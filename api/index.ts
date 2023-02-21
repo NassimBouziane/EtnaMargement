@@ -1,9 +1,16 @@
 import express from 'express'
-
+import logsroute from './server/routes/logs.route'
 const app = express()
 const port = 3000
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  }),
+);
 
-
+app.use('/logs', logsroute)
+//app.use('/tickets', )
 
 
 app.listen(port, () => {
