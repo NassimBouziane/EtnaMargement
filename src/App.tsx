@@ -42,7 +42,7 @@ function Section({children, title}: SectionProps): JSX.Element {
         ]}>
         {title}
       </Text>
-      <Text className="text-2xl text-black dark:text-white">
+      <Text className="text-6xl text-black dark:text-white">
         {children}
       </Text>
     </View>
@@ -71,8 +71,7 @@ function App(): JSX.Element {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Section title="Step One">
-            Edit <Text className="text-blue-500">App.tsx</Text> to change this
-            screen and then come back to see your edits.
+            Edit <Text className="text-red-500">App.tsx</Text> je suis KC ZIZOUILLE 
           </Section>
           <Section title="See Your Changes">
             <ReloadInstructions />
@@ -81,7 +80,7 @@ function App(): JSX.Element {
             <DebugInstructions />
           </Section>
           <Section title="Learn More">
-            Wesh la street
+            Wesh la !street !
           </Section>
           <LearnMoreLinks />
         </View>
