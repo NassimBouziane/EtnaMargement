@@ -71,7 +71,7 @@ function App(): JSX.Element {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Section title="Step One">
-            Edit <Text className="text-red-500">App.tsx</Text> je suis KC ZIZOUILLE 
+            Edit <Text className="text-red-500">App.tsx</Text> je suis KC ZIZOUILLE
           </Section>
           <Section title="See Your Changes">
             <ReloadInstructions />
