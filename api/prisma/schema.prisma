@@ -8,11 +8,11 @@ datasource db {
 }
 
 model Logs {
-  id        Int      @id @unique(map: "id") @default(autoincrement())
-  login     String   @db.Char(50)
-  date      DateTime @db.DateTime(0)
-  morning   String   @db.Char(50)
-  afternoon String   @db.Char(50)
+  id        Int    @id @unique(map: "id") @default(autoincrement())
+  login     String @db.Char(50)
+  date      String @default("") @db.VarChar(50)
+  morning   String @db.Char(50)
+  afternoon String @db.Char(50)
 }
 
 model Ticket {
