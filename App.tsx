@@ -42,13 +42,7 @@ function Section({children, title}: SectionProps): JSX.Element {
         ]}>
         {title}
       </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
+      <Text className="text-2xl text-black dark:text-white">
         {children}
       </Text>
     </View>
@@ -77,7 +71,7 @@ function App(): JSX.Element {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
+            Edit <Text className="text-blue-500">App.tsx</Text> to change this
             screen and then come back to see your edits.
           </Section>
           <Section title="See Your Changes">
