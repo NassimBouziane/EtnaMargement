@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Logs {
+  id        Int      @id @unique(map: "id") @default(autoincrement())
+  date      DateTime @db.DateTime(0)
+  morning   String   @db.Char(50)
+  afternoon String   @db.Char(50)
+}
+
+model Ticket {
+  id      Int    @id @unique(map: "Colonne 2") @default(autoincrement())
+  title   String @db.Char(50)
+  sender  String @db.Char(50)
+  service String @db.Char(50)
+  message String @db.Char(50)
+  status  String @db.Char(50)
+}
