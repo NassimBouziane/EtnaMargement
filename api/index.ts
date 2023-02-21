@@ -1,5 +1,6 @@
 import express from 'express'
 import logsroute from './server/routes/logs.route'
+import users from './server/routes/users.route';
 const app = express()
 const port = 3000
 app.use(express.json());
@@ -21,6 +22,7 @@ app.options('*', cors(corsOptions)); // Enable pre-flight
 
 
 app.use('/logs', logsroute)
+app.use('/users', users)
 //app.use('/tickets', )
 
 

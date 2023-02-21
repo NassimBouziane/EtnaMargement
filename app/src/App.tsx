@@ -5,31 +5,26 @@
  * @format
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Text, View } from 'react-native';
+import { postLogin } from './services/users/users.services';
+
 
 function App(): JSX.Element {
-  const login = async () => {
-    const response = await fetch('https://auth.etna-alternance.net/identity', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          login: 'boular_t',
-          password: 'Test1234',
-        }),
-      }).then((response) => console.log(response));
-      const json = await response;
-      console.log(json)
-    }
-  useEffect(() => {
-    login();
-  }, []);
+
+  const handleSubmit = async(e : any) => {
+    await postLogin('boular_t','Test1234').then((res) => {
+      console.log(res['set-cookie']);
+    })
+    .catch(() => {
+      console.log('fail')
+    });
+  }
+
   return (
     <View>
       <Text>Wesh</Text>
+      <Button onPress={handleSubmit} title="weshlazone"></Button>
     </View>
   );
 }
