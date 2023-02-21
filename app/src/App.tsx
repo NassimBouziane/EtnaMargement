@@ -24,13 +24,14 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import CardHome from "./components/cardHome";
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+function Section({ children, title }: SectionProps): JSX.Element {
+  const isDarkMode = useColorScheme() === "dark";
   return (
     <View style={styles.sectionContainer}>
       <Text
@@ -39,18 +40,17 @@ function Section({children, title}: SectionProps): JSX.Element {
           {
             color: isDarkMode ? Colors.white : Colors.black,
           },
-        ]}>
+        ]}
+      >
         {title}
       </Text>
-      <Text className="text-6xl text-black dark:text-white">
-        {children}
-      </Text>
+      <Text className="text-6xl text-black dark:text-white">{children}</Text>
     </View>
   );
 }
 
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  const isDarkMode = useColorScheme() === "dark";
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -59,19 +59,22 @@ function App(): JSX.Element {
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        barStyle={isDarkMode ? "light-content" : "dark-content"}
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
+        style={backgroundStyle}
+      >
         <Header />
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
+          }}
+        >
           <Section title="Step One">
-            Edit <Text className="text-red-500">App.tsx</Text> je suis KC ZIZOUILLE
+            Edit <Text className="text-red-500">App.tsx</Text> je suis KC
+            ZIZOUILLE
           </Section>
           <Section title="See Your Changes">
             <ReloadInstructions />
@@ -79,9 +82,7 @@ function App(): JSX.Element {
           <Section title="Debug">
             <DebugInstructions />
           </Section>
-          <Section title="Learn More">
-            Wesh la !street !
-          </Section>
+          <Section title="Learn More">{/* <CardHome /> */}</Section>
           <LearnMoreLinks />
         </View>
       </ScrollView>
