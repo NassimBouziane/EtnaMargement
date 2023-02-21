@@ -5,15 +5,19 @@
  * @format
  */
 
-import React from 'react';
-import { Button, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Button, SafeAreaView, Text, View } from 'react-native';
+import { Input } from 'react-native-elements';
 import { postLogin } from './services/users/users.services';
 
 
 function App(): JSX.Element {
-
+  const [nom, setNom] = useState('');
+  const [password, setPassword] = useState('');
+  
   const handleSubmit = async(e : any) => {
-    await postLogin('boular_t','Test1234').then((res) => {
+    console.log(nom,password)
+    await postLogin(nom,password).then((res) => {
       console.log(res['set-cookie']);
     })
     .catch(() => {
@@ -23,8 +27,18 @@ function App(): JSX.Element {
 
   return (
     <View>
-      <Text>Wesh</Text>
-      <Button onPress={handleSubmit} title="weshlazone"></Button>
+      <Input
+        placeholder='Nom'
+        value={nom}
+        onChangeText={(value) => setNom(value)}
+      />
+      <Input
+        placeholder='Mot de passe'
+        secureTextEntry={true}
+        value={password}
+        onChangeText={(value) => setPassword(value)}
+      />
+      <Button title='Envoyer' onPress={handleSubmit} />
     </View>
   );
 }
