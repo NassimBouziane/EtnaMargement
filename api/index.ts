@@ -9,6 +9,17 @@ app.use(
   }),
 );
 
+const cors = require('cors');
+
+const corsOptions = {
+  origin: '*',
+  optionSuccessStatus: 200,
+  // preflightContinue: false,
+};
+app.use(cors({ origin: '*' }));
+app.options('*', cors(corsOptions)); // Enable pre-flight
+
+
 app.use('/logs', logsroute)
 //app.use('/tickets', )
 

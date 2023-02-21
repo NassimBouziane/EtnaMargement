@@ -1,7 +1,8 @@
+import { Request, Response } from 'express';
 
 async function getAll(req: Request, res:Response){
-    console.log('test')
-    res.json()
+    //TODO LE GET ALL
+    res.send('test')
 }
 
 
