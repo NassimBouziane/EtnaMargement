@@ -3,9 +3,9 @@ import Navbar from "../components/Navbar";
 
 export default function Home() {
   return (
-    <View>
+    <View className="flex flex-row h-full my-12">
       <Navbar/>
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <View>
         <Text>Home Screen</Text>
       </View>
     </View>
