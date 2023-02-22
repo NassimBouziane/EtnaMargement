@@ -2,15 +2,19 @@ import React, { useEffect, useState } from "react";
 import { BarCodeScanner, PermissionStatus } from 'expo-barcode-scanner';
 import { Alert, Button, Text, View } from "react-native";
 import { checkUser } from "../../services/users/users.services";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Scanner() {
   const [data, setData] = useState(null)
   const [permission, setPermission] = useState(true);
   const [error, setError] = useState(false)
-  const [isLogin, setIsLogin] = useState(false)
+  const [token, setToken] = useState<any>()
 
   useEffect(() => {
     requestCameraPermission();
+    AsyncStorage.getItem("token").then((value) => {  
+      if(value !== null)
+      setToken(JSON.parse(value)) })
   }, []);
 
   const requestCameraPermission = async () => {
@@ -29,10 +33,6 @@ export default function Scanner() {
         setPermission(false);
     }
   };
-
-  const callCheckUser = async (login : String) => {
-    await setIsLogin(await checkUser(login))
-  }
 
   if(data){
     return (
@@ -57,28 +57,24 @@ export default function Scanner() {
   if (permission) {
     return (
         <BarCodeScanner
-            onBarCodeScanned={({ type, data }) => {
+            onBarCodeScanned={ async ({ type, data }) => {
                 try {
-                    console.log(type);
-                    console.log(data);
                     const dataParse = data.split('|')
                     if (dataParse.length === 3 
                       && dataParse[0][dataParse[0].length - 2] === '_'
                       && /^\d+$/.test(dataParse[1])
                       && /^\d+$/.test(dataParse[2]) )
                       {
-                        callCheckUser(dataParse[0])
-                        if (isLogin){
+                        if (await checkUser(dataParse[0], token)){
                           setData(dataParse)
-                        } else {
-                          console.log("[FAIL] Login don't exist*")
-                          throw new Error("[FAIL] Login don't exist")
+                        }else{
+                          console.log("[FAIL] Login is not good")
+                          throw new Error("[FAIL] Login is not good")
                         }
                         
                       }else{
                         console.log("[FAIL] QR Code is not good")
                         throw new Error("[FAIL] QR Code is not good")
-
                       }
 
                 } catch (error) {

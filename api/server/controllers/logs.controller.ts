@@ -6,7 +6,6 @@ import { deletebylogin } from '../services/logs.service';
 import { createlog } from '../services/logs.service';
 
 
-
 async function getAll(req: Request, res:Response){
     const QueryResult = await prisma.logs.findMany();
 

@@ -19,12 +19,11 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Scanner">
       <Stack.Screen
           name="Login"
           component={Login}
           options={{
-            headerShown: false,
           }}
         />
         <Stack.Screen
@@ -59,7 +58,6 @@ function App() {
           name="Scanner"
           component={Scanner}
           options={{
-            headerShown: false,
           }}
         />
         <Stack.Screen
