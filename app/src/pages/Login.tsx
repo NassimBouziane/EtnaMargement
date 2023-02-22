@@ -21,8 +21,8 @@ function Login(): JSX.Element {
       console.log(res['set-cookie'])
       AsyncStorage.setItem('token',JSON.stringify(res['set-cookie']));
     })
-    .catch(() => {
-      console.log('[FAIL] Wrong login or password')
+    .catch((e) => {
+      console.log('[FAIL]',e)
     });
   }
 
