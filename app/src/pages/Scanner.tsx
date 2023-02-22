@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { BarCodeScanner, PermissionStatus } from 'expo-barcode-scanner';
 import { Alert, Button, Text, View } from "react-native";
+import { checkUser } from "../../services/users/users.services";
 
 export default function Scanner() {
   const [data, setData] = useState(null)
   const [permission, setPermission] = useState(true);
   const [error, setError] = useState(false)
+  const [isLogin, setIsLogin] = useState(false)
 
   useEffect(() => {
     requestCameraPermission();
@@ -28,6 +30,10 @@ export default function Scanner() {
     }
   };
 
+  const callCheckUser = async (login : String) => {
+    await setIsLogin(await checkUser(login))
+  }
+
   if(data){
     return (
       <View>
@@ -47,6 +53,7 @@ export default function Scanner() {
       </View>
     )
   }
+
   if (permission) {
     return (
         <BarCodeScanner
@@ -60,10 +67,17 @@ export default function Scanner() {
                       && /^\d+$/.test(dataParse[1])
                       && /^\d+$/.test(dataParse[2]) )
                       {
-                        setData(dataParse)
+                        callCheckUser(dataParse[0])
+                        if (isLogin){
+                          setData(dataParse)
+                        } else {
+                          console.log("[FAIL] Login don't exist*")
+                          throw new Error("[FAIL] Login don't exist")
+                        }
+                        
                       }else{
-                        console.log('[FAIL] QR Code is not good')
-                        throw new Error('[FAIL] QR Code is not good')
+                        console.log("[FAIL] QR Code is not good")
+                        throw new Error("[FAIL] QR Code is not good")
 
                       }
 
