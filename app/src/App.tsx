@@ -5,6 +5,7 @@ import React from "react";
 import { Button, Text, View } from "react-native";
 
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 import Logs from "./pages/Logs";
 import Messages from "./pages/Messages";
 import ScanMode from "./pages/ScanMode";
@@ -18,7 +19,14 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Login">
+      <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name="Home"
           component={Home}
