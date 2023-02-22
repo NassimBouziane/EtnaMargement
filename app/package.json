@@ -20,6 +20,7 @@
     "nativewind": "^2.0.11",
     "react": "18.1.0",
     "react-native": "0.70.5",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-responsive": "^9.0.2",
     "tailwindcss": "^3.2.7",
     "typescript": "^4.6.3"
