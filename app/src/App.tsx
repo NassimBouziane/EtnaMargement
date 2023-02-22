@@ -23,65 +23,44 @@ function App() {
       <Stack.Screen
           name="Login"
           component={Login}
-          options={{
-            headerShown: false,
-          }}
+          
         />
         <Stack.Screen
           name="Home"
           component={Home}
-          options={{
-            headerShown: false,
-          }}
+          
         />
         <Stack.Screen
           name="Logs"
           component={Logs}
-          options={{
-            headerShown: false,
-          }}
         />
         <Stack.Screen
           name="Messages"
           component={Messages}
-          options={{
-            headerShown: false,
-          }}
         />
         <Stack.Screen
           name="ScanMode"
           component={ScanMode}
-          options={{
-            headerShown: false,
-          }}
         />
         <Stack.Screen
           name="Scanner"
           component={Scanner}
-          options={{
-            headerShown: false,
-          }}
+          
         />
         <Stack.Screen
           name="Settings"
           component={Settings}
-          options={{
-            headerShown: false,
-          }}
+          
         />
         <Stack.Screen
           name="Students"
           component={Student}
-          options={{
-            headerShown: false,
-          }}
+          
         />
         <Stack.Screen
           name="Tickets"
           component={Tickets}
-          options={{
-            headerShown: false,
-          }}
+          
         />
       </Stack.Navigator>
     </NavigationContainer>
