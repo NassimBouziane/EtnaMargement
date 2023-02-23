@@ -16,6 +16,7 @@ import Tickets from "./pages/Tickets";
 
 const Stack = createNativeStackNavigator();
 
+
 function App() {
   return (
     <NavigationContainer>
@@ -23,6 +24,7 @@ function App() {
       <Stack.Screen
           name="Login"
           component={Login}
+          
           
         />
         <Stack.Screen
