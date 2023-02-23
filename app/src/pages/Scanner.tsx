@@ -79,7 +79,7 @@ export default function Scanner() {
 
                 } catch (error) {
                   setError(true)
-                  Alert.alert("erreur ... erreur ... erreur tu as fait une erreur ... erreur")
+                  console.log(error)
                 }
             }}
         >
