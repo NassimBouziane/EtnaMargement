@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 
 export default function Tickets() {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View className="flex flex-row h-full my-12 ">
       <Navbar />
 
       <Text>Tickets Screen</Text>

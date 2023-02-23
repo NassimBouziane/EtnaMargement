@@ -1,9 +1,11 @@
 import React from "react";
 import { Text, View } from "react-native";
+import Navbar from "../components/Navbar";
 
 export default function Student() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View className="flex flex-row h-full my-12 ">
+      <Navbar />
       <Text>Student Screen</Text>
     </View>
   );

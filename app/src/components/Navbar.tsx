@@ -6,7 +6,6 @@ export default function Navbar() {
   const navigation: any = useNavigation();
   return (
     <View className="flex justify-evenly items-center gap-2 w-[15%] h-[90%] bg-[#5863F8] rounded-3xl">
-      {/* <Button title="Go scan" onPress={() => navigation.navigate("Scanner")} /> */}
       <View className="w-[64px] h-[64px] bg-transparent">
         <Pressable className="" onPress={() => navigation.navigate("Home")}>
           <Image source={require("../../assets/nav_home.png")} />
@@ -28,8 +27,8 @@ export default function Navbar() {
         </Pressable>
       </View>
       <View className="w-[64px] h-[64px] bg-transparent">
-        <Pressable className="" onPress={() => navigation.navigate("Logs")}>
-          <Image source={require("../../assets/nav_logs.png")} />
+        <Pressable className="" onPress={() => navigation.navigate("ScanMode")}>
+          <Image source={require("../../assets/nav_scan.png")} />
         </Pressable>
       </View>
       <View className="w-[64px] h-[64px] bg-transparent">
