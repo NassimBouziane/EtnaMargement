@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
+  Alert,
   Button,
   Dimensions,
   Image,
@@ -21,35 +22,33 @@ const { height, width } = Dimensions.get("window");
 export default function Login() {
   const [nom, setNom] = useState('');
   const [password, setPassword] = useState('');
-  const [token, setToken] = useState('')
   const navigation: any = useNavigation();
   const [hidden, sethidden] = useState(true);
   const [destination, setDestination] = useState('Students')
-  const [message, setMessage] = useState('')
 
-  const handleSubmit = async(e : any) => {
-    setMessage('')
-    setDestination('Students')
-    await postLogin(nom,password).then((res) => {
-      AsyncStorage.setItem('token',JSON.stringify(res['set-cookie']));
-      setMessage('')
-    })
-    .catch((e) => {
-      setMessage('Login or password false')
-      console.log('[FAIL]',e)
-    });
-    AsyncStorage.getItem("token").then((value) => {
-      if(value !== null)
-      setToken(JSON.parse(value)) })
-    await fetchUserConnected( token ).then((res) => {
-      res.groups.forEach((element: string) => {
-        if( element === 'adm' ) { setDestination('Home')}
-      });
-    })
-    if(!message){
-      navigation.navigate(destination)
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      await AsyncStorage.clear();
+      setDestination("Students");
+  
+      const res = await postLogin(nom, password);
+      await AsyncStorage.setItem("token", JSON.stringify(res["set-cookie"]));
+      
+      const value = await AsyncStorage.getItem("token");
+      if (value !== null) {
+        const user = await fetchUserConnected(await JSON.parse(value));
+        if (user.groups.includes("adm")) {
+          setDestination("Home");
+        }
+        navigation.navigate(destination);
+      }
+    } catch (error) {
+      Alert.alert("Mot de passe ou login incorrect(s)");
+      console.log("[FAIL]", error);
     }
-  }
+  };
 
   
   React.useLayoutEffect(() => {
@@ -89,8 +88,8 @@ export default function Login() {
           <Text className="text-[15px] mt-[25px]">Mot de passe:</Text>
           <View className="bg-[#D9D9D9] flex flex-row w-full h-[65px] rounded-lg mt-[10px] p-4">
             <Image source={require("../../assets/login_lock.png")} className="w-[20px] h-[20px] mr-[10px] my-auto"></Image>
-            <TextInput className="h-full w-full" 
-              secureTextEntry={hidden} 
+            <TextInput className="h-full w-[80%]" 
+              secureTextEntry={hidden}
               placeholder="1234"
               value={password}
               onChangeText={(value) => setPassword(value)}
