@@ -81,9 +81,9 @@ if(scanned){
                       {
                         if (await checkUser(dataParse[0], token)){
                           const timezone = 'Europe/Paris'; // UTC+1
-  const date = moment().tz(timezone).format('YYYY-MM-DD HH:mm');
+                          const date = moment().tz(timezone).format('YYYY-MM-DD');
 
-                          await checkLogs('zaeaz',"2023-02-21 15:57:11") // TODO ENLEVER LES HEURES DE LA DATE
+                          await checkLogs(dataParse[0],date) // TODO ENLEVER LES HEURES DE LA DATE
                           setData(dataParse)
                         }else{
                           console.log("[FAIL] Login is not good")
