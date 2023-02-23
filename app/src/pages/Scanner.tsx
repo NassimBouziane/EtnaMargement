@@ -9,6 +9,7 @@ export default function Scanner() {
   const [permission, setPermission] = useState(true);
   const [error, setError] = useState(false)
   const [token, setToken] = useState<any>()
+  const [scanned, setScanned] = useState(false)
 
   useEffect(() => {
     requestCameraPermission();
@@ -40,7 +41,7 @@ export default function Scanner() {
         <Text> {data[0]} </Text>
         <Text> {data[1]} </Text>
         <Text> {data[2]} </Text>
-        <Button title="Scan again" onPress={() => setData(null)}></Button>
+        <Button title="Scan again" onPress={() => {setData(null); setScanned(false)}}></Button>
       </View>
     )
   }
@@ -49,15 +50,25 @@ export default function Scanner() {
     return (
       <View>
         <Text>Wesh erreur</Text>
-        <Button title="Scan again" onPress={() => setError(false)}></Button>
+        <Button title="Scan again" onPress={() => { setError(false); setScanned(false)} }></Button>
       </View>
     )
   }
 
+  if(scanned){
+    return(
+      <View>
+        <Text>Check if QRcode is good</Text>
+      </View>
+    )
+  }
+
+  
   if (permission) {
     return (
         <BarCodeScanner
             onBarCodeScanned={ async ({ type, data }) => {
+              setScanned(true)
                 try {
                     const dataParse = data.split('|')
                     if (dataParse.length === 3 
@@ -65,7 +76,7 @@ export default function Scanner() {
                       && /^\d+$/.test(dataParse[1])
                       && /^\d+$/.test(dataParse[2]) )
                       {
-                        if (await checkUser(dataParse[0], token)){
+                        if (await checkUser('bnej', token)){
                           setData(dataParse)
                         }else{
                           console.log("[FAIL] Login is not good")
@@ -76,12 +87,12 @@ export default function Scanner() {
                         console.log("[FAIL] QR Code is not good")
                         throw new Error("[FAIL] QR Code is not good")
                       }
-
                 } catch (error) {
                   setError(true)
                   console.log(error)
                 }
             }}
+            
         >
         <Text >Scan the QR code.</Text>
         </BarCodeScanner>
