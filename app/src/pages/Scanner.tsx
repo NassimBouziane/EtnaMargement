@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { BarCodeScanner, PermissionStatus } from 'expo-barcode-scanner';
+import React, { useEffect, useState } from "react";
 import { Alert, Button, Text, View } from "react-native";
 import { checkUser } from "../../services/users/users.services";
 
