@@ -2,12 +2,17 @@ import { BarCodeScanner, PermissionStatus } from 'expo-barcode-scanner';
 import React, { useEffect, useState } from "react";
 import { Alert, Button, Text, View } from "react-native";
 import { checkUser } from "../../services/users/users.services";
+import { checkLogs } from "../../services/logs/logs.services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import moment from 'moment-timezone';
+
 
 export default function Scanner() {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState<any>(null)
   const [permission, setPermission] = useState(true);
   const [error, setError] = useState(false)
+  const [scanned, setScanned] = useState(false)
+
   const [token, setToken] = useState<any>()
   const [scanned, setScanned] = useState(false)
 
@@ -54,6 +59,13 @@ export default function Scanner() {
       </View>
     )
   }
+if(scanned){
+    return(
+      <View>
+        <Text>Check if QRcode is good</Text>
+      </View>
+    )
+  }
 
   if(scanned){
     return(
@@ -76,7 +88,11 @@ export default function Scanner() {
                       && /^\d+$/.test(dataParse[1])
                       && /^\d+$/.test(dataParse[2]) )
                       {
-                        if (await checkUser('bnej', token)){
+                        if (await checkUser(dataParse[0], token)){
+                          const timezone = 'Europe/Paris'; // UTC+1
+                          const date = moment().tz(timezone).format('YYYY-MM-DD');
+
+                          await checkLogs(dataParse[0],date) // TODO ENLEVER LES HEURES DE LA DATE
                           setData(dataParse)
                         }else{
                           console.log("[FAIL] Login is not good")
@@ -101,3 +117,5 @@ export default function Scanner() {
     return <Text >Permission rejected.</Text>;
 }
 }
+
+
