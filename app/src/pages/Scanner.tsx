@@ -2,15 +2,20 @@ import { BarCodeScanner, PermissionStatus } from 'expo-barcode-scanner';
 import React, { useEffect, useState } from "react";
 import { Alert, Button, Text, View } from "react-native";
 import { checkUser } from "../../services/users/users.services";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Scanner() {
   const [data, setData] = useState(null)
   const [permission, setPermission] = useState(true);
   const [error, setError] = useState(false)
-  const [isLogin, setIsLogin] = useState(false)
+  const [token, setToken] = useState<any>()
+  const [scanned, setScanned] = useState(false)
 
   useEffect(() => {
     requestCameraPermission();
+    AsyncStorage.getItem("token").then((value) => {  
+      if(value !== null)
+      setToken(JSON.parse(value)) })
   }, []);
 
   const requestCameraPermission = async () => {
@@ -30,17 +35,13 @@ export default function Scanner() {
     }
   };
 
-  const callCheckUser = async (login : String) => {
-    await setIsLogin(await checkUser(login))
-  }
-
   if(data){
     return (
       <View>
         <Text> {data[0]} </Text>
         <Text> {data[1]} </Text>
         <Text> {data[2]} </Text>
-        <Button title="Scan again" onPress={() => setData(null)}></Button>
+        <Button title="Scan again" onPress={() => {setData(null); setScanned(false)}}></Button>
       </View>
     )
   }
@@ -49,43 +50,49 @@ export default function Scanner() {
     return (
       <View>
         <Text>Wesh erreur</Text>
-        <Button title="Scan again" onPress={() => setError(false)}></Button>
+        <Button title="Scan again" onPress={() => { setError(false); setScanned(false)} }></Button>
       </View>
     )
   }
 
+  if(scanned){
+    return(
+      <View>
+        <Text>Check if QRcode is good</Text>
+      </View>
+    )
+  }
+
+  
   if (permission) {
     return (
         <BarCodeScanner
-            onBarCodeScanned={({ type, data }) => {
+            onBarCodeScanned={ async ({ type, data }) => {
+              setScanned(true)
                 try {
-                    console.log(type);
-                    console.log(data);
                     const dataParse = data.split('|')
                     if (dataParse.length === 3 
                       && dataParse[0][dataParse[0].length - 2] === '_'
                       && /^\d+$/.test(dataParse[1])
                       && /^\d+$/.test(dataParse[2]) )
                       {
-                        callCheckUser(dataParse[0])
-                        if (isLogin){
+                        if (await checkUser('bnej', token)){
                           setData(dataParse)
-                        } else {
-                          console.log("[FAIL] Login don't exist*")
-                          throw new Error("[FAIL] Login don't exist")
+                        }else{
+                          console.log("[FAIL] Login is not good")
+                          throw new Error("[FAIL] Login is not good")
                         }
                         
                       }else{
                         console.log("[FAIL] QR Code is not good")
                         throw new Error("[FAIL] QR Code is not good")
-
                       }
-
                 } catch (error) {
                   setError(true)
-                  Alert.alert("erreur ... erreur ... erreur tu as fait une erreur ... erreur")
+                  console.log(error)
                 }
             }}
+            
         >
         <Text >Scan the QR code.</Text>
         </BarCodeScanner>
