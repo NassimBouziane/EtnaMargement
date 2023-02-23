@@ -2,12 +2,17 @@ import React, { useEffect, useState } from "react";
 import { BarCodeScanner, PermissionStatus } from 'expo-barcode-scanner';
 import { Alert, Button, Text, View } from "react-native";
 import { checkUser } from "../../services/users/users.services";
+import { checkLogs } from "../../services/logs/logs.services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import moment from 'moment-timezone';
+
 
 export default function Scanner() {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState<any>(null)
   const [permission, setPermission] = useState(true);
   const [error, setError] = useState(false)
+  const [scanned, setScanned] = useState(false)
+
   const [token, setToken] = useState<any>()
 
   useEffect(() => {
@@ -40,7 +45,7 @@ export default function Scanner() {
         <Text> {data[0]} </Text>
         <Text> {data[1]} </Text>
         <Text> {data[2]} </Text>
-        <Button title="Scan again" onPress={() => setData(null)}></Button>
+        <Button title="Scan again" onPress={() => {setData(null); setScanned(false)}}></Button>
       </View>
     )
   }
@@ -49,15 +54,24 @@ export default function Scanner() {
     return (
       <View>
         <Text>Wesh erreur</Text>
-        <Button title="Scan again" onPress={() => setError(false)}></Button>
+        <Button title="Scan again" onPress={() => { setError(false); setScanned(false)} }></Button>
       </View>
     )
   }
+if(scanned){
+    return(
+      <View>
+        <Text>Check if QRcode is good</Text>
+      </View>
+    )
+  }
+
 
   if (permission) {
     return (
         <BarCodeScanner
             onBarCodeScanned={ async ({ type, data }) => {
+              setScanned(true)
                 try {
                     const dataParse = data.split('|')
                     if (dataParse.length === 3 
@@ -66,6 +80,10 @@ export default function Scanner() {
                       && /^\d+$/.test(dataParse[2]) )
                       {
                         if (await checkUser(dataParse[0], token)){
+                          const timezone = 'Europe/Paris'; // UTC+1
+  const date = moment().tz(timezone).format('YYYY-MM-DD HH:mm');
+
+                          await checkLogs('zaeaz',"2023-02-21 15:57:11") // TODO ENLEVER LES HEURES DE LA DATE
                           setData(dataParse)
                         }else{
                           console.log("[FAIL] Login is not good")
@@ -90,3 +108,5 @@ export default function Scanner() {
     return <Text >Permission rejected.</Text>;
 }
 }
+
+
