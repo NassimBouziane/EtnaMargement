@@ -30,7 +30,8 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      await AsyncStorage.clear();
+      await AsyncStorage.removeItem("token");
+      console.log(AsyncStorage.getItem('token'))
       setDestination("Students");
   
       const res = await postLogin(nom, password);
@@ -40,9 +41,13 @@ export default function Login() {
       if (value !== null) {
         const user = await fetchUserConnected(await JSON.parse(value));
         if (user.groups.includes("adm") || user.login == "boular_t") {
+          console.log("jsuis la porte de derriere")
           setDestination("Home");
+          navigation.navigate('Home')
         }
-        navigation.navigate(destination);
+        else{
+        navigation.navigate("Students");}
+
       }
     } catch (error) {
       Alert.alert("Mot de passe ou login incorrect(s)");

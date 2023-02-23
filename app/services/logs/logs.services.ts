@@ -16,8 +16,8 @@ export const checkLogs = async(login :String, date:any) => {
 
     const isAlready : Array<log> = await api.get(`/logs/date/${date}/${login}`).then((response) => {return response.data})
     if(isAlready[0] != undefined ){
-    const hours = moment().tz('Europe/Paris').format("HH")
-    //const hours = 11;
+    //const hours = moment().tz('Europe/Paris').format("HH")
+    const hours = 11;
     //TODO ADD RETARD IF STUDENTS ARRIVES BETWEEN 10h AND 14H
     
     if(Number(hours) > 12){
