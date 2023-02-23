@@ -18,6 +18,7 @@ export const checkLogs = async(login :String, date:any) => {
     if(isAlready[0] != undefined ){
     const hours = moment().tz('Europe/Paris').format("HH")
     //const hours = 11;
+    //TODO ADD RETARD IF STUDENTS ARRIVES BETWEEN 10h AND 14H
     
     if(Number(hours) > 12){
 
@@ -30,7 +31,6 @@ export const checkLogs = async(login :String, date:any) => {
    
             updatelogs({afternoon : "present"}, isAlready[0].id)
         
-            console.log('UPDATE A FAIRE AFETERNOON')
         }
 
 
@@ -39,17 +39,15 @@ export const checkLogs = async(login :String, date:any) => {
     else{
         
         if(isAlready[0].morning){
+            //ALERT por dire que vous etes déja emargé
             console.log(isAlready[0].morning)
 
         }
         else{
             //TODO UPDATE LOGS ET METTRE EN PRESENT
-
-
-
             updatelogs({morning : "present"}, isAlready[0].id)
 
-            console.log('UPDATE A FAIRE MORNING')
+ 
         }
     }
     }
@@ -68,7 +66,6 @@ export const checkLogs = async(login :String, date:any) => {
 }
 
 export const updatelogs = async(body:any,id: Number)=>{
-    //TODO
-    console.log(body)
+
     return await api.put('/logs/'+id,body).then((response) =>console.log(response.data))
 }
