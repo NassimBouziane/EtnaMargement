@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { BarCodeScanner, PermissionStatus } from 'expo-barcode-scanner';
+import React, { useEffect, useState } from "react";
 import { Alert, Button, Text, View } from "react-native";
 import { checkUser } from "../../services/users/users.services";
 import { checkLogs } from "../../services/logs/logs.services";
@@ -14,6 +14,7 @@ export default function Scanner() {
   const [scanned, setScanned] = useState(false)
 
   const [token, setToken] = useState<any>()
+  const [scanned, setScanned] = useState(false)
 
   useEffect(() => {
     requestCameraPermission();
@@ -66,7 +67,15 @@ if(scanned){
     )
   }
 
+  if(scanned){
+    return(
+      <View>
+        <Text>Check if QRcode is good</Text>
+      </View>
+    )
+  }
 
+  
   if (permission) {
     return (
         <BarCodeScanner
@@ -94,12 +103,12 @@ if(scanned){
                         console.log("[FAIL] QR Code is not good")
                         throw new Error("[FAIL] QR Code is not good")
                       }
-
                 } catch (error) {
                   setError(true)
                   console.log(error)
                 }
             }}
+            
         >
         <Text >Scan the QR code.</Text>
         </BarCodeScanner>
