@@ -14,7 +14,6 @@ export default function Scanner() {
   const [scanned, setScanned] = useState(false)
 
   const [token, setToken] = useState<any>()
-  const [scanned, setScanned] = useState(false)
 
   useEffect(() => {
     requestCameraPermission();
