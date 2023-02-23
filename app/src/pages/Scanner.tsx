@@ -51,6 +51,30 @@ export default function Scanner() {
       <View>
         <Text>Wesh erreur</Text>
         <Button title="Scan again" onPress={() => { setError(false); setScanned(false)} }></Button>
+export default function Scanner({ navigation }: any) {
+  const [currentTime, setCurrentTime] = useState(
+    moment().locale("fr").utcOffset("+0100").format("LT")
+  );
+  useEffect(() => {
+    const intervalID = setInterval(() => {
+      setCurrentTime(moment().locale("fr").utcOffset("+0100").format("LT"));
+    }, 1000);
+    return () => clearInterval(intervalID);
+  }, []);
+  return (
+    <View className="mt-16">
+      <View className="flex flex-row justify-between items-center">
+        <Image
+          source={require("../../assets/logoEtna.png")}
+          className=" ml-5 "
+          style={{ width: 96, height: 30 }}
+        />
+        <Pressable
+          className="mr-5 pl-5 pr-5 pt-2 pb-2 bg-[#5863F8] rounded-2xl"
+          onPress={() => navigation.navigate("Login")}
+        >
+          <Text className="text-lg text-white">Connexion</Text>
+        </Pressable>
       </View>
     )
   }
