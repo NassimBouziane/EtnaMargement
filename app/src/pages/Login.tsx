@@ -10,15 +10,48 @@ import {
   TextInput,
   View
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { fetchUserConnected, postLogin } from "../../services/users/users.services";
 
 const { height, width } = Dimensions.get("window");
 
 // TODO : <Button title="reveal" onPress={() => {sethidden(current => !current)}}></Button>
 
 export default function Login() {
-  const [hidden, sethidden] = useState(true);
+  const [nom, setNom] = useState('');
+  const [password, setPassword] = useState('');
+  const [token, setToken] = useState('')
   const navigation: any = useNavigation();
+  const [hidden, sethidden] = useState(true);
+  const [destination, setDestination] = useState('Students')
+  const [message, setMessage] = useState('')
+
+  const handleSubmit = async(e : any) => {
+    setMessage('')
+    setDestination('Students')
+    await postLogin(nom,password).then((res) => {
+      AsyncStorage.setItem('token',JSON.stringify(res['set-cookie']));
+      setMessage('')
+    })
+    .catch((e) => {
+      setMessage('Login or password false')
+      console.log('[FAIL]',e)
+    });
+    AsyncStorage.getItem("token").then((value) => {
+      if(value !== null)
+      setToken(JSON.parse(value)) })
+    await fetchUserConnected( token ).then((res) => {
+      res.groups.forEach((element: string) => {
+        if( element === 'adm' ) { setDestination('Home')}
+      });
+    })
+    if(!message){
+      navigation.navigate(destination)
+    }
+  }
+
+  
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -47,12 +80,21 @@ export default function Login() {
           <Text className="text-[15px] mt-[43px]">Login:</Text>
           <View className="bg-[#D9D9D9] flex flex-row w-full h-[65px] rounded-lg mt-[10px] p-4">
             <Image source={require("../../assets/login_atsign.png")} className="w-[20px] h-[20px] mr-[10px] my-auto"></Image>
-            <TextInput className="" placeholder="carra_c"></TextInput>
+            <TextInput className="h-full w-full" 
+              placeholder="carra_c"
+              value={nom}
+              onChangeText={(value) => setNom(value)}>       
+            </TextInput>
           </View>
           <Text className="text-[15px] mt-[25px]">Mot de passe:</Text>
           <View className="bg-[#D9D9D9] flex flex-row w-full h-[65px] rounded-lg mt-[10px] p-4">
             <Image source={require("../../assets/login_lock.png")} className="w-[20px] h-[20px] mr-[10px] my-auto"></Image>
-            <TextInput className="" secureTextEntry={hidden} placeholder="1234"></TextInput>
+            <TextInput className="h-full w-full" 
+              secureTextEntry={hidden} 
+              placeholder="1234"
+              value={password}
+              onChangeText={(value) => setPassword(value)}
+    ></TextInput>
             <Pressable className="ml-auto my-auto" onPress={() => {sethidden(current => !current)}}>
               <Image source={lock} className="w-[20px] h-[20px]"></Image>
             </Pressable>
@@ -61,7 +103,7 @@ export default function Login() {
         
         <Pressable
           className="bg-[#5863F8] flext items-center justify-center w-full h-[42px] rounded-lg mt-[50px] active:bg-[#3940aa]"
-          onPress={() => {}}
+          onPress={handleSubmit}
         >
           <Text className="text-white">Se Connecter</Text>
         </Pressable>
