@@ -11,6 +11,13 @@ async function getAll(req: Request, res:Response){
 
     res.json(QueryResult)
 }
+async function getbydate(req:Request, res:Response){
+    const { date } = req.params;
+    const QueryResult = await prisma.logs.findMany({ where: {date:date}})
+    res.json(QueryResult)
+    
+
+}
 
 async function getByLogin(req: Request, res:Response){
     const { id } = req.params;
@@ -33,4 +40,4 @@ async function getstats(req:Request, res:Response){
 async function insertintologs(req:Request, res:Response){
     await insertintologs_service(req,res)
 }
-export {getAll,getByLogin, deleteById,deleteByLogin,createLog, getstats, insertintologs};
+export {getAll,getByLogin, deleteById,deleteByLogin,createLog, getstats, insertintologs,getbydate};
