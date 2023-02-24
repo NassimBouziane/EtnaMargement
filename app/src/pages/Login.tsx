@@ -39,7 +39,7 @@ export default function Login() {
       const value = await AsyncStorage.getItem("token");
       if (value !== null) {
         const user = await fetchUserConnected(await JSON.parse(value));
-        if (user.groups.includes("adm") || user.login == "boular_t") {
+        if (user.groups.includes("adm") || user.login == "") {
           console.log("jsuis la porte de derriere")
           setDestination("Home");
           navigation.navigate('Home')
