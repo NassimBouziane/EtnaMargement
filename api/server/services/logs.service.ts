@@ -46,7 +46,14 @@ async function createlog(req:Request,res:Response){
 
 async function insertintologs_service(req:Request,res:Response){
   try{
-  const QueryResult = await prisma.$queryRaw`SELECT * FROM Logs`
+  const QueryResult = await prisma.$queryRaw`INSERT INTO Logs (login, date, morning, afternoon)
+  SELECT u.login, CURDATE(), '', ''
+  FROM users u
+  WHERE NOT EXISTS (
+    SELECT l.login, l.date
+    FROM Logs l
+    WHERE l.login = u.login AND l.date = CURDATE()
+  )`
   if(QueryResult){
     console.log(QueryResult)
     res.status(300).json(QueryResult)
