@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
+import { count } from 'console';
 const prisma = new PrismaClient();
 
 async function deletebyid(req: Request, res:Response){
@@ -42,32 +43,68 @@ async function createlog(req:Request,res:Response){
     }
     
 }
+
+async function insertintologs_service(req:Request,res:Response){
+  try{
+  const QueryResult = await prisma.$queryRaw`SELECT * FROM Logs`
+  if(QueryResult){
+    console.log(QueryResult)
+    res.status(300).json(QueryResult)
+}
+else{
+    res.status(404).json('Wrong data sent')
+}
+  }
+  catch(e){
+    res.json(e)
+  }
+
+
+
+}
 async function statlogs_bylogin(req:Request, res:Response){
-  const { login } = req.params
-  const absentCount = await prisma.logs.count({
+  const { login } = req.params;
+  
+  const absentCount = await prisma.logs.groupBy({
     where: {
       login: login,
       OR: [
         { morning: "Absent" },
         { afternoon: "Absent" }
       ]
+    },
+    by: ['morning', 'afternoon'],
+    _count: true
+  });
+  let countAbsent = 0;
+  let countRetard = 0;
+
+
+  absentCount.forEach((item) => {
+    if (item.morning === 'Absent') {
+      countAbsent += item._count;
+    }
+  
+    if (item.afternoon === 'Absent') {
+      countAbsent += item._count;
+    }
+    if (item.morning === 'Retard') {
+      countRetard += item._count;
+    }
+  
+    if (item.afternoon === 'Retard') {
+      countRetard += item._count;
     }
   });
   
-  const retardCount = await prisma.logs.count({
-    where: {
-      login: login,
-      OR: [
-        { morning: "Retard" },
-        { afternoon: "Retard" }
-      ]
-    }
-  });
   
-  if (absentCount >= 0 && retardCount >= 0) {
+
+
+  
+  if (countAbsent >= 0 && countRetard >= 0) {
     res.json({
-      absent: absentCount.toString(),
-      retard: retardCount.toString()
+      Absent: countAbsent.toString(),
+      Retard: countRetard.toString()
     });
   } else {
     res.json("Wrong login");
@@ -75,4 +112,4 @@ async function statlogs_bylogin(req:Request, res:Response){
 }
 
 
-export { deletebyid,deletebylogin,createlog,statlogs_bylogin }
+export { deletebyid,deletebylogin,createlog,statlogs_bylogin, insertintologs_service }

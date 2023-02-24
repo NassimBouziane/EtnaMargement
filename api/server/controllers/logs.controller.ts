@@ -1,7 +1,7 @@
 import { query, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
-import { deletebyid, statlogs_bylogin } from '../services/logs.service';
+import { deletebyid, statlogs_bylogin, insertintologs_service } from '../services/logs.service';
 import { deletebylogin } from '../services/logs.service';
 import { createlog } from '../services/logs.service';
 
@@ -30,4 +30,7 @@ async function createLog(req: Request, res:Response){
 async function getstats(req:Request, res:Response){
     await statlogs_bylogin(req,res)
 }
-export {getAll,getByLogin, deleteById,deleteByLogin,createLog, getstats};
+async function insertintologs(req:Request, res:Response){
+    await insertintologs_service(req,res)
+}
+export {getAll,getByLogin, deleteById,deleteByLogin,createLog, getstats, insertintologs};
