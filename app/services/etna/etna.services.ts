@@ -22,3 +22,10 @@ export const getNote = async(token:any, login:string, promo:string) => {
 		promo
 	}).then((response) => response.data)
 }
+
+export const getPromo = async(token : any) => {
+	return await api.post('/etna/promo',
+	{
+		token
+	}).then((response) => response.data)
+}
