@@ -2,7 +2,7 @@ import express from 'express'
 import logsroute from './server/routes/logs.route'
 import users from './server/routes/users.route';
 const app = express()
-const port = 3000
+const port = 3600
 app.use(express.json());
 app.use(
   express.urlencoded({

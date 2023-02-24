@@ -31,7 +31,6 @@ export default function Login() {
 
     try {
       await AsyncStorage.removeItem("token");
-      console.log(AsyncStorage.getItem('token'))
       setDestination("Students");
   
       const res = await postLogin(nom, password);
