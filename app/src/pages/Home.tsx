@@ -99,7 +99,6 @@ export default function Home({ navigation }: any) {
               </Text>
               <GraphWeek/>
             </View>
-
             <View className="flex flex-row w-4/5 h-4/5 justify-between bg-orange-500 ">
               <Text>Actions rapides</Text>
               <Pressable onPress={() => navigation.navigate("Tickets")}>
