@@ -116,7 +116,6 @@ async function statlogs_bylogin(req:Request, res:Response){
 
 async function serviceStatLogsByDate(req:Request, res:Response){
   const { date } = req.params;
-  
   const absentCount = await prisma.logs.groupBy({
     where: {
       date: date,
@@ -145,7 +144,6 @@ async function serviceStatLogsByDate(req:Request, res:Response){
     }
 
   });
-  
   res.json({
     Absent: countAbsent.toString(),
     Retard: countRetard.toString(),

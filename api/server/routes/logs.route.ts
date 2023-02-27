@@ -7,13 +7,13 @@ const logs = logsrouter.Router()
 logs.get('/', getAll)
 logs.get('/:id', getByLogin)
 // logs.delete('/:id', deleteById)
-logs.put('/update/:date/:login', updateLogs)
+logs.put('/update/:id', updateLogs)
 logs.delete('/login/:login', deleteByLogin)
 logs.post('/', createLog)
 logs.get('/stats/:login', getstats)
 logs.post('/insert', insertintologs)
 logs.get('/date/:date/:login', getByDate)
-logs.get('/date/all/:date', statLogsByDate)
+logs.get('/date/:date', statLogsByDate)
 export default logs
 
 

@@ -13,7 +13,7 @@ export default function GraphDay() {
       setDataGraph([res.data.Absent, res.data.Distanciel, res.data.Present, res.data.Retard])
     })
   }
-  useEffect(() => {
+  useEffect( () => {
     setData()
   }, []);
 

@@ -48,10 +48,9 @@ export const checkLogs = async(login :String, date:any) => {
 }
 
 export const updatelogs = async(body:any,id: Number)=>{
-
-    return await api.put('/logs/'+id,body).then((response) =>console.log(response.data))
+    return await api.put('/logs/update/'+id,{body}).then((response) =>console.log(response.data))
 }
 
 export const getLogsByDate = async(date: String) =>{
-    return await api.get('/logs/date/all/'+date).then((response) => response)
+    return await api.get('/logs/date/'+date).then((response) => response)
 }

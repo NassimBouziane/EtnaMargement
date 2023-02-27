@@ -161,7 +161,6 @@ export default function Scanner({ navigation }: any) {
                   if (await checkUser(dataParse[0], token)){
                     const timezone = 'Europe/Paris'; // UTC+1
                     const date = moment().tz(timezone).format('YYYY-MM-DD');
-
                     await checkLogs(dataParse[0],date) // TODO ENLEVER LES HEURES DE LA DATE
                     setData(dataParse)
                   }else{
