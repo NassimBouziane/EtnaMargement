@@ -29,7 +29,7 @@ export const checkLogs = async(login :String, date:any) => {
         else{
             //TODO UPDATE LOGS ET METTRE PRESEnt
    
-            updatelogs({afternoon : "present"}, isAlready[0].id)
+            updatelogs({afternoon : "Present"}, isAlready[0].id)
         
         }
 
@@ -45,7 +45,7 @@ export const checkLogs = async(login :String, date:any) => {
         }
         else{
             //TODO UPDATE LOGS ET METTRE EN PRESENT
-            updatelogs({morning : "present"}, isAlready[0].id)
+            updatelogs({morning : "Present"}, isAlready[0].id)
 
  
         }
