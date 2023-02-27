@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import { checkUser } from "../../services/users/users.services";
+import { checkLogs } from "../../services/logs/logs.services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moment from "moment";
 import "moment/locale/fr";
@@ -22,6 +23,8 @@ export default function Scanner({ navigation }: any) {
   const [error, setError] = useState(false);
   const [token, setToken] = useState<any>();
   const [scanned, setScanned] = useState(false);
+
+  const [token, setToken] = useState<any>()
 
   useEffect(() => {
     requestCameraPermission();
@@ -89,6 +92,13 @@ export default function Scanner({ navigation }: any) {
       </View>
     );
   }
+if(scanned){
+    return(
+      <View>
+        <Text>Check if QRcode is good</Text>
+      </View>
+    )
+  }
 
   if (scanned) {
     return (
@@ -100,27 +110,35 @@ export default function Scanner({ navigation }: any) {
 
   if (permission) {
     return (
-      <View>
-        <View
-          className="flex flex-row justify-between items-center mt-10"
-          style={{
-            marginTop: screenWidth < 768 ? "15%" : 0,
-            paddingRight: screenWidth < 768 ? 5 : 10,
-          }}
-        >
-          <Image
-            source={require("../../assets/logoEtna.png")}
-            className=" ml-5 "
-            style={{ width: 96, height: 30 }}
-          />
-          <Pressable
-            className="pl-5 pr-5 pt-2 pb-2 bg-[#5863F8] rounded-2xl mr-12"
-            style={{
-              paddingLeft: screenWidth < 768 ? 5 : 10,
-              paddingRight: screenWidth < 768 ? 5 : 10,
-              paddingTop: screenWidth < 768 ? 5 : 10,
-              paddingBottom: screenWidth < 768 ? 5 : 10,
-              marginRight: screenWidth < 769 ? 10 : 20,
+        <BarCodeScanner
+            onBarCodeScanned={ async ({ type, data }) => {
+              setScanned(true)
+                try {
+                    const dataParse = data.split('|')
+                    if (dataParse.length === 3 
+                      && dataParse[0][dataParse[0].length - 2] === '_'
+                      && /^\d+$/.test(dataParse[1])
+                      && /^\d+$/.test(dataParse[2]) )
+                      {
+                        if (await checkUser(dataParse[0], token)){
+                          const timezone = 'Europe/Paris'; // UTC+1
+                          const date = moment().tz(timezone).format('YYYY-MM-DD');
+
+                          await checkLogs(dataParse[0],date) // TODO ENLEVER LES HEURES DE LA DATE
+                          setData(dataParse)
+                        }else{
+                          console.log("[FAIL] Login is not good")
+                          throw new Error("[FAIL] Login is not good")
+                        }
+                        
+                      }else{
+                        console.log("[FAIL] QR Code is not good")
+                        throw new Error("[FAIL] QR Code is not good")
+                      }
+                } catch (error) {
+                  setError(true)
+                  console.log(error)
+                }
             }}
             onPress={() => navigation.navigate("Login")}
           >
@@ -179,3 +197,5 @@ export default function Scanner({ navigation }: any) {
     return <Text>Permission rejected.</Text>;
   }
 }
+
+
