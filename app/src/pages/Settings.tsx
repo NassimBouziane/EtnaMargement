@@ -7,7 +7,7 @@ export default function Settings() {
     <View className="flex flex-row h-full">
       <Navbar />
       <View className="mt-12 ml-5">
-        <Text className="text-2xl">Paramètres</Text>
+        <Text className="text-2xl mt-5">Paramètres</Text>
       </View>
     </View>
   );
