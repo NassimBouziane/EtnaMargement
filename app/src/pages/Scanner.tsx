@@ -1,6 +1,14 @@
 import { BarCodeScanner, PermissionStatus } from 'expo-barcode-scanner';
 import React, { useEffect, useState } from "react";
-import { Alert, Button, Text, View } from "react-native";
+import {
+  Alert,
+  Button,
+  Dimensions,
+  Image,
+  Pressable,
+  Text,
+  View,
+} from "react-native";
 import { checkUser } from "../../services/users/users.services";
 import { checkLogs } from "../../services/logs/logs.services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -17,53 +25,69 @@ export default function Scanner() {
 
   useEffect(() => {
     requestCameraPermission();
-    AsyncStorage.getItem("token").then((value) => {  
-      if(value !== null)
-      setToken(JSON.parse(value)) })
+    AsyncStorage.getItem("token").then((value) => {
+      if (value !== null) setToken(JSON.parse(value));
+    });
+  }, []);
+
+  const [currentTime, setCurrentTime] = useState(
+    moment().locale("fr").utcOffset("+0100").format("LT")
+  );
+  useEffect(() => {
+    const intervalID = setInterval(() => {
+      setCurrentTime(moment().locale("fr").utcOffset("+0100").format("LT"));
+    }, 1000);
+    return () => clearInterval(intervalID);
   }, []);
 
   const requestCameraPermission = async () => {
     try {
-        const { status, granted } = await BarCodeScanner.requestPermissionsAsync();
-        console.log(`Status: ${status}, Granted: ${granted}`);
+      const { status, granted } =
+        await BarCodeScanner.requestPermissionsAsync();
+      console.log(`Status: ${status}, Granted: ${granted}`);
 
-        if (status === 'granted') {
-            console.log('Access granted');
-            setPermission(true);
-        } else {
-            setPermission(false);
-        }
-    } catch (error) {
-        console.error(error);
+      if (status === "granted") {
+        console.log("Access granted");
+        setPermission(true);
+      } else {
         setPermission(false);
+      }
+    } catch (error) {
+      console.error(error);
+      setPermission(false);
     }
   };
 
-  if(data){
+  if (data) {
     return (
       <View>
         <Text> {data[0]} </Text>
         <Text> {data[1]} </Text>
         <Text> {data[2]} </Text>
-        <Button title="Scan again" onPress={() => {setData(null); setScanned(false)}}></Button>
+        <Button
+          title="Scan again"
+          onPress={() => {
+            setData(null);
+            setScanned(false);
+          }}
+        ></Button>
       </View>
-    )
+    );
   }
 
-  if(error){
+  if (error) {
     return (
       <View>
         <Text>Wesh erreur</Text>
-        <Button title="Scan again" onPress={() => { setError(false); setScanned(false)} }></Button>
+        <Button
+          title="Scan again"
+          onPress={() => {
+            setError(false);
+            setScanned(false);
+          }}
+        ></Button>
       </View>
-    )
-  }
-if(scanned){
-    return(
-      <View>
-        <Text>Check if QRcode is good</Text>
-      </View>
-    )
+    );
   }
 
   if(scanned){
@@ -77,6 +101,51 @@ if(scanned){
   
   if (permission) {
     return (
+      <View>
+        <View
+          className="flex flex-row justify-between items-center mt-10"
+          style={{
+            marginTop: screenWidth < 768 ? "15%" : 0,
+            paddingRight: screenWidth < 768 ? 5 : 10,
+          }}
+        >
+          <Image
+            source={require("../../assets/logoEtna.png")}
+            className=" ml-5 "
+            style={{ width: 96, height: 30 }}
+          />
+          <Pressable
+            className="pl-5 pr-5 pt-2 pb-2 bg-[#5863F8] rounded-2xl mr-12"
+            style={{
+              paddingLeft: screenWidth < 768 ? 5 : 10,
+              paddingRight: screenWidth < 768 ? 5 : 10,
+              paddingTop: screenWidth < 768 ? 5 : 10,
+              paddingBottom: screenWidth < 768 ? 5 : 10,
+              marginRight: screenWidth < 769 ? 10 : 20,
+            }}
+            onPress={() => navigation.navigate("Login")}
+          >
+            <Text
+              className="text-2xl px-5 py-1 text-white"
+              style={{
+                fontSize: screenWidth < 768 ? 16 : 32,
+              }}
+            >
+              Connexion
+            </Text>
+          </Pressable>
+        </View>
+        <Text
+          className="mt-40 text-center text-5xl"
+          style={{
+            marginTop: screenWidth < 768 ? "20%" : 0,
+          }}
+        >
+          {currentTime}
+        </Text>
+        <Text className=" text-center text-3xl w-3/4 m-auto mt-12 mb-10">
+          Bonjour ! Veuillez scanner le QRcode
+        </Text>
         <BarCodeScanner
             onBarCodeScanned={ async ({ type, data }) => {
               setScanned(true)
@@ -112,9 +181,9 @@ if(scanned){
         <Text >Scan the QR code.</Text>
         </BarCodeScanner>
     );
-} else {
-    return <Text >Permission rejected.</Text>;
-}
+  } else {
+    return <Text>Permission rejected.</Text>;
+  }
 }
 
 
