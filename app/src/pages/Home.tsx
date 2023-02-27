@@ -19,7 +19,7 @@ export default function Home({ navigation }: any) {
       <Navbar />
       <ScrollView className="w-full h-full">
         <View
-          className="flex w-full h-full  rounded-3xl"
+          className="flex w-full h-full rounded-3xl"
           style={{
             left: screenWidth < 768 ? "5%" : "5%",
             width: screenWidth < 768 ? "90%" : "80%",
@@ -55,7 +55,7 @@ export default function Home({ navigation }: any) {
               >
                 Graphique journalier
               </Text>
-              <GraphDay/>
+              <GraphDay />
             </View>
             <View
               className="right-5"
@@ -96,7 +96,7 @@ export default function Home({ navigation }: any) {
               >
                 Graphique de la semaine
               </Text>
-              <GraphWeek/>
+              <GraphWeek />
             </View>
             <View className="flex flex-row w-4/5 h-4/5 justify-between bg-orange-500 ">
               <Text>Actions rapides</Text>
