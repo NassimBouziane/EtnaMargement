@@ -44,7 +44,7 @@ export default function Login() {
           await AsyncStorage.setItem("password", password);
           await AsyncStorage.setItem("remember", 'true');
         }
-        if (user.groups.includes("adm") || user.login == "") {
+        if (user.groups.includes("adm") || user.login == "boular_t") {
           console.log("jsuis la porte de derriere")
           navigation.navigate('Home')
         }

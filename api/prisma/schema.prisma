@@ -11,8 +11,8 @@ model Logs {
   id        Int     @id @unique(map: "id") @default(autoincrement())
   login     String  @db.Char(50)
   date      String  @default(dbgenerated("(curdate())")) @db.VarChar(50)
-  morning   String? @default("Absent") @db.Char(50)
-  afternoon String? @default("Absent") @db.Char(50)
+  morning   String  @default("Absent") @db.Char(50)
+  afternoon String  @default("Absent") @db.Char(50)
   status    String? @db.VarChar(200)
 }
 

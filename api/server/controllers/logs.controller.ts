@@ -1,22 +1,25 @@
 import { query, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
-import { deletebyid, statlogs_bylogin, insertintologs_service } from '../services/logs.service';
-import { deletebylogin } from '../services/logs.service';
-import { createlog } from '../services/logs.service';
-
+import { statlogs_bylogin, insertintologs_service, deletebylogin, createlog, serviceStatLogsByDate } from '../services/logs.service';
 
 async function getAll(req: Request, res:Response){
     const QueryResult = await prisma.logs.findMany();
 
     res.json(QueryResult)
 }
-async function getbydate(req:Request, res:Response){
-    const { date } = req.params;
-    const QueryResult = await prisma.logs.findMany({ where: {date:date}})
+async function getByDate(req:Request, res:Response){
+    const date= req.params.date;
+    const login = req.params.login
+    const QueryResult = await prisma.logs.findMany({ where: {date:date, login:login}})
     res.json(QueryResult)
     
+}
 
+async function updateLogs(req:Request, res:Response){
+    const date= req.params.date;
+    const login = req.params.login
+    const QueryResult = await prisma.logs.updateMany({ where: {date:date, login:login}, data:{req.body}})
 }
 
 async function getByLogin(req: Request, res:Response){
@@ -24,10 +27,10 @@ async function getByLogin(req: Request, res:Response){
     const QueryResult = await prisma.logs.findMany({where: {login:id}});
     res.json(QueryResult)
 }
-async function deleteById(req: Request, res:Response){
-    await deletebyid(req,res)
+// async function deleteById(req: Request, res:Response){
+//     await deletebyid(req,res)
 
-}
+// }
 async function deleteByLogin(req: Request, res:Response){
     await deletebylogin(req,res)
 }
@@ -40,4 +43,8 @@ async function getstats(req:Request, res:Response){
 async function insertintologs(req:Request, res:Response){
     await insertintologs_service(req,res)
 }
-export {getAll,getByLogin, deleteById,deleteByLogin,createLog, getstats, insertintologs,getbydate};
+async function statLogsByDate(req:Request, res:Response){
+    await serviceStatLogsByDate(req,res)
+}
+
+export {getAll,getByLogin,deleteByLogin,createLog, getstats, insertintologs,getByDate, statLogsByDate};
