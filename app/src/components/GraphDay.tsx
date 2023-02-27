@@ -1,19 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { WebView } from 'react-native-webview';
-import { Dimensions } from 'react-native';
+import { Button, Dimensions, View } from 'react-native';
+import moment from 'moment-timezone';
+import { getLogsByDate } from '../../services/logs/logs.services';
 
 export default function GraphDay() {
+  const [dataGraph, setDataGraph] = useState<any>()
+
+  const setData = async() => {
+    const date = moment().tz('Europe/Paris').format('YYYY-MM-DD');
+    await getLogsByDate(date).then((res) => {
+      setDataGraph([res.data.Absent, res.data.Distanciel, res.data.Present, res.data.Retard])
+    })
+  }
+  useEffect( () => {
+    setData()
+  }, []);
+
   const chartData = {
-    labels: ['Absent', 'Distanciel', 'Retard', 'Present'],
+    labels: ['Absent', 'Distanciel', 'Present', 'Retard' ],
     datasets: [
       {
         label: 'My First Dataset',
-        data: [3, 1, 10, 80],
+        data: dataGraph,
         backgroundColor: [
           'red',
           'purple',
-          'yellow',
-          'green'
+          'green',
+          'yellow'
         ],
         hoverOffset: 4,
       },
@@ -21,6 +35,7 @@ export default function GraphDay() {
   };
 
   return (
+    <View>
     <WebView
       style={{ width: Dimensions.get('window').width - 16, height: 220 }}
       originWhitelist={['*']}
@@ -30,5 +45,6 @@ export default function GraphDay() {
       javaScriptEnabled={true}
       scalesPageToFit={false}
     />
+    </View>
   );
 };

@@ -104,10 +104,6 @@ async function statlogs_bylogin(req:Request, res:Response){
     }
   });
   
-  
-
-
-  
   if (countAbsent >= 0 && countRetard >= 0) {
     res.json({
       Absent: countAbsent.toString(),
@@ -118,5 +114,43 @@ async function statlogs_bylogin(req:Request, res:Response){
   }
 }
 
+async function serviceStatLogsByDate(req:Request, res:Response){
+  const { date } = req.params;
+  const absentCount = await prisma.logs.groupBy({
+    where: {
+      date: date,
+    },
+    by: ['morning'],
+    _count: true
+  });
+  let countAbsent = 0;
+  let countRetard = 0;
+  let countPresent = 0;
+  let countDistanciel = 0;
 
-export { deletebyid,deletebylogin,createlog,statlogs_bylogin, insertintologs_service }
+
+  absentCount.forEach((item) => {
+    if (item.morning === 'Absent') {
+      countAbsent += item._count;
+    }
+    if (item.morning === 'Retard') {
+      countRetard += item._count;
+    }
+    if (item.morning === 'Present') {
+      countPresent += item._count;
+    }
+    if (item.morning === 'Distanciel') {
+      countDistanciel += item._count;
+    }
+
+  });
+  res.json({
+    Absent: countAbsent.toString(),
+    Retard: countRetard.toString(),
+    Present: countPresent.toString(),
+    Distanciel: countDistanciel.toString()
+  });
+}
+
+
+export { deletebylogin,createlog,statlogs_bylogin, insertintologs_service, serviceStatLogsByDate }
