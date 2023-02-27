@@ -103,7 +103,6 @@ export default function Home({ navigation }: any) {
               </Text>
               <View className="w-11/12 h-64 bg-slate-600 rounded-2xl  mx-auto"></View>
             </View>
-
             <View className="flex flex-row w-4/5 h-4/5 justify-between bg-orange-500 ">
               <Text>Actions rapides</Text>
               <Pressable onPress={() => navigation.navigate("Tickets")}>
