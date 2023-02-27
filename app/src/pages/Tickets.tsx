@@ -7,16 +7,16 @@ export default function Tickets() {
   const screenWidth = Dimensions.get("window").width;
 
   return (
-    <View className="flex flex-row h-full my-12">
+    <View className="flex flex-row h-full">
       <Navbar />
-      <ScrollView>
+      <ScrollView className="my-12 h-full">
         <View
           style={{
             marginLeft: screenWidth < 768 ? "5%" : "10%",
           }}
         >
           <Text
-            className="text-center w-fit text-3xl py-3 rounded-3xl text-white bg-[#5863F8]"
+            className="text-center w-fit text-3xl py-3 rounded-l-2xl text-black"
             style={{
               fontSize: screenWidth < 768 ? 24 : 32,
               textAlign: screenWidth < 768 ? "left" : "center",
@@ -28,9 +28,9 @@ export default function Tickets() {
           <View className="mt-10">
             <View className="flex flex-row mb-5 items-center">
               <Text
-                className="text-2xl bg-red-500 text-white py-1 px-3 rounded-[50px]"
+                className="bg-red-500 text-white py-1 px-3 rounded-3xl"
                 style={{
-                  fontSize: screenWidth < 768 ? 24 : 32,
+                  fontSize: screenWidth < 768 ? 16 : 32,
                 }}
               >
                 7
@@ -62,7 +62,7 @@ export default function Tickets() {
           </View>
           <View className="mt-10">
             <View className="flex flex-row mb-5 items-center">
-              <Text className="text-2xl bg-red-500 text-white py-1 px-3 rounded-[40px]">
+              <Text className="bg-red-500 text-white py-1 px-3 rounded-3xl">
                 5
               </Text>
               <Text

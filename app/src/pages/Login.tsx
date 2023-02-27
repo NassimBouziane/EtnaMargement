@@ -77,8 +77,9 @@ export default function Login() {
       headerRight: () => (
         <View>
           <Image
-            source={require("../../assets/etna-logo.png")}
-            className="my-auto"
+            source={require("../../assets/logoEtna.png")}
+            className=" ml-5 "
+            style={{ width: 96, height: 30 }}
           />
         </View>
       ),
@@ -110,13 +111,17 @@ export default function Login() {
             <TextInput className="h-full w-full"
               placeholder="carra_c"
               value={login}
-              onChangeText={(value) => setLogin(value)}>       
-            </TextInput>
+              onChangeText={(value) => setLogin(value)}
+            ></TextInput>
           </View>
           <Text className="text-[15px] mt-[25px]">Mot de passe:</Text>
-          <View className="bg-[#D9D9D9] flex flex-row w-full h-[65px] rounded-lg mt-[10px] p-4">
-            <Image source={require("../../assets/login_lock.png")} className="w-[20px] h-[20px] mr-[10px] my-auto"></Image>
-            <TextInput className="h-full w-[80%]"
+          <View className="bg-[#D9D9D9] flex flex-row items-center w-full h-[65px] rounded-lg mt-[10px] p-4">
+            <Image
+              source={require("../../assets/login_lock.png")}
+              className="w-[20px] h-[20px] mr-[10px] my-auto"
+            ></Image>
+            <TextInput
+              className="h-full w-[80%]"
               secureTextEntry={hidden}
               placeholder="1234"
               value={password}

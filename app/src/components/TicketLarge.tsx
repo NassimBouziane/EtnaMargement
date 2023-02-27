@@ -19,7 +19,7 @@ export default function Ticketlarge() {
           <Text
             className="text-3xl"
             style={{
-              fontSize: screenWidth < 768 ? 22 : 32,
+              fontSize: screenWidth < 768 ? 20 : 32,
             }}
           >
             Paul Menut
@@ -27,7 +27,7 @@ export default function Ticketlarge() {
           <Text
             className="text-2xl text-gray-700"
             style={{
-              fontSize: screenWidth < 768 ? 18 : 32,
+              fontSize: screenWidth < 768 ? 16 : 32,
             }}
           >
             Train retardé à 8h52

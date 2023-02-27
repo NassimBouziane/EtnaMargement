@@ -4,9 +4,11 @@ import Navbar from "../components/Navbar";
 
 export default function Settings() {
   return (
-    <View className="flex flex-row h-full my-12 ">
+    <View className="flex flex-row h-full">
       <Navbar />
-      <Text>Settings Screen</Text>
+      <View className="mt-12 ml-5">
+        <Text className="text-2xl mt-5">Paramètres</Text>
+      </View>
     </View>
   );
 }
