@@ -25,6 +25,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const navigation: any = useNavigation();
   const [hidden, sethidden] = useState(true);
+  const [checked, setChecked] = useState(false);
   const [isRemember, setIsRemember] = useState(false)
 
   const handleSubmit = async (e: any) => {
@@ -35,7 +36,7 @@ export default function Login() {
   
       const res = await postLogin(login, password);
       await AsyncStorage.setItem("token", JSON.stringify(res["set-cookie"]));
-      
+
       const value = await AsyncStorage.getItem("token");
       if (value !== null) {
         const user = await fetchUserConnected(await JSON.parse(value));
@@ -48,8 +49,9 @@ export default function Login() {
           console.log("jsuis la porte de derriere")
           navigation.navigate('Home')
         }
-        else{
-        navigation.navigate("Students");}
+        else {
+          navigation.navigate("Students");
+        }
 
       }
     } catch (error) {
@@ -99,10 +101,13 @@ export default function Login() {
         <View className="flex w-[80%] h-full mx-auto">
           <Text className="text-[32px] mt-[20px]">Connexion</Text>
 
+        <View className="flex w-[80%] h-full mx-auto">
+          <Text className="text-[32px] mt-[20px]">Connexion</Text>
+
           <Text className="text-[15px] mt-[43px]">Login:</Text>
           <View className="bg-[#D9D9D9] flex flex-row w-full h-[65px] rounded-lg mt-[10px] p-4">
             <Image source={require("../../assets/login_atsign.png")} className="w-[20px] h-[20px] mr-[10px] my-auto"></Image>
-            <TextInput className="h-full w-full" 
+            <TextInput className="h-full w-full"
               placeholder="carra_c"
               value={login}
               onChangeText={(value) => setLogin(value)}>       
@@ -111,23 +116,32 @@ export default function Login() {
           <Text className="text-[15px] mt-[25px]">Mot de passe:</Text>
           <View className="bg-[#D9D9D9] flex flex-row w-full h-[65px] rounded-lg mt-[10px] p-4">
             <Image source={require("../../assets/login_lock.png")} className="w-[20px] h-[20px] mr-[10px] my-auto"></Image>
-            <TextInput className="h-full w-[80%]" 
+            <TextInput className="h-full w-[80%]"
               secureTextEntry={hidden}
               placeholder="1234"
               value={password}
               onChangeText={(value) => setPassword(value)}
-    ></TextInput>
-            <Pressable className="ml-auto my-auto" onPress={() => {sethidden(current => !current)}}>
+            ></TextInput>
+            <Pressable className="ml-auto my-auto" onPress={() => { sethidden(current => !current) }}>
               <Image source={lock} className="w-[20px] h-[20px]"></Image>
             </Pressable>
-          </View> 
-        <Pressable
-          className="bg-[#5863F8] flext items-center justify-center w-full h-[42px] rounded-lg mt-[50px] active:bg-[#3940aa]"
-          onPress={handleSubmit}
-        >
-          <Text className="text-white">Se Connecter</Text>
-        </Pressable>
-      </View>
+          </View>
+          <View className="flex flex-row items-center mt-[25px]">
+            <View className="h-[32px] w-[32px] bg-[#D9D9D9] rounded-lg">
+              <Pressable onPress={() => { setChecked(current => !current)}}>
+                <Image source={check} className="w-[20px] h-[20px] ml-[6px] mt-[6px]"></Image>
+              </Pressable>
+            </View>
+            <Text className="text-[15px] ml-[5px] items-center text-center">Se souvenir de moi</Text>
+          </View>
+
+          <Pressable
+            className="bg-[#5863F8] flext items-center justify-center w-full h-[42px] rounded-lg mt-[50px] active:bg-[#3940aa]"
+            onPress={handleSubmit}
+          >
+            <Text className="text-white">Se Connecter</Text>
+          </Pressable>
+        </View>
       </KeyboardAwareScrollView>
     </View>
   );
