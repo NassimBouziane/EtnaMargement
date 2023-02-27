@@ -147,7 +147,7 @@ export default function Scanner({ navigation }: any) {
           Bonjour ! Veuillez scanner le QRcode
         </Text>
         <BarCodeScanner
-          className="mt-10 w-full h-1/2"
+          className="mt-10 w-full h-1/2 bord"
           onBarCodeScanned={async ({ type, data }) => {
             setScanned(true);
             try {
@@ -177,6 +177,7 @@ export default function Scanner({ navigation }: any) {
             }
           }}
         ></BarCodeScanner>
+        <View className="w-full h-48 bg-[#f2f2f2] z-10 bottom-0 absolute"></View>
       </View>
     );
   } else {
