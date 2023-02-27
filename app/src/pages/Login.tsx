@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Alert,
   Button,
@@ -14,34 +14,38 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { fetchUserConnected, postLogin } from "../../services/users/users.services";
+import { CheckBox } from "react-native-elements";
 
 const { height, width } = Dimensions.get("window");
 
 // TODO : <Button title="reveal" onPress={() => {sethidden(current => !current)}}></Button>
 
 export default function Login() {
-  const [nom, setNom] = useState('');
+  const [login, setLogin] = useState<any>('');
   const [password, setPassword] = useState('');
   const navigation: any = useNavigation();
   const [hidden, sethidden] = useState(true);
-  const [destination, setDestination] = useState('Students')
+  const [isRemember, setIsRemember] = useState(false)
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     try {
       await AsyncStorage.removeItem("token");
-      setDestination("Students");
   
-      const res = await postLogin(nom, password);
+      const res = await postLogin(login, password);
       await AsyncStorage.setItem("token", JSON.stringify(res["set-cookie"]));
       
       const value = await AsyncStorage.getItem("token");
       if (value !== null) {
         const user = await fetchUserConnected(await JSON.parse(value));
+        if(isRemember){
+          await AsyncStorage.setItem("login", login);
+          await AsyncStorage.setItem("password", password);
+          await AsyncStorage.setItem("remember", 'true');
+        }
         if (user.groups.includes("adm") || user.login == "") {
           console.log("jsuis la porte de derriere")
-          setDestination("Home");
           navigation.navigate('Home')
         }
         else{
@@ -54,7 +58,18 @@ export default function Login() {
     }
   };
 
-  
+  const getRemember = async () => {
+    if(await AsyncStorage.getItem("remember") == 'true') {
+      setIsRemember(true)
+      if(await AsyncStorage.getItem("login")) { setLogin(await AsyncStorage.getItem("login"))}
+      if(await AsyncStorage.getItem("password")) { setLogin(await AsyncStorage.getItem("password"))}
+    }
+  }
+
+  useEffect(() => {
+    getRemember()
+  }, []);
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -85,8 +100,8 @@ export default function Login() {
             <Image source={require("../../assets/login_atsign.png")} className="w-[20px] h-[20px] mr-[10px] my-auto"></Image>
             <TextInput className="h-full w-full" 
               placeholder="carra_c"
-              value={nom}
-              onChangeText={(value) => setNom(value)}>       
+              value={login}
+              onChangeText={(value) => setLogin(value)}>       
             </TextInput>
           </View>
           <Text className="text-[15px] mt-[25px]">Mot de passe:</Text>
@@ -103,6 +118,11 @@ export default function Login() {
             </Pressable>
             
           </View>
+          <CheckBox
+            value={isRemember}
+            onValueChange={setIsRemember}
+            />
+
         
         <Pressable
           className="bg-[#5863F8] flext items-center justify-center w-full h-[42px] rounded-lg mt-[50px] active:bg-[#3940aa]"

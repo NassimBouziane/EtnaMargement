@@ -5,6 +5,7 @@ import { getNote, getPromo } from "../../services/etna/etna.services";
 import { fetchUserConnected, getUserByLogin } from "../../services/users/users.services";
 import GraphDay from "../components/GraphDay";
 import GraphWeek from "../components/GrapWeek";
+import Navbar from "../components/Navbar";
 
 export default function Student() {
 
@@ -20,9 +21,11 @@ export default function Student() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Student Screen</Text>
+      <Navbar/>
       <GraphDay></GraphDay>
       <GraphWeek></GraphWeek>
       <Button title='test' onPress={consoleNote}></Button>
+      
     </View>
   );
 }
