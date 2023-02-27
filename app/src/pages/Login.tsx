@@ -14,7 +14,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { fetchUserConnected, postLogin } from "../../services/users/users.services";
-import { CheckBox } from "react-native-elements";
+
 
 const { height, width } = Dimensions.get("window");
 
@@ -89,6 +89,8 @@ export default function Login() {
     ? require("../../assets/login_showpass_01.png")
     : require("../../assets/login_showpass_02.png");
 
+  const check = checked ? require("../../assets/login_check.png") : "";
+
   return (
     <View style={{ flex: 1, width: width, height: height }}>
       <View className="flex w-[80%] h-[30%] mx-auto mt-5">
@@ -98,8 +100,6 @@ export default function Login() {
         />
       </View>
       <KeyboardAwareScrollView>
-        <View className="flex w-[80%] h-full mx-auto">
-          <Text className="text-[32px] mt-[20px]">Connexion</Text>
 
         <View className="flex w-[80%] h-full mx-auto">
           <Text className="text-[32px] mt-[20px]">Connexion</Text>
