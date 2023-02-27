@@ -22,11 +22,10 @@ const { height, width } = Dimensions.get("window");
 
 export default function Login() {
   const [login, setLogin] = useState<any>('');
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState<any>('');
   const navigation: any = useNavigation();
   const [hidden, sethidden] = useState(true);
   const [checked, setChecked] = useState(false);
-  const [isRemember, setIsRemember] = useState(false)
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -40,10 +39,13 @@ export default function Login() {
       const value = await AsyncStorage.getItem("token");
       if (value !== null) {
         const user = await fetchUserConnected(await JSON.parse(value));
-        if(isRemember){
+        if(checked){
           await AsyncStorage.setItem("login", login);
           await AsyncStorage.setItem("password", password);
           await AsyncStorage.setItem("remember", 'true');
+        }else{
+          await AsyncStorage.removeItem("login")
+          await AsyncStorage.removeItem("password")
         }
         if (user.groups.includes("adm") || user.login == "boular_t") {
           console.log("jsuis la porte de derriere")
@@ -62,9 +64,9 @@ export default function Login() {
 
   const getRemember = async () => {
     if(await AsyncStorage.getItem("remember") == 'true') {
-      setIsRemember(true)
       if(await AsyncStorage.getItem("login")) { setLogin(await AsyncStorage.getItem("login"))}
-      if(await AsyncStorage.getItem("password")) { setLogin(await AsyncStorage.getItem("password"))}
+      if(await AsyncStorage.getItem("password")) { setPassword(await AsyncStorage.getItem("password"))}
+      setChecked(true)
     }
   }
 
