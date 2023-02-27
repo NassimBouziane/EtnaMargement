@@ -1,4 +1,4 @@
-import { BarCodeScanner, PermissionStatus } from 'expo-barcode-scanner';
+import { BarCodeScanner, PermissionStatus } from "expo-barcode-scanner";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
@@ -13,7 +13,7 @@ import { checkUser } from "../../services/users/users.services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moment from "moment";
 import "moment/locale/fr";
-import { checkLogs } from '../../services/logs/logs.services';
+import { checkLogs } from "../../services/logs/logs.services";
 
 export default function Scanner({ navigation }: any) {
   const screenWidth = Dimensions.get("window").width;
@@ -153,15 +153,15 @@ export default function Scanner({ navigation }: any) {
                 /^\d+$/.test(dataParse[1]) &&
                 /^\d+$/.test(dataParse[2])
               ) {
-                  if (await checkUser(dataParse[0], token)){
-                    const timezone = 'Europe/Paris'; // UTC+1
-                    const date = moment().tz(timezone).format('YYYY-MM-DD');
-                    await checkLogs(dataParse[0],date) // TODO ENLEVER LES HEURES DE LA DATE
-                    setData(dataParse)
-                  }else{
-                    console.log("[FAIL] Login is not good")
-                    throw new Error("[FAIL] Login is not good")
-                  }
+                if (await checkUser(dataParse[0], token)) {
+                  const timezone = "Europe/Paris"; // UTC+1
+                  const date = moment().tz(timezone).format("YYYY-MM-DD");
+                  await checkLogs(dataParse[0], date); // TODO ENLEVER LES HEURES DE LA DATE
+                  setData(dataParse);
+                } else {
+                  console.log("[FAIL] Login is not good");
+                  throw new Error("[FAIL] Login is not good");
+                }
               } else {
                 console.log("[FAIL] QR Code is not good");
                 throw new Error("[FAIL] QR Code is not good");
