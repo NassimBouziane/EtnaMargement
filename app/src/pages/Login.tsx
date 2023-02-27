@@ -9,7 +9,7 @@ import {
   Pressable,
   Text,
   TextInput,
-  View
+  View,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -74,17 +74,21 @@ export default function Login() {
     navigation.setOptions({
       headerRight: () => (
         <View>
-        <Image source={require("../../assets/etna-logo.png")} className="my-auto" />
+          <Image
+            source={require("../../assets/etna-logo.png")}
+            className="my-auto"
+          />
         </View>
       ),
     });
   }, [navigation]);
 
-  const lock = hidden ? require("../../assets/login_showpass_01.png") : require("../../assets/login_showpass_02.png");
+  const lock = hidden
+    ? require("../../assets/login_showpass_01.png")
+    : require("../../assets/login_showpass_02.png");
 
   return (
     <View style={{ flex: 1, width: width, height: height }}>
-      
       <View className="flex w-[80%] h-[30%] mx-auto mt-5">
         <Image
           source={require("../../assets/login-illustration.png")}
@@ -92,9 +96,9 @@ export default function Login() {
         />
       </View>
       <KeyboardAwareScrollView>
-      <View className="flex w-[80%] h-full mx-auto">
-        <Text className="text-[32px] mt-[20px]">Connexion</Text>
-        
+        <View className="flex w-[80%] h-full mx-auto">
+          <Text className="text-[32px] mt-[20px]">Connexion</Text>
+
           <Text className="text-[15px] mt-[43px]">Login:</Text>
           <View className="bg-[#D9D9D9] flex flex-row w-full h-[65px] rounded-lg mt-[10px] p-4">
             <Image source={require("../../assets/login_atsign.png")} className="w-[20px] h-[20px] mr-[10px] my-auto"></Image>
@@ -116,7 +120,6 @@ export default function Login() {
             <Pressable className="ml-auto my-auto" onPress={() => {sethidden(current => !current)}}>
               <Image source={lock} className="w-[20px] h-[20px]"></Image>
             </Pressable>
-            
           </View>
           <CheckBox
             value={isRemember}

@@ -19,7 +19,8 @@ export default function Student() {
   }
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View className="flex flex-row h-full my-12 ">
+      <Navbar />
       <Text>Student Screen</Text>
       <Navbar/>
       <GraphDay></GraphDay>
