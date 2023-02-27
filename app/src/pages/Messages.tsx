@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 
 export default function Messages() {
   return (
-    <View className="flex flex-row h-full my-12 ">
+    <View className="flex flex-row h-full">
       <Navbar />
       <Text>Messages Screen</Text>
     </View>

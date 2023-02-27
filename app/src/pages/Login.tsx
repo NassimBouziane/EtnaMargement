@@ -75,8 +75,9 @@ export default function Login() {
       headerRight: () => (
         <View>
           <Image
-            source={require("../../assets/etna-logo.png")}
-            className="my-auto"
+            source={require("../../assets/logoEtna.png")}
+            className=" ml-5 "
+            style={{ width: 96, height: 30 }}
           />
         </View>
       ),
@@ -101,33 +102,46 @@ export default function Login() {
 
           <Text className="text-[15px] mt-[43px]">Login:</Text>
           <View className="bg-[#D9D9D9] flex flex-row w-full h-[65px] rounded-lg mt-[10px] p-4">
-            <Image source={require("../../assets/login_atsign.png")} className="w-[20px] h-[20px] mr-[10px] my-auto"></Image>
-            <TextInput className="h-full w-full" 
+            <Image
+              source={require("../../assets/login_atsign.png")}
+              className="w-[20px] h-[20px] mr-[10px] my-auto"
+            ></Image>
+            <TextInput
+              className="h-full w-full"
               placeholder="carra_c"
               value={login}
-              onChangeText={(value) => setLogin(value)}>       
-            </TextInput>
+              onChangeText={(value) => setLogin(value)}
+            ></TextInput>
           </View>
           <Text className="text-[15px] mt-[25px]">Mot de passe:</Text>
-          <View className="bg-[#D9D9D9] flex flex-row w-full h-[65px] rounded-lg mt-[10px] p-4">
-            <Image source={require("../../assets/login_lock.png")} className="w-[20px] h-[20px] mr-[10px] my-auto"></Image>
-            <TextInput className="h-full w-[80%]" 
+          <View className="bg-[#D9D9D9] flex flex-row items-center w-full h-[65px] rounded-lg mt-[10px] p-4">
+            <Image
+              source={require("../../assets/login_lock.png")}
+              className="w-[20px] h-[20px] mr-[10px] my-auto"
+            ></Image>
+            <TextInput
+              className="h-full w-[80%]"
               secureTextEntry={hidden}
               placeholder="1234"
               value={password}
               onChangeText={(value) => setPassword(value)}
-    ></TextInput>
-            <Pressable className="ml-auto my-auto" onPress={() => {sethidden(current => !current)}}>
+            ></TextInput>
+            <Pressable
+              className="px-5 py-5 right-5"
+              onPress={() => {
+                sethidden((current) => !current);
+              }}
+            >
               <Image source={lock} className="w-[20px] h-[20px]"></Image>
             </Pressable>
-          </View> 
-        <Pressable
-          className="bg-[#5863F8] flext items-center justify-center w-full h-[42px] rounded-lg mt-[50px] active:bg-[#3940aa]"
-          onPress={handleSubmit}
-        >
-          <Text className="text-white">Se Connecter</Text>
-        </Pressable>
-      </View>
+          </View>
+          <Pressable
+            className="bg-[#5863F8] flext items-center justify-center w-full h-[42px] rounded-lg mt-[50px] active:bg-[#3940aa]"
+            onPress={handleSubmit}
+          >
+            <Text className="text-white">Se Connecter</Text>
+          </Pressable>
+        </View>
       </KeyboardAwareScrollView>
     </View>
   );

@@ -10,12 +10,11 @@ import Navbar from "../components/Navbar";
 export default function Student() {
 
   return (
-    <View className="flex flex-row h-full my-12 ">
+    <View className="flex flex-row h-full">
       <Navbar />
       <Text>Student Screen</Text>
-      <GraphDay></GraphDay>
-      <GraphWeek></GraphWeek>
-      
+      {/* <GraphDay></GraphDay>
+      <GraphWeek></GraphWeek> */}
     </View>
   );
 }
