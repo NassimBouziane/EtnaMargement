@@ -120,13 +120,7 @@ export default function Login() {
             <Pressable className="ml-auto my-auto" onPress={() => {sethidden(current => !current)}}>
               <Image source={lock} className="w-[20px] h-[20px]"></Image>
             </Pressable>
-          </View>
-          <CheckBox
-            value={isRemember}
-            onValueChange={setIsRemember}
-            />
-
-        
+          </View> 
         <Pressable
           className="bg-[#5863F8] flext items-center justify-center w-full h-[42px] rounded-lg mt-[50px] active:bg-[#3940aa]"
           onPress={handleSubmit}

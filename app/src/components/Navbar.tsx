@@ -97,7 +97,7 @@ export default function Navbar() {
       <View className="w-[64px] h-[64px] bg-transparent">
         <Pressable className="" onPress={() => {
           navigation.navigate("Login")
-          logOut()
+          // logOut()
           }}>
           <Image
             source={require("../../assets/nav_disconnect.png")}
