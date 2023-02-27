@@ -1,12 +1,49 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
+import { getLogsByDate } from '../../services/logs/logs.services';
 
 export default function GraphWeek() {
-	const retardData = [3, 10, 6, 15, 50]
-	const absentData = [0, 2, 4, 3, 6]
-	const presentData = [97, 88, 90, 85, 60]
-	const distancielData = [0,0,0,0,0]
+	const [retardData, setRetardData] = useState<number[]>([0,0,0,0,0]);
+  const [absentData, setAbsentData] = useState<number[]>([0,0,0,0,0]);
+  const [presentData, setPresentData] = useState<number[]>([0,0,0,0,0]);
+  const [distancielData, setDistancielData] = useState<number[]>([0,0,0,0,0]);
+
+  
+  const setData = async () => {
+    for(let i = 0; i < 5; i++){
+      const nextMonday = new Date();
+      nextMonday.setDate(nextMonday.getDate() + ((i+1) + 7 - nextMonday.getDay()) % 7)
+      await getLogsByDate(nextMonday.toISOString().substring(0,10)).then((res) => {
+        setRetardData(prevData => {
+          const newData = [...prevData]; // Crée une copie du tableau précédent
+          newData[i] = res.data.Retard; // Modifie la valeur à l'indice i avec les nouvelles données
+          return newData; // Renvoie le nouveau tableau pour mettre à jour l'état
+        });
+        setAbsentData(prevData => {
+          // Même principe pour les autres tableaux de données
+          const newData = [...prevData];
+          newData[i] = res.data.Absent;
+          return newData;
+        });
+        setPresentData(prevData => {
+          const newData = [...prevData];
+          newData[i] = res.data.Present;
+          return newData;
+        });
+        setDistancielData(prevData => {
+          const newData = [...prevData];
+          newData[i] = res.data.Distanciel;
+          return newData;
+        });
+      })
+    }
+  }
+
+  useEffect( () => {
+    setData()
+  }, []);
+
 
   return (
     <LineChart

@@ -4,6 +4,8 @@ import CardActions from "../components/CardActions";
 import Navbar from "../components/Navbar";
 import Ticket from "../components/Ticket";
 import { Dimensions } from "react-native";
+import GraphDay from "../components/GraphDay";
+import GraphWeek from "../components/GrapWeek";
 
 export default function Home({ navigation }: any) {
   const screenWidth = Dimensions.get("window").width;
@@ -54,13 +56,7 @@ export default function Home({ navigation }: any) {
               >
                 Graphique journalier
               </Text>
-              <View
-                className="w-full h-64 bg-slate-600 rounded-2xl"
-                style={{
-                  width: screenWidth < 768 ? "100%" : "60%",
-                  height: screenWidth < 768 ? "20%" : "60%",
-                }}
-              ></View>
+              <GraphDay/>
             </View>
             <View
               className="right-5"
@@ -101,9 +97,8 @@ export default function Home({ navigation }: any) {
               >
                 Graphique de la semaine
               </Text>
-              <View className="w-11/12 h-64 bg-slate-600 rounded-2xl  mx-auto"></View>
+              <GraphWeek/>
             </View>
-
             <View className="flex flex-row w-4/5 h-4/5 justify-between bg-orange-500 ">
               <Text>Actions rapides</Text>
               <Pressable onPress={() => navigation.navigate("Tickets")}>

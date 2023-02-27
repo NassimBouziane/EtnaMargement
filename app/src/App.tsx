@@ -20,11 +20,12 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
-      <Stack.Screen
+        <Stack.Screen
           name="Login"
           component={Login}
           options={{
             headerShown: true,
+            animation: "none",
           }}
         />
         <Stack.Screen
@@ -32,6 +33,7 @@ function App() {
           component={Home}
           options={{
             headerShown: false,
+            animation: "none",
           }}
         />
         <Stack.Screen
@@ -39,6 +41,7 @@ function App() {
           component={Logs}
           options={{
             headerShown: false,
+            animation: "none",
           }}
         />
         <Stack.Screen
@@ -46,6 +49,7 @@ function App() {
           component={Messages}
           options={{
             headerShown: false,
+            animation: "none",
           }}
         />
         <Stack.Screen
@@ -53,6 +57,7 @@ function App() {
           component={ScanMode}
           options={{
             headerShown: false,
+            animation: "none",
           }}
         />
         <Stack.Screen
@@ -60,6 +65,7 @@ function App() {
           component={Scanner}
           options={{
             headerShown: false,
+            animation: "none",
           }}
         />
         <Stack.Screen
@@ -67,13 +73,15 @@ function App() {
           component={Settings}
           options={{
             headerShown: false,
+            animation: "none",
           }}
         />
         <Stack.Screen
           name="Students"
           component={Student}
           options={{
-            headerShown: true,
+            headerShown: false,
+            animation: "none",
           }}
         />
         <Stack.Screen
@@ -81,6 +89,7 @@ function App() {
           component={Tickets}
           options={{
             headerShown: false,
+            animation: "none",
           }}
         />
       </Stack.Navigator>

@@ -10,18 +10,19 @@ import {
   View,
 } from "react-native";
 import { checkUser } from "../../services/users/users.services";
-import { checkLogs } from "../../services/logs/logs.services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import moment from 'moment-timezone';
+import moment from "moment";
+import "moment/locale/fr";
+import { checkLogs } from '../../services/logs/logs.services';
 
+export default function Scanner({ navigation }: any) {
+  const screenWidth = Dimensions.get("window").width;
 
-export default function Scanner() {
-  const [data, setData] = useState<any>(null)
+  const [data, setData] = useState(null);
   const [permission, setPermission] = useState(true);
-  const [error, setError] = useState(false)
-  const [scanned, setScanned] = useState(false)
-
-  const [token, setToken] = useState<any>()
+  const [error, setError] = useState(false);
+  const [token, setToken] = useState<any>();
+  const [scanned, setScanned] = useState(false);
 
   useEffect(() => {
     requestCameraPermission();
@@ -95,7 +96,7 @@ export default function Scanner() {
       <View>
         <Text>Check if QRcode is good</Text>
       </View>
-    )
+    );
   }
 
 
@@ -147,39 +148,38 @@ export default function Scanner() {
           Bonjour ! Veuillez scanner le QRcode
         </Text>
         <BarCodeScanner
+          className="mt-10 w-full h-1/2 bord"
           onBarCodeScanned={async ({ type, data }) => {
-            setScanned(true)
+            setScanned(true);
             try {
-              const dataParse = data.split('|')
-              if (dataParse.length === 3
-                && dataParse[0][dataParse[0].length - 2] === '_'
-                && /^\d+$/.test(dataParse[1])
-                && /^\d+$/.test(dataParse[2])) {
-                if (await checkUser(dataParse[0], token)) {
-                  const timezone = 'Europe/Paris'; // UTC+1
-                  const date = moment().tz(timezone).format('YYYY-MM-DD');
-
-                  await checkLogs(dataParse[0], date) // TODO ENLEVER LES HEURES DE LA DATE
-                  setData(dataParse)
-                } else {
-                  console.log("[FAIL] Login is not good")
-                  throw new Error("[FAIL] Login is not good")
-                }
-
+              const dataParse = data.split("|");
+              if (
+                dataParse.length === 3 &&
+                dataParse[0][dataParse[0].length - 2] === "_" &&
+                /^\d+$/.test(dataParse[1]) &&
+                /^\d+$/.test(dataParse[2])
+              ) {
+                  if (await checkUser(dataParse[0], token)){
+                    const timezone = 'Europe/Paris'; // UTC+1
+                    const date = moment().tz(timezone).format('YYYY-MM-DD');
+                    await checkLogs(dataParse[0],date) // TODO ENLEVER LES HEURES DE LA DATE
+                    setData(dataParse)
+                  }else{
+                    console.log("[FAIL] Login is not good")
+                    throw new Error("[FAIL] Login is not good")
+                  }
               } else {
-                console.log("[FAIL] QR Code is not good")
-                throw new Error("[FAIL] QR Code is not good")
+                console.log("[FAIL] QR Code is not good");
+                throw new Error("[FAIL] QR Code is not good");
               }
             } catch (error) {
-              setError(true)
-              console.log(error)
+              setError(true);
+              console.log(error);
             }
           }}
-
-        >
-          <Text >Scan the QR code.</Text>
-        </BarCodeScanner>
-        </View>
+        ></BarCodeScanner>
+        <View className="w-full h-48 bg-[#f2f2f2] z-10 bottom-0 absolute"></View>
+      </View>
     );
     
   } else {
@@ -187,5 +187,3 @@ export default function Scanner() {
   
   }
 }
-
-
