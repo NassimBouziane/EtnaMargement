@@ -172,7 +172,7 @@ export default function Scanner({ navigation }: any) {
             }
           }}
         ></BarCodeScanner>
-        <View className="w-full h-48 bg-[#f2f2f2] z-10 bottom-0 absolute"></View>
+        <View className="w-full h-36 bg-[#f2f2f2] z-10 bottom-0 absolute"></View>
       </View>
     );
   } else {

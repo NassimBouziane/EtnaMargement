@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Pressable, ScrollView, Text, View } from "react-native";
+import { Button, Pressable, ScrollView, Text, View, Image } from "react-native";
 import CardActions from "../components/CardActions";
 import Navbar from "../components/Navbar";
 import Ticket from "../components/Ticket";
@@ -10,12 +10,7 @@ import GraphWeek from "../components/GrapWeek";
 export default function Home({ navigation }: any) {
   const screenWidth = Dimensions.get("window").width;
   return (
-    <View
-      className="flex flex-row h-full w-full "
-      style={{
-        backgroundColor: screenWidth < 768 ? "white" : "#E3E3E3",
-      }}
-    >
+    <View className="flex flex-row h-full w-full ">
       <Navbar />
       <ScrollView className="w-full h-full">
         <View
@@ -27,11 +22,11 @@ export default function Home({ navigation }: any) {
           }}
         >
           <Text
-            className="mt-12 text-4xl mb-12 ml-12"
+            className="mt-12 text-4xl"
             style={{
               fontSize: screenWidth < 768 ? 24 : 32,
               marginTop: screenWidth < 768 ? "10%" : "8%",
-              marginBottom: screenWidth < 768 ? "0%" : "8%",
+              marginBottom: screenWidth < 768 ? "5%" : "8%",
             }}
           >
             Bonjour, Admin
@@ -45,7 +40,7 @@ export default function Home({ navigation }: any) {
               justifyContent: screenWidth < 768 ? "center" : "space-between",
             }}
           >
-            <View className="">
+            <View className="mb-10">
               <Text
                 className="text-3xl mb-5"
                 style={{
@@ -55,7 +50,8 @@ export default function Home({ navigation }: any) {
               >
                 Graphique journalier
               </Text>
-              <GraphDay />
+              {/* <GraphDay /> */}
+              <Image source={require("../../assets/graphPlaceholder.png")} />
             </View>
             <View
               className="right-5"
@@ -80,7 +76,7 @@ export default function Home({ navigation }: any) {
               </Text>
             </View>
           </View>
-          <View className="mt-2">
+          <View className="mt-2 mb-2">
             <View
               className="w-full"
               style={{
@@ -88,7 +84,7 @@ export default function Home({ navigation }: any) {
               }}
             >
               <Text
-                className="text-3xl mb-5 ml-8"
+                className="text-3xl mb-5"
                 style={{
                   fontSize: screenWidth < 768 ? 24 : 32,
                   marginTop: screenWidth < 768 ? "5%" : "8%",
@@ -96,29 +92,37 @@ export default function Home({ navigation }: any) {
               >
                 Graphique de la semaine
               </Text>
-              <GraphWeek />
+              <Image source={require("../../assets/graphPlaceholder.png")} />
+
+              {/* <GraphWeek /> */}
             </View>
-            <View className="flex flex-row w-4/5 h-4/5 justify-between bg-orange-500 ">
-              <Text>Actions rapides</Text>
-              <Pressable onPress={() => navigation.navigate("Tickets")}>
-                <CardActions
-                  title="Tickets"
-                  image={require("./../../assets/button_ticket.png")}
-                />
-              </Pressable>
-              <Pressable onPress={() => navigation.navigate("Messages")}>
-                <CardActions
-                  title="Messages"
-                  image={require("./../../assets/button_message.png")}
-                />
-              </Pressable>
-              <Pressable onPress={() => navigation.navigate("Scanner")}>
-                <CardActions
-                  title="Mode scan"
-                  image={require("./../../assets/button_scan.png")}
-                />
-              </Pressable>
-            </View>
+            <Text className="text-2xl">Actions rapides</Text>
+          </View>
+          <View className="flex flex-row flex-wrap justify-between w-full mb-12">
+            <Pressable onPress={() => navigation.navigate("Tickets")}>
+              <CardActions
+                title="Tickets"
+                image={require("./../../assets/ticketIcon.png")}
+              />
+            </Pressable>
+            <Pressable onPress={() => navigation.navigate("Messages")}>
+              <CardActions
+                title="Messages"
+                image={require("./../../assets/messageIcon.png")}
+              />
+            </Pressable>
+            <Pressable onPress={() => navigation.navigate("Scanner")}>
+              <CardActions
+                title="Scanner"
+                image={require("./../../assets/scanIcon2.png")}
+              />
+            </Pressable>
+            <Pressable onPress={() => navigation.navigate("Logs")}>
+              <CardActions
+                title="Export"
+                image={require("./../../assets/logsIcon.png")}
+              />
+            </Pressable>
           </View>
         </View>
       </ScrollView>
