@@ -108,12 +108,7 @@ export default function Scanner({ navigation }: any) {
             paddingRight: screenWidth < 768 ? 5 : 10,
           }}
         >
-          <Image
-            source={require("../../assets/logoEtna.png")}
-            className=" ml-5 "
-            style={{ width: 96, height: 30 }}
-          />
-          <Pressable
+          {/* <Pressable
             className="pl-5 pr-5 pt-2 pb-2 bg-[#5863F8] rounded-2xl mr-12"
             style={{
               paddingLeft: screenWidth < 768 ? 5 : 10,
@@ -132,7 +127,7 @@ export default function Scanner({ navigation }: any) {
             >
               Connexion
             </Text>
-          </Pressable>
+          </Pressable> */}
         </View>
         <Text
           className="mt-40 text-center text-5xl"

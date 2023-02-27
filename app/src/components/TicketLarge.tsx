@@ -13,8 +13,14 @@ export default function Ticketlarge() {
         paddingBottom: screenWidth < 768 ? 5 : 10,
       }}
     >
-      <Image source={require("../../assets/test-pfp.png")} className="" />
-      <View className="flex flew-row items-start ml-20">
+      <View>
+        <Image source={require("../../assets/test-pfp.png")} className="" />
+        <Image
+          source={require("../../assets/round2.png")}
+          className="top-0 absolute"
+        />
+      </View>
+      <View className="flex flew-row items-start ml-10">
         <View className="flex flex-col">
           <Text
             className="text-3xl"
@@ -34,7 +40,10 @@ export default function Ticketlarge() {
           </Text>
         </View>
       </View>
-      <Image source={require("../../assets/circle1.png")} className="ml-20" />
+      {/* <Image
+        source={require("../../assets/circle1.png")}
+        className="ml-20 w-[5%] h-[20%]"
+      /> */}
     </View>
   );
 }

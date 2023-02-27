@@ -15,13 +15,12 @@ export default function Home({ navigation }: any) {
       }}
     >
       <Navbar />
-      <ScrollView>
+      <ScrollView className="w-full h-full">
         <View
-          className="flex w-4/5 h-full   bg-[#E3E3E3] rounded-3xl"
+          className="flex w-full h-full  rounded-3xl"
           style={{
             left: screenWidth < 768 ? "5%" : "5%",
             width: screenWidth < 768 ? "90%" : "80%",
-            backgroundColor: screenWidth < 768 ? "white" : "#E3E3E3",
             height: screenWidth < 768 ? "100%" : "93%",
           }}
         >
@@ -29,7 +28,7 @@ export default function Home({ navigation }: any) {
             className="mt-12 text-4xl mb-12 ml-12"
             style={{
               fontSize: screenWidth < 768 ? 24 : 32,
-              marginTop: screenWidth < 768 ? "20%" : "8%",
+              marginTop: screenWidth < 768 ? "10%" : "8%",
               marginBottom: screenWidth < 768 ? "0%" : "8%",
             }}
           >
