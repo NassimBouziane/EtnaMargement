@@ -9,8 +9,7 @@ export default function Settings() {
   return (
     <View className="flex flex-row h-full">
       <Navbar />
-      <View className="mt-12 ml-5">
-        <Text className="text-3xl mt-5 mb-5">Paramètres</Text>
+      <View className="mt-6 ml-5">
         <View>
           <Text className="mt-3 mb-3 text-xl font-semibold">
             Paramètres généraux
