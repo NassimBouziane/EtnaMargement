@@ -9,7 +9,7 @@ export default function Tickets() {
   return (
     <View className="flex flex-row h-full">
       <Navbar />
-      <ScrollView className="my-12">
+      <ScrollView className="my-12 h-full">
         <View
           style={{
             marginLeft: screenWidth < 768 ? "5%" : "10%",
