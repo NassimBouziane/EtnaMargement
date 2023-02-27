@@ -90,15 +90,15 @@ export default function Scanner() {
     );
   }
 
-  if(scanned){
-    return(
+  if (scanned) {
+    return (
       <View>
         <Text>Check if QRcode is good</Text>
       </View>
     )
   }
 
-  
+
   if (permission) {
     return (
       <View>
@@ -147,42 +147,44 @@ export default function Scanner() {
           Bonjour ! Veuillez scanner le QRcode
         </Text>
         <BarCodeScanner
-            onBarCodeScanned={ async ({ type, data }) => {
-              setScanned(true)
-                try {
-                    const dataParse = data.split('|')
-                    if (dataParse.length === 3 
-                      && dataParse[0][dataParse[0].length - 2] === '_'
-                      && /^\d+$/.test(dataParse[1])
-                      && /^\d+$/.test(dataParse[2]) )
-                      {
-                        if (await checkUser(dataParse[0], token)){
-                          const timezone = 'Europe/Paris'; // UTC+1
-                          const date = moment().tz(timezone).format('YYYY-MM-DD');
+          onBarCodeScanned={async ({ type, data }) => {
+            setScanned(true)
+            try {
+              const dataParse = data.split('|')
+              if (dataParse.length === 3
+                && dataParse[0][dataParse[0].length - 2] === '_'
+                && /^\d+$/.test(dataParse[1])
+                && /^\d+$/.test(dataParse[2])) {
+                if (await checkUser(dataParse[0], token)) {
+                  const timezone = 'Europe/Paris'; // UTC+1
+                  const date = moment().tz(timezone).format('YYYY-MM-DD');
 
-                          await checkLogs(dataParse[0],date) // TODO ENLEVER LES HEURES DE LA DATE
-                          setData(dataParse)
-                        }else{
-                          console.log("[FAIL] Login is not good")
-                          throw new Error("[FAIL] Login is not good")
-                        }
-                        
-                      }else{
-                        console.log("[FAIL] QR Code is not good")
-                        throw new Error("[FAIL] QR Code is not good")
-                      }
-                } catch (error) {
-                  setError(true)
-                  console.log(error)
+                  await checkLogs(dataParse[0], date) // TODO ENLEVER LES HEURES DE LA DATE
+                  setData(dataParse)
+                } else {
+                  console.log("[FAIL] Login is not good")
+                  throw new Error("[FAIL] Login is not good")
                 }
-            }}
-            
+
+              } else {
+                console.log("[FAIL] QR Code is not good")
+                throw new Error("[FAIL] QR Code is not good")
+              }
+            } catch (error) {
+              setError(true)
+              console.log(error)
+            }
+          }}
+
         >
-        <Text >Scan the QR code.</Text>
+          <Text >Scan the QR code.</Text>
         </BarCodeScanner>
+        </View>
     );
+    
   } else {
     return <Text>Permission rejected.</Text>;
+  
   }
 }
 
