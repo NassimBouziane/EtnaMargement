@@ -32,7 +32,7 @@ function App() {
           name="Home"
           component={Home}
           options={{
-            headerShown: false,
+            headerShown: true,
             animation: "none",
           }}
         />
@@ -40,7 +40,7 @@ function App() {
           name="Logs"
           component={Logs}
           options={{
-            headerShown: false,
+            headerShown: true,
             animation: "none",
           }}
         />
@@ -48,7 +48,7 @@ function App() {
           name="Messages"
           component={Messages}
           options={{
-            headerShown: false,
+            headerShown: true,
             animation: "none",
           }}
         />
@@ -64,7 +64,7 @@ function App() {
           name="Scanner"
           component={Scanner}
           options={{
-            headerShown: false,
+            headerShown: true,
             animation: "none",
           }}
         />
@@ -72,7 +72,7 @@ function App() {
           name="Settings"
           component={Settings}
           options={{
-            headerShown: false,
+            headerShown: true,
             animation: "none",
           }}
         />
@@ -88,7 +88,7 @@ function App() {
           name="Tickets"
           component={Tickets}
           options={{
-            headerShown: false,
+            headerShown: true,
             animation: "none",
           }}
         />
