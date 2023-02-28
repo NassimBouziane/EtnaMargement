@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Text, View } from "react-native";
 import { getNote, getPromo } from "../../services/etna/etna.services";
 import {
@@ -9,14 +9,18 @@ import {
 import GraphDay from "../components/GraphDay";
 import GraphWeek from "../components/GrapWeek";
 import Navbar from "../components/Navbar";
+import QRCODE from "../components/QRCode";
 
 export default function Student() {
+
   return (
     <View className="flex flex-row h-full">
       <Navbar />
       <Text>Student Screen</Text>
       {/* <GraphDay></GraphDay>
       <GraphWeek></GraphWeek> */}
+       <QRCODE 
+        value={'menut_p|41094|813'}/>
     </View>
   );
 }
