@@ -10,7 +10,11 @@ import {
   View,
   ScrollView,
 } from "react-native";
-import { getNote, getPromo } from "../../services/etna/etna.services";
+import {
+  getNote,
+  getPromo,
+  getTicket,
+} from "../../services/etna/etna.services";
 import {
   fetchUserConnected,
   getPhoto,
@@ -27,6 +31,7 @@ export default function Students() {
   const [user, setUser] = React.useState<any>("");
   const [promo, setPromo] = React.useState<any>("");
   const [qr_value, setQr_value] = React.useState<any>("");
+  const [tickets, setTickets] = React.useState<any>(null);
 
   const UserInfo = async () => {
     const token: any = await AsyncStorage.getItem("token");
@@ -34,13 +39,16 @@ export default function Students() {
     const user = await getUserByLogin(user_logs.login, await JSON.parse(token));
     const promo = await getPromo(await JSON.parse(token));
     const qr_value = `${user.login}|${user.id}|${promo[0].id}`;
+    //const tickets = await getTicket(await JSON.parse(token));
     //const promo = await getPromo(await JSON.parse(token))
     //const lastNote = await getNote(await JSON.parse(token), user.login, promo[0].id.toString()).then((res) => res[res.length-1])
     //console.log(lastNote.activity_name)
     //console.log(lastNote.student_mark)
+    //console.log(tickets)
     setUser(user);
     setPromo(promo[0]);
     setQr_value(qr_value);
+    // setTickets(tickets);
   };
 
   useEffect(() => {
@@ -67,11 +75,6 @@ export default function Students() {
           <Text className="font-medium text-[32px] mx-auto">
             Bienvenue, {user.firstname ? user.firstname : ""}
           </Text>
-          <Pressable className="bg-[#5863F8] h-[45px] w-[125px] rounded-lg active:bg-[#3940aa] mx-auto">
-            <Text className="text-white text-[15px] my-auto mx-auto ">
-              Se déconnecter
-            </Text>
-          </Pressable>
         </View>
         <View className="flex h-[270px] w-[95%] mx-auto bg-[#E3E3E3] mt-[50px] rounded-lg">
           <View className="flex flex-row justify-evenly w-full h-[64px] bg-[#5863F8]">
@@ -91,23 +94,22 @@ export default function Students() {
                 }}
                 style={{ width: "50%", height: "60%" }}
               />
-              <Text className="text-[16px] mt-5">{user.id ? user.id : ""}</Text>
+              <Text className="text-[16px] mt-5">
+                {user.id ? user.id : "XXXXX"}
+              </Text>
             </View>
             <View className="flex w-[50%] h-fit gap-4 mr-5 mt-2">
               <Text className="text-[11px]">
-                {user.lastname ? user.lastname : ""}
+                {user.lastname ? user.lastname : "Lastname"}
               </Text>
               <Text className="text-[11px]">
-                {user.firstname ? user.firstname : ""}
+                {user.firstname ? user.firstname : "Firstname"}
               </Text>
               <Text className="text-[11px]">
-                {user.email ? user.email : ""}
+                {user.email ? user.email : "email@etna-alternance.net"}
               </Text>
               <Text className="text-[11px]">
-                {promo.wall_name ? promo.wall_name : ""}
-              </Text>
-              <Text className="text-[11px]">
-                {user.birthday ? user.birthday : "birthday"}
+                {promo.wall_name ? promo.wall_name : "APX-XXXX"}
               </Text>
             </View>
           </View>
@@ -122,10 +124,11 @@ export default function Students() {
             />
           </View>
         </View>
-        <View className="flex h-[300px] w-[95%] mx-auto bg-[#E3E3E3] mt-[50px] rounded-lg">
-          <Text className="text-[32px] my-auto mx-auto">
-            Mon graphique de la semaine
+        <View className="flex h-[300px] w-[95%] mx-auto mt-[50px] rounded-lg justify-center items-center">
+          <Text className="text-[px] my-auto mx-auto">
+            Graphique de Présence
           </Text>
+          <GraphWeek />
         </View>
 
         <View className="flex h-[600px] w-[95%] mx-auto bg-[#E3E3E3] mt-[50px] rounded-lg">

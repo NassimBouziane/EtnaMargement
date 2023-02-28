@@ -52,7 +52,7 @@ export default function Login() {
           navigation.navigate('Home')
         }
         else {
-          navigation.navigate("StudentHome");
+          navigation.navigate("Students");
         }
 
       }
