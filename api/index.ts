@@ -25,7 +25,6 @@ app.options('*', cors(corsOptions)); // Enable pre-flight
 app.use('/logs', logsroute)
 app.use('/users', users)
 app.use('/etna', etna)
-//app.use('/tickets', )
 
 
 app.listen(port, () => {
