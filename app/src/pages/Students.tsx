@@ -21,7 +21,7 @@ import GraphWeek from "../components/GrapWeek";
 import Navbar from "../components/Navbar";
 import QRCODE from "../components/QRCode";
 
-export default function Student() {
+export default function Students() {
   const navigation: any = useNavigation();
   const screen = Dimensions.get("window");
   const [user, setUser] = React.useState<any>("");
@@ -29,7 +29,7 @@ export default function Student() {
   const [qr_value, setQr_value] = React.useState<any>("");
 
   const UserInfo = async () => {
-    const token = await AsyncStorage.getItem("token");
+    const token: any = await AsyncStorage.getItem("token");
     const user_logs = await fetchUserConnected(await JSON.parse(token));
     const user = await getUserByLogin(user_logs.login, await JSON.parse(token));
     const promo = await getPromo(await JSON.parse(token));
@@ -85,7 +85,12 @@ export default function Student() {
           </View>
           <View className="flex flex-row w-full h-fit">
             <View className="flex w-[50%] items-center justify-center">
-              <Image source={{uri:`https://auth.etna-alternance.net/api/users/${user.login}/photo`} } style={{width: '50%', height: '60%'}} />
+              <Image
+                source={{
+                  uri: `https://auth.etna-alternance.net/api/users/${user.login}/photo`,
+                }}
+                style={{ width: "50%", height: "60%" }}
+              />
               <Text className="text-[16px] mt-5">{user.id ? user.id : ""}</Text>
             </View>
             <View className="flex w-[50%] h-fit gap-4 mr-5 mt-2">
@@ -99,16 +104,23 @@ export default function Student() {
                 {user.email ? user.email : ""}
               </Text>
               <Text className="text-[11px]">
-                {promo.wall_name ? promo.wall_name  : ""}
+                {promo.wall_name ? promo.wall_name : ""}
               </Text>
               <Text className="text-[11px]">
                 {user.birthday ? user.birthday : "birthday"}
               </Text>
-              
             </View>
-            
           </View>
-          <View className="absolute bottom-5 right-5"><QRCODE value={qr_value ? qr_value : "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"}className="absolute"/></View>
+          <View className="absolute bottom-5 right-5">
+            <QRCODE
+              value={
+                qr_value
+                  ? qr_value
+                  : "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+              }
+              className="absolute"
+            />
+          </View>
         </View>
         <View className="flex h-[300px] w-[95%] mx-auto bg-[#E3E3E3] mt-[50px] rounded-lg">
           <Text className="text-[32px] my-auto mx-auto">

@@ -1,6 +1,7 @@
 import { BarCodeScanner, PermissionStatus } from "expo-barcode-scanner";
 import React, { useEffect, useState } from "react";
 import {
+  ActivityIndicator,
   Alert,
   Button,
   Dimensions,
@@ -79,7 +80,7 @@ export default function Scanner({ navigation }: any) {
   if (error) {
     return (
       <View>
-        <Text>Wesh erreur</Text>
+        <Text>Erreur</Text>
         <Button
           title="Scan again"
           onPress={() => {
@@ -93,12 +94,14 @@ export default function Scanner({ navigation }: any) {
 
   if (scanned) {
     return (
-      <View>
-        <Text>Check if QRcode is good</Text>
+      <View className="mt-64">
+        <Text className="text-center mb-10 text-xl">
+          Vérification du QR code
+        </Text>
+        <ActivityIndicator size="large" color="blue" />
       </View>
     );
   }
-
 
   if (permission) {
     return (
@@ -147,7 +150,7 @@ export default function Scanner({ navigation }: any) {
           onBarCodeScanned={async ({ type, data }) => {
             setScanned(true);
             try {
-              const dataParse = data.split("|");
+              const dataParse: any = data.split("|"); // TODO ENLEVER LE ANY
               if (
                 dataParse.length === 3 &&
                 dataParse[0][dataParse[0].length - 2] === "_" &&
@@ -176,9 +179,7 @@ export default function Scanner({ navigation }: any) {
         <View className="w-full h-36 bg-[#f2f2f2] z-10 bottom-0 absolute"></View>
       </View>
     );
-    
   } else {
     return <Text>Permission rejected.</Text>;
-  
   }
 }
