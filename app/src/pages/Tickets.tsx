@@ -16,7 +16,7 @@ export default function Tickets() {
     // Mettre à jour le state isLoading pour simuler une durée de chargement
     setTimeout(() => {
       setLoading(false);
-    }, 100); // Temps de chargement de 3 secondes
+    }, 50); // Temps de chargement de 3 secondes
   }, []);
 
   const screenWidth = Dimensions.get("window").width;
