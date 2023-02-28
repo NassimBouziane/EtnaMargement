@@ -65,7 +65,10 @@ export default function Navbar() {
         </Pressable>
       </View>
       <View className="w-[64px] h-[64px] bg-transparent">
-        <Pressable className="" onPress={() => navigation.navigate("Students")}>
+        <Pressable
+          className=""
+          onPress={() => navigation.navigate("Etudiants")}
+        >
           <Image
             source={require("../../assets/nav_student.png")}
             style={{
@@ -98,10 +101,13 @@ export default function Navbar() {
         </Pressable>
       </View>
       <View className="w-[64px] h-[64px] bg-transparent">
-        <Pressable className="" onPress={() => {
-          navigation.navigate("Login")
-          logOut()
-          }}>
+        <Pressable
+          className=""
+          onPress={() => {
+            navigation.navigate("Login");
+            logOut();
+          }}
+        >
           <Image
             source={require("../../assets/nav_disconnect.png")}
             style={{
