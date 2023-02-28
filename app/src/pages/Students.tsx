@@ -18,6 +18,7 @@ import {
 import GraphDay from "../components/GraphDay";
 import GraphWeek from "../components/GrapWeek";
 import Navbar from "../components/Navbar";
+import QRCODE from "../components/QRCode";
 
 export default function Student() {
   const navigation: any = useNavigation();
