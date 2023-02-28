@@ -25,3 +25,10 @@ export const fetchUserConnected = async(token:any) => {
       token
     }).then((response) => response.data)
 }
+
+export const getPhoto = async(login: String ,token:any) => {
+  return await api.post('/users/'+ login +'/photo',
+  {
+    token
+  }).then((response) => response.data)
+}

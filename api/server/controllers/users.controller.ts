@@ -31,8 +31,17 @@ async function getUser(req: Request, res:Response){
     .catch(() => {res.sendStatus(400)});
 }
 
+async function getPhoto(req: Request, res:Response){
+  return await apiEtnaAuth.get('/api/users/'+req.params.login+'/photo', {
+      headers: {Cookie: req.body.token} 
+  })
+  .then((response) => res.send(response.data))
+  .catch(() => {res.sendStatus(400)});
+}
+
 export {
     login,
     getConnected,
-    getUser
+    getUser,
+    getPhoto
 }
