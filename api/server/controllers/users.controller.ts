@@ -10,7 +10,6 @@ export const apiEtnaAuth = axios.create({
   })
 
 async function getConnected(req: Request, res: Response) {
-    
     return await apiEtnaAuth.get('/identity', 
     {
       headers: {Cookie: req.body.token}
@@ -25,7 +24,7 @@ async function login(req: Request, res: Response) {
 }
 
 async function getUser(req: Request, res:Response){
-    return await apiEtnaAuth.get('api/users/'+req.params.id, {
+    return await apiEtnaAuth.get('/api/users/'+req.params.id, {
         headers: {Cookie: req.body.token} 
     })
     .then((response) => res.send(response.data))

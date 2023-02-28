@@ -15,8 +15,11 @@ export default function Navbar() {
 
   const navigation: any = useNavigation();
 
-  const logOut = () => {
-    AsyncStorage.removeItem('token')
+  const logOut = async () => {
+    await AsyncStorage.removeItem('token')
+    await AsyncStorage.removeItem('login')
+    await AsyncStorage.removeItem('password')
+    await AsyncStorage.removeItem('remember')
   }
 
   return (
@@ -97,7 +100,7 @@ export default function Navbar() {
       <View className="w-[64px] h-[64px] bg-transparent">
         <Pressable className="" onPress={() => {
           navigation.navigate("Login")
-          // logOut()
+          logOut()
           }}>
           <Image
             source={require("../../assets/nav_disconnect.png")}
