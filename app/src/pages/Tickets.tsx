@@ -28,7 +28,10 @@ export default function Tickets() {
       ) : (
         <View className="flex flex-row h-full">
           <Navbar />
-          <ScrollView className="w-full h-full">
+          <ScrollView
+            className="w-full h-full"
+            showsVerticalScrollIndicator={false}
+          >
             <View
               style={{
                 marginLeft: screenWidth < 768 ? "5%" : "10%",

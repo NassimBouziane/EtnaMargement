@@ -51,7 +51,10 @@ export default function Home({ navigation }: any) {
       ) : (
         <View className="flex flex-row h-full w-full ">
           <Navbar />
-          <ScrollView className="w-full h-full">
+          <ScrollView
+            className="w-full h-full"
+            showsVerticalScrollIndicator={false}
+          >
             <View
               className="flex w-full h-full rounded-3xl"
               style={{

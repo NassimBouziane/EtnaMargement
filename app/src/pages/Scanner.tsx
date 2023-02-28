@@ -150,7 +150,7 @@ export default function Scanner({ navigation }: any) {
           onBarCodeScanned={async ({ type, data }) => {
             setScanned(true);
             try {
-              const dataParse = data.split("|");
+              const dataParse: any = data.split("|"); // TODO ENLEVER LE ANY
               if (
                 dataParse.length === 3 &&
                 dataParse[0][dataParse[0].length - 2] === "_" &&

@@ -29,7 +29,7 @@ export default function Students() {
   const [qr_value, setQr_value] = React.useState<any>("");
 
   const UserInfo = async () => {
-    const token = await AsyncStorage.getItem("token");
+    const token: any = await AsyncStorage.getItem("token");
     const user_logs = await fetchUserConnected(await JSON.parse(token));
     const user = await getUserByLogin(user_logs.login, await JSON.parse(token));
     const promo = await getPromo(await JSON.parse(token));
