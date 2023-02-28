@@ -15,6 +15,7 @@ export const checkLogs = async(login :String, date:any) => {
     const isAlready : Array<log> = await api.get(`/logs/date/${date}/${login}`).then((response) => {return response.data})
     if(isAlready[0] != undefined ){
     const hours = moment().tz('Europe/Paris').format("HH")
+    const hours_minute = moment().tz('Europe/Paris').format("HH:mm")
     //TODO ADD RETARD IF STUDENTS ARRIVES BETWEEN 10h AND 14H
     
     if(Number(hours) > 12){
@@ -23,7 +24,7 @@ export const checkLogs = async(login :String, date:any) => {
             console.log(isAlready[0].afternoon)
         }
         else{
-            updatelogs({afternoon : "Present"}, isAlready[0].id)
+            updatelogs({afternoon : "Present", hours_afternoon:hours_minute}, isAlready[0].id)
         }
     }
     else{
@@ -33,7 +34,7 @@ export const checkLogs = async(login :String, date:any) => {
             console.log(isAlready[0].morning)
         }
         else{
-            updatelogs({morning : "Present"}, isAlready[0].id)
+            updatelogs({morning : "Present", hours_morning:hours_minute}, isAlready[0].id)
         }
     }
     }
@@ -48,9 +49,15 @@ export const checkLogs = async(login :String, date:any) => {
 }
 
 export const updatelogs = async(body:any,id: Number)=>{
-    return await api.put('/logs/update/'+id,{body}).then((response) =>console.log(response.data))
+    return await api.put('/logs/update/'+id,{body}).then((response) => response)
 }
 
 export const getLogsByDate = async(date: String) =>{
+    // THIS GETS STATS
     return await api.get('/logs/date/'+date).then((response) => response)
+}
+
+export const getLogsByToday = async(date: String) =>{
+    // THIS GETS STATS
+    return await api.get('/logs/today/'+date).then((response) => response)
 }

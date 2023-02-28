@@ -29,6 +29,7 @@
     "expo-sharing": "~11.0.1",
     "expo-status-bar": "~1.4.2",
     "fs": "^0.0.1-security",
+    "install": "^0.13.0",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.40",
     "nativewind": "^2.0.11",
