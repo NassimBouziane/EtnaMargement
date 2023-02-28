@@ -39,7 +39,8 @@ export default function Students() {
     const user = await getUserByLogin(user_logs.login, await JSON.parse(token));
     const promo = await getPromo(await JSON.parse(token));
     const qr_value = `${user.login}|${user.id}|${promo[0].id}`;
-    //const tickets = await getTicket(await JSON.parse(token));
+    const tickets = await getTicket(await JSON.parse(token));
+    console.log(tickets)
     //const promo = await getPromo(await JSON.parse(token))
     //const lastNote = await getNote(await JSON.parse(token), user.login, promo[0].id.toString()).then((res) => res[res.length-1])
     //console.log(lastNote.activity_name)
