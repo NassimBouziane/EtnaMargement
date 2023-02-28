@@ -12,7 +12,7 @@ import Messages from "./pages/Messages";
 import ScanMode from "./pages/ScanMode";
 import Scanner from "./pages/Scanner";
 import Settings from "./pages/Settings";
-import Student from "./pages/Students";
+import Students from "./pages/Students";
 import Tickets from "./pages/Tickets";
 
 const Stack = createNativeStackNavigator();
@@ -79,7 +79,7 @@ function App() {
         />
         <Stack.Screen
           name="Students"
-          component={Student}
+          component={Students}
           options={{
             headerShown: true,
             animation: "none",
