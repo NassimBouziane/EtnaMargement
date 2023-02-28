@@ -7,6 +7,7 @@ import { Button, Text, View } from "react-native";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Logs from "./pages/Logs";
+import LogsInfo from "./pages/LogsInfo";
 import Messages from "./pages/Messages";
 import ScanMode from "./pages/ScanMode";
 import Scanner from "./pages/Scanner";
@@ -38,7 +39,7 @@ function App() {
         />
         <Stack.Screen
           name="Logs"
-          component={Logs}
+          component={LogsInfo}
           options={{
             headerShown: true,
             animation: "none",
