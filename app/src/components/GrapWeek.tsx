@@ -16,7 +16,6 @@ export default function GraphWeek() {
       const now = moment();
       const weekNumber = now.isoWeek();
       const day = moment().isoWeekday(i);
-      console.log(day)
       await getLogsByDate(day.toISOString().substring(0,10)).then((res) => {
         setRetardData(prevData => {
           const newData = [...prevData]; // Crée une copie du tableau précédent
