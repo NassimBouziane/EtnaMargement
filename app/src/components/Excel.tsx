@@ -38,39 +38,91 @@ export default function App() {
             { header: 'Login', key: 'login', width: 10 },
             { header: 'Matin', key: 'matin', width: 10 },
             { header: 'Après-midi', key: 'apm', width: 10, },
-            { header: 'Retard', key: 'retard', width: 10 }
+            { header: 'Retard Matin', key: 'retard_morning', width: 10 },
+						{ header: 'Retard Après-Midi', key: 'retard_apm', width: 10}
           ];
           // Add some test data
-          let matin= ''
-          let colorMatin ='white'
-          let colorApm ='white'
-          let apm = ''
-          let retard = ''
-          await getLogsByToday(now.toISOString().substring(0,10)).then((res) => {
-            res.data.forEach(element => {
-                switch(element.morning){
-                    case 'Absent' : matin = 'KO'; colorMatin = 'red'; break;
-                    case 'Present': matin = 'OK'; colorMatin = 'green'; break;
-                    case 'Retard' : matin = 'OK'; colorMatin = 'green'; retard = 'heure'; break;
-                    case 'Distanciel': matin ='Distance'; colorMatin = 'purple'; break;
-                }
-                switch(element.afternoon){
-                    case 'Absent' : apm = 'KO'; colorApm = 'red'; break;
-                    case 'Present': apm = 'OK'; colorApm = 'green'; break;
-                    case 'Retard' : apm = 'OK'; colorApm = 'green'; retard = 'heure'; break;
-                    case 'Distanciel': apm ='Distance'; colorApm = 'purple'; break;
-                }
-                worksheet.addRow({ login: element.login, matin: matin, apm: apm, retard: retard });
-            });
-          })
+          let matin = '';
+					let colorMatin = '';
+					let colorApm = '';
+					let apm = '';
+					let retard_morning = '';
+					let retard_apm = '';
 
-          // Test styling
+					try {
+					const logs = await getLogsByToday(now.toISOString().substring(0, 10));
+
+					logs.data.forEach((element: any, index: number) => {
+						retard_morning=' '
+						retard_apm=' '
+							switch (element.morning) {
+							case 'Absent':
+									matin = 'KO';
+									colorMatin = 'e3a251';
+									break;
+							case 'Present':
+									matin = 'OK';
+									colorMatin = 'b6f0a6';
+									break;
+							case 'Retard':
+									matin = 'OK';
+									colorMatin = 'b6f0a6';
+									retard_morning = element.hours_morning;
+									break;
+							case 'Distanciel':
+									matin = 'Distance';
+									colorMatin = 'c8b1c8';
+									break;
+							default:
+									break;
+							}
+
+							switch (element.afternoon) {
+							case 'Absent':
+									apm = 'KO';
+									colorApm = 'e3a251';
+									break;
+							case 'Present':
+									apm = 'OK';
+									colorApm = 'b6f0a6';
+									break;
+							case 'Retard':
+									apm = 'OK';
+									colorApm = 'b6f0a6';
+									retard_apm = element.hours_afternoon;
+									break;
+							case 'Distanciel':
+									apm = 'Distance';
+									colorApm = 'c8b1c8';
+									break;
+							default:
+									break;
+							}
+							
+							worksheet.addRow({
+								login: element.login,
+								matin,
+								apm,
+								retard_morning,
+								retard_apm
+							});
+
+							worksheet.getCell('B'+(index+2).toString()).fill = {
+								type : 'pattern',
+								pattern : 'solid',
+								fgColor: { argb: colorMatin }
+							};
+							worksheet.getCell('C'+(index+2).toString()).fill = {
+								type : 'pattern',
+								pattern : 'solid',
+								fgColor: { argb: colorApm }
+							};
+					});
+					} catch (error) {
+					console.error(error);
+					}
       
-          // Style first row
-      
-          // Write to file
           workbook.xlsx.writeBuffer().then((buffer: ExcelJS.Buffer) => {
-            // Do this to use base64 encoding
             const nodeBuffer = NodeBuffer.from(buffer);
             const bufferStr = nodeBuffer.toString('base64');
             FileSystem.writeAsStringAsync(fileUri, bufferStr, {
