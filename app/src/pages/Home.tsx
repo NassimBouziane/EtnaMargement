@@ -93,10 +93,10 @@ export default function Home({ navigation }: any) {
                   >
                     Graphique journalier
                   </Text>
-                  {/* <GraphDay /> */}
-                  <Image
+                  <GraphDay />
+                  {/* <Image
                     source={require("../../assets/graphPlaceholder.png")}
-                  />
+                  /> */}
                 </View>
                 <View
                   className="right-5"
@@ -137,11 +137,11 @@ export default function Home({ navigation }: any) {
                   >
                     Graphique de la semaine
                   </Text>
-                  <Image
+                  {/* <Image
                     source={require("../../assets/graphPlaceholder.png")}
-                  />
+                  /> */}
 
-                  {/* <GraphWeek /> */}
+                  <GraphWeek />
                 </View>
                 <Text className="text-2xl">Actions rapides</Text>
               </View>
