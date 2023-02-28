@@ -15,6 +15,13 @@ async function getByDate(req:Request, res:Response){
     res.json(QueryResult)
     
 }
+async function getByToday(req:Request, res:Response){
+    const date= req.params.date;
+    const QueryResult = await prisma.logs.findMany({ where: {date:date}})
+    res.json(QueryResult)
+    
+}
+
 
 async function updateLogs(req:Request, res:Response){
     const id = Number(req.params.id)
@@ -47,4 +54,4 @@ async function statLogsByDate(req:Request, res:Response){
     await serviceStatLogsByDate(req,res)
 }
 
-export {getAll,getByLogin,deleteByLogin,createLog, getstats, insertintologs,getByDate, statLogsByDate, updateLogs};
+export { getAll, getByLogin, deleteByLogin, createLog, getstats, insertintologs, getByDate, statLogsByDate, updateLogs, getByToday };
