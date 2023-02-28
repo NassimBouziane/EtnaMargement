@@ -28,7 +28,7 @@ export default function Navbar() {
       style={{
         width: screenWidth < 768 ? "20%" : "15%",
         paddingLeft: screenWidth < 768 ? "5%" : "0%",
-        top: screenWidth < 768 ? "15%" : "unset",
+        top: screenWidth < 768 ? "10%" : "unset",
       }}
     >
       <View className="w-[64px] h-[64px] bg-transparent">

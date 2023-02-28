@@ -1,16 +1,28 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
-import { Image, Pressable, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Image, Pressable, Text, View, Button } from "react-native";
 import Navbar from "../components/Navbar";
+import { NativeModules } from "react-native";
+// import { extendTheme, withColorScheme } from "native-base";
 
 export default function Settings() {
-  const navigation: any = useNavigation();
+  const [isDarkModeEnabled, setIsDarkModeEnabled] = useState(false);
 
+  const toggleDarkMode = () => {
+    if (isDarkModeEnabled) {
+      NativeModules.DevSettings.reload();
+    } else {
+      setIsDarkModeEnabled(true);
+    }
+  };
+  const navigation: any = useNavigation();
+  // const theme = extendTheme(
+  //   withColorScheme({ colorScheme: isDarkModeEnabled ? "dark" : "light" })
+  // );
   return (
     <View className="flex flex-row h-full">
       <Navbar />
-      <View className="mt-12 ml-5">
-        <Text className="text-3xl mt-5 mb-5">Paramètres</Text>
+      <View className="mt-6 ml-5">
         <View>
           <Text className="mt-3 mb-3 text-xl font-semibold">
             Paramètres généraux
@@ -40,6 +52,9 @@ export default function Settings() {
                 className="w-6 h-6 mr-2"
               />
               <Text className="my-5 text-xl">Mode sombre</Text>
+              {/* <View>
+                <Button onPress={toggleDarkMode} title="Mode sombre" />
+              </View> */}
             </View>
           </View>
           <Text className="mt-10 mb-3 text-xl font-semibold">Compte</Text>

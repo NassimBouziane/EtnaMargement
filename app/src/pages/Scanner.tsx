@@ -1,4 +1,4 @@
-import { BarCodeScanner, PermissionStatus } from 'expo-barcode-scanner';
+import { BarCodeScanner, PermissionStatus } from "expo-barcode-scanner";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
@@ -13,7 +13,7 @@ import { checkUser } from "../../services/users/users.services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moment from "moment";
 import "moment/locale/fr";
-import { checkLogs } from '../../services/logs/logs.services';
+import { checkLogs } from "../../services/logs/logs.services";
 
 export default function Scanner({ navigation }: any) {
   const screenWidth = Dimensions.get("window").width;
@@ -109,12 +109,7 @@ export default function Scanner({ navigation }: any) {
             paddingRight: screenWidth < 768 ? 5 : 10,
           }}
         >
-          <Image
-            source={require("../../assets/logoEtna.png")}
-            className=" ml-5 "
-            style={{ width: 96, height: 30 }}
-          />
-          <Pressable
+          {/* <Pressable
             className="pl-5 pr-5 pt-2 pb-2 bg-[#5863F8] rounded-2xl mr-12"
             style={{
               paddingLeft: screenWidth < 768 ? 5 : 10,
@@ -133,7 +128,7 @@ export default function Scanner({ navigation }: any) {
             >
               Connexion
             </Text>
-          </Pressable>
+          </Pressable> */}
         </View>
         <Text
           className="mt-40 text-center text-5xl"
@@ -158,15 +153,15 @@ export default function Scanner({ navigation }: any) {
                 /^\d+$/.test(dataParse[1]) &&
                 /^\d+$/.test(dataParse[2])
               ) {
-                  if (await checkUser(dataParse[0], token)){
-                    const timezone = 'Europe/Paris'; // UTC+1
-                    const date = moment().tz(timezone).format('YYYY-MM-DD');
-                    await checkLogs(dataParse[0],date) // TODO ENLEVER LES HEURES DE LA DATE
-                    setData(dataParse)
-                  }else{
-                    console.log("[FAIL] Login is not good")
-                    throw new Error("[FAIL] Login is not good")
-                  }
+                if (await checkUser(dataParse[0], token)) {
+                  const timezone = "Europe/Paris"; // UTC+1
+                  const date = moment().tz(timezone).format("YYYY-MM-DD");
+                  await checkLogs(dataParse[0], date); // TODO ENLEVER LES HEURES DE LA DATE
+                  setData(dataParse);
+                } else {
+                  console.log("[FAIL] Login is not good");
+                  throw new Error("[FAIL] Login is not good");
+                }
               } else {
                 console.log("[FAIL] QR Code is not good");
                 throw new Error("[FAIL] QR Code is not good");
@@ -177,7 +172,7 @@ export default function Scanner({ navigation }: any) {
             }
           }}
         ></BarCodeScanner>
-        <View className="w-full h-48 bg-[#f2f2f2] z-10 bottom-0 absolute"></View>
+        <View className="w-full h-36 bg-[#f2f2f2] z-10 bottom-0 absolute"></View>
       </View>
     );
   } else {
