@@ -75,24 +75,29 @@ export default function GraphWeek() {
 								withDots: false,
 							}
             ],
+            legend: ["Prés", "Abs", "Ret", "Dist"]
+            
           }}
-          width={Dimensions.get('window').width}
+          
+          width={Dimensions.get('window').width- 25}
           height={220}
 					withShadow={false}
 					withVerticalLines={false}
           chartConfig={{
             backgroundColor: '#1cc910',
-            backgroundGradientFrom: '#eff3ff',
-            backgroundGradientTo: '#efefef',
+            backgroundGradientFrom: '#ffffff',
+            backgroundGradientTo: '#ffffff',
             decimalPlaces: 0,
             color: () => `rgba(0, 0, 0, 0.5)`,
             style: {
               borderRadius: 16,
+            
             },
+            
           }}
           style={{
-            marginVertical: 8,
             borderRadius: 16,
+           
           }}
         />
   );
