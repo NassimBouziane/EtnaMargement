@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   AsyncStorage,
   Button,
+  Pressable,
   ScrollView,
   Text,
   TextInput,
@@ -114,13 +115,16 @@ const handleclick =(button: String)=>{
               </View>
               <View className="flex flex-row w-full gap-6 ">
                 <View className="bg-[#92F866] px-4 py-2 rounded-xl">
-                <Button title={"Absent"} onPress={() => handleclick("Absent")}></Button>
+                  <Pressable onPress={()=> handleclick("Present")}><Text className="text-lg">Prés.</Text></Pressable>
                 </View>
                 <View className="bg-[#FBB733] px-4 py-2 rounded-xl">
-                <Button title={"Present"} onPress={() => handleclick("Present")}></Button></View>
-                <View className="bg-[#F04C4C] px-4 py-2 rounded-xl">
-                <Button title={"Retard"} onPress={() => handleclick("Retard")}></Button>
+                <Pressable onPress={()=> handleclick("Retard")}><Text className="text-lg">Retard</Text></Pressable>
                 </View>
+                <View className="bg-[#F04C4C] px-4 py-2 rounded-xl">
+                <Pressable onPress={()=> handleclick("Absent")}><Text className="text-lg">Abs.</Text></Pressable>
+                </View>
+
+
               </View>
             </View>
             <ScrollView
