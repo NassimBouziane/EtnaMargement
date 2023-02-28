@@ -80,7 +80,7 @@ function App() {
           name="Students"
           component={Student}
           options={{
-            headerShown: false,
+            headerShown: true,
             animation: "none",
           }}
         />
