@@ -9,10 +9,20 @@ export default function CardStudent(props: any) {
     <View className="bg-[#D9D9D9] rounded-2xl my-3">
       <Pressable onPress={() => navigation.navigate("Detail")}>
         <View className="flex flex-row gap-1 py-3 ml-3 items-center">
-          <Image source={require("../../assets/test-pfp.png")} />
-          <Text className="pl-2">{props.fistname}</Text>
+          <Image 
+          className="rounded-lg w-64"
+          source={{
+                  uri: `https://auth.etna-alternance.net/api/users/${props.login}/photo`,
+                }}
+                style={{ width: "8%", height: "100%" }}
+ 
+                />
+                <Text>{props.morning}</Text>
+                <Text>{props.afternoon}</Text>
+
+          <Text className="pl-2">{props.firstname}</Text>
           <Text>{props.lastname}</Text>
-          <Text className="text-gray-500">({props.login})</Text>
+          {/* <Text className="text-gray-500">({props.login})</Text> */}
         </View>
       </Pressable>
     </View>

@@ -16,6 +16,8 @@ model Logs {
   status          String? @db.VarChar(200)
   hours_morning   String? @db.VarChar(50)
   hours_afternoon String? @db.VarChar(50)
+  firstname       String? @default("NO DATA") @db.VarChar(50)
+  lastname        String? @default("NO DATA") @db.VarChar(50)
 }
 
 model Ticket {
