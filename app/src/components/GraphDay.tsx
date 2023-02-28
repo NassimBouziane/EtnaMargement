@@ -40,7 +40,7 @@ export default function GraphDay() {
   return (
     
     <WebView
-    style={{ width: Dimensions.get('window').width, height: 220 }}
+    style={{ width: 1000, height: 220 }}
     originWhitelist={['*']}
     source={{ html: `<html><body><canvas id="canvas"></canvas><script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script><script>var ctx = document.getElementById('canvas').getContext('2d');new Chart(ctx, {type: 'doughnut', data: ${JSON.stringify(
       chartData,
