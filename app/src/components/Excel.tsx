@@ -8,6 +8,7 @@ import ExcelJS from 'exceljs';
 import * as Sharing from 'expo-sharing';
 // From @types/node/buffer
 import { Buffer as NodeBuffer } from 'buffer';
+import { getLogsByToday } from '../../services/logs/logs.services';
 
 
 const styles = StyleSheet.create({
@@ -35,29 +36,37 @@ export default function App() {
           // Just some columns as used on ExcelJS Readme
           worksheet.columns = [
             { header: 'Login', key: 'login', width: 10 },
-            { header: 'Matin', key: 'matin', width: 32 },
+            { header: 'Matin', key: 'matin', width: 10 },
             { header: 'Après-midi', key: 'apm', width: 10, },
-            { header: 'Retard', key: 'retard', width:10}
+            { header: 'Retard', key: 'retard', width: 10 }
           ];
           // Add some test data
-          await 
-      
+          let matin= ''
+          let colorMatin ='white'
+          let colorApm ='white'
+          let apm = ''
+          let retard = ''
+          await getLogsByToday(now.toISOString().substring(0,10)).then((res) => {
+            res.data.forEach(element => {
+                switch(element.morning){
+                    case 'Absent' : matin = 'KO'; colorMatin = 'red'; break;
+                    case 'Present': matin = 'OK'; colorMatin = 'green'; break;
+                    case 'Retard' : matin = 'OK'; colorMatin = 'green'; retard = 'heure'; break;
+                    case 'Distanciel': matin ='Distance'; colorMatin = 'purple'; break;
+                }
+                switch(element.afternoon){
+                    case 'Absent' : apm = 'KO'; colorApm = 'red'; break;
+                    case 'Present': apm = 'OK'; colorApm = 'green'; break;
+                    case 'Retard' : apm = 'OK'; colorApm = 'green'; retard = 'heure'; break;
+                    case 'Distanciel': apm ='Distance'; colorApm = 'purple'; break;
+                }
+                worksheet.addRow({ login: element.login, matin: matin, apm: apm, retard: retard });
+            });
+          })
+
           // Test styling
       
           // Style first row
-          worksheet.getRow(1).font = {
-            name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true
-          };
-          // Style second column
-          worksheet.eachRow((row, rowNumber) => {
-            row.getCell(2).font = {
-              name: 'Arial Black',
-              color: { argb: 'FF00FF00' },
-              family: 2,
-              size: 14,
-              bold: true
-            };
-          });
       
           // Write to file
           workbook.xlsx.writeBuffer().then((buffer: ExcelJS.Buffer) => {
