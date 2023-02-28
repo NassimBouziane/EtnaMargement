@@ -40,9 +40,9 @@ export default function Tickets() {
               <View className="mt-5">
                 <View className="flex flex-row mb-5 items-center">
                   <Text
-                    className="bg-red-500 text-white py-1 px-3 rounded-3xl"
+                    className="bg-red-500 text-white py-[2px] px-2 rounded-2xl"
                     style={{
-                      fontSize: screenWidth < 768 ? 16 : 32,
+                      fontSize: screenWidth < 768 ? 14 : 32,
                     }}
                   >
                     7
@@ -74,7 +74,7 @@ export default function Tickets() {
               </View>
               <View className="mt-10 mb-10">
                 <View className="flex flex-row mb-5 items-center">
-                  <Text className="bg-red-500 text-white py-1 px-3 rounded-3xl">
+                  <Text className="bg-red-500 text-white py-[2px] px-2 rounded-3xl">
                     5
                   </Text>
                   <Text
