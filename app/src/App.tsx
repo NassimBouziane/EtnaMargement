@@ -22,7 +22,7 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="ScanMode">
         <Stack.Screen
           name="Login"
           component={Login}
