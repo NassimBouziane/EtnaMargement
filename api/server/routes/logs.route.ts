@@ -1,4 +1,4 @@
-import {deleteByLogin, getAll,getByLogin,createLog, getstats, insertintologs, statLogsByDate, getByDate, updateLogs} from "../controllers/logs.controller"
+import {deleteByLogin, getAll,getByLogin,createLog, getstats, insertintologs, statLogsByDate, getByDate, updateLogs, getByToday} from "../controllers/logs.controller"
 
 
 const logsrouter = require('express')
@@ -14,6 +14,7 @@ logs.get('/stats/:login', getstats)
 logs.post('/insert', insertintologs)
 logs.get('/date/:date/:login', getByDate)
 logs.get('/date/:date', statLogsByDate)
+logs.get('/today/:date', getByToday)
 export default logs
 
 
