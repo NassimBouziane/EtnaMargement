@@ -19,12 +19,14 @@ import { checkLogs } from "../../services/logs/logs.services";
 export default function Scanner({ navigation }: any) {
   const screenWidth = Dimensions.get("window").width;
 
-  const [data, setData] = useState(null);
-  const [permission, setPermission] = useState(true);
-  const [error, setError] = useState(false);
-  const [token, setToken] = useState<any>();
-  const [scanned, setScanned] = useState(false);
+  // Initialisation des états
+  const [data, setData] = useState(null); // donnée à scanner
+  const [permission, setPermission] = useState(true); // autorisation de caméra
+  const [error, setError] = useState(false); // erreur lors du scan
+  const [token, setToken] = useState<any>(); // token de l'utilisateur
+  const [scanned, setScanned] = useState(false); // si le code a été scanné
 
+  // Demande d'autorisation pour la caméra au lancement de l'application
   useEffect(() => {
     requestCameraPermission();
     AsyncStorage.getItem("token").then((value) => {
@@ -32,9 +34,11 @@ export default function Scanner({ navigation }: any) {
     });
   }, []);
 
+  // Récupération de l'heure locale
   const [currentTime, setCurrentTime] = useState(
     moment().locale("fr").utcOffset("+0100").format("LT")
   );
+  // Mise à jour de l'heure toutes les secondes
   useEffect(() => {
     const intervalID = setInterval(() => {
       setCurrentTime(moment().locale("fr").utcOffset("+0100").format("LT"));
@@ -42,6 +46,7 @@ export default function Scanner({ navigation }: any) {
     return () => clearInterval(intervalID);
   }, []);
 
+  // Fonction de demande d'autorisation pour la caméra
   const requestCameraPermission = async () => {
     try {
       const { status, granted } =

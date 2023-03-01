@@ -30,17 +30,16 @@ export default function Home({ navigation }: any) {
     const token: any = await AsyncStorage.getItem("token");
     const user_logs = await fetchUserConnected(await JSON.parse(token));
     const user = await getUserByLogin(user_logs.login, await JSON.parse(token));
-
     setUser(user);
   };
   
-
   useEffect(() => {
     UserInfo();
     // user change => re-render
   }, []);
 
   const [isLoading, setLoading] = useState(true);
+  const screenWidth = Dimensions.get("window").width;
 
   useEffect(() => {
     // Mettre à jour le state isLoading pour simuler une durée de chargement
@@ -48,6 +47,7 @@ export default function Home({ navigation }: any) {
       setLoading(false);
     }, 100); // Temps de chargement de 3 secondes
   }, []);
+
   if(chooseDate){
     return (
       <View>
@@ -57,7 +57,7 @@ export default function Home({ navigation }: any) {
       </View>
     )
   }
-  const screenWidth = Dimensions.get("window").width;
+
   return (
     <View>
       <View className="flex flex-row h-full w-full ">
