@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 export default function Excel(props: any) {
     const generateShareableExcel = async (): Promise<string> => {
         const date = new Date(props.date);
-        const fileName = date.toISOString().substring(0,10)+'_etnamargement_Sheet.xlsx';
+        const fileName = date.toISOString().substring(0,10)+'_etnamargementSheet.xlsx';
         const fileUri = FileSystem.cacheDirectory + fileName;
         return new Promise<string>(async (resolve, reject) => {
           const workbook = new ExcelJS.Workbook();
@@ -38,7 +38,8 @@ export default function Excel(props: any) {
             { header: 'Matin', key: 'matin', width: 10 },
             { header: 'Après-midi', key: 'apm', width: 10, },
             { header: 'Retard Matin', key: 'retard_morning', width: 20 },
-						{ header: 'Retard Après-Midi', key: 'retard_apm', width: 20}
+						{ header: 'Retard Après-Midi', key: 'retard_apm', width: 20},
+						{ header: 'Status', key: 'status', width:20 }
           ];
           // Add some test data
           let matin = '';
@@ -103,7 +104,8 @@ export default function Excel(props: any) {
 								matin,
 								apm,
 								retard_morning,
-								retard_apm
+								retard_apm,
+								status: element.status
 							});
 
 							worksheet.getCell('B'+(index+2).toString()).fill = {

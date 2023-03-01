@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useEffect } from "react";
 import {
   Button,
@@ -9,12 +9,16 @@ import {
   Text,
   View,
   ScrollView,
+  RefreshControl,
 } from "react-native";
 import { Card } from "react-native-elements/dist/card/Card";
 import {
   getNote,
   getPromo,
   getTicket,
+  getWall,
+  getWallByName,
+  getWallByPromo,
 } from "../../services/etna/etna.services";
 import {
   fetchUserConnected,
@@ -24,6 +28,7 @@ import {
 import CardStudent from "../components/CardStudent";
 import CardTicket from "../components/CardTicket";
 import GraphDay from "../components/GraphDay";
+import GraphStudent from "../components/GraphStudent";
 import GraphWeek from "../components/GrapWeek";
 import Navbar from "../components/Navbar";
 import QRCODE from "../components/QRCode";
@@ -37,6 +42,18 @@ export default function Students() {
   const [tickets, setTickets] = React.useState<any>();
   const [lentickets, setLentickets] = React.useState<any>(3);
   const [buttonlentickets, setButtonlentickets] = React.useState<any>(true);
+  const [refreshing, setRefreshing] = React.useState(false);
+  const onRefresh = React.useCallback(() => {
+
+    setRefreshing(true);
+    // reload data
+    UserInfo();
+    setLentickets(3);
+    setButtonlentickets(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const UserInfo = async () => {
     const token: any = await AsyncStorage.getItem("token");
@@ -47,6 +64,15 @@ export default function Students() {
     const tickets = await getTicket(await JSON.parse(token)).then((res) => {
       setTickets(res);
     });
+
+    const wall = await getWall(await JSON.parse(token));
+
+    
+
+    const wallByName = await getWallByName(wall[0], 0, 5, await JSON.parse(token))
+    console.log(wallByName.hits[0])
+    console.log(wallByName.hits[0].title)
+    console.log(wallByName.hits[0].content)
 
     // console.log(tickets.data.length);
     // console.log(tickets.data[0].creator.login);
@@ -68,7 +94,6 @@ export default function Students() {
 
   useEffect(() => {
     UserInfo();
-    // user change => re-render
   }, []);
 
   React.useLayoutEffect(() => {
@@ -84,7 +109,9 @@ export default function Students() {
     });
   }, [navigation]);
   return (
-    <ScrollView>
+    <ScrollView refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    }>
       <View className="flex mt-5">
         <View className="flex flex-row w-full h-fit ml-1">
           <Text className="font-medium text-[32px] mx-auto">
@@ -143,17 +170,17 @@ export default function Students() {
           <Text className="text-[px] my-auto mx-auto">
             Graphique de Présence
           </Text>
-          <GraphWeek />
+          <GraphStudent login={user.login}/>
         </View>
         <Text className="text-[22px] w-full text-center mt-[10px]">({tickets ? tickets.data.length : "" }) Ticket(s)</Text>
         <View className="flex h-fit w-[95%] mx-auto mt-[10px] rounded-lg">
-          <View>
+          <View className="bg-white rounded-lg">
             {tickets &&
               tickets.data.slice(0, lentickets).map((ticket: any) => {
                 return (
                   <View className="mx-auto">
                     <CardTicket
-                      login={ticket ? ticket.creator.login : ""}
+                      login={ticket ?  ticket.creator.login : ""}
                       name={
                         user
                           ? user.lastname.charAt(0).toUpperCase() +

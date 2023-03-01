@@ -1,4 +1,4 @@
-import { getNote, getPromo, getTicket, getWall, getWallByName, getWallByPromo } from '../controllers/etna.controller';
+import { getMessage, getNote, getPromo, getTicket, getWall, getWallByName, getWallByPromo } from '../controllers/etna.controller';
 
 const expressUser = require('express');
 
@@ -9,6 +9,8 @@ etna.post('/wall', getWall);
 etna.post('/wall/name', getWallByName)
 
 etna.post('/wall/promo', getWallByPromo)
+
+etna.post('/message', getMessage)
 
 etna.post('/ticket', getTicket);
 
