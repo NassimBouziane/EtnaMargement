@@ -36,6 +36,7 @@ export default function StudentsAdmin() {
   const [absentFilter, setAbsentFilter] = useState(false);
   const [retardFilter, setRetardFilter] = useState(false);
   const [presentFilter, setPresentFilter] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   const handleclick = (button: string) => {
     setPresentFilter(button === "Present");
@@ -46,18 +47,18 @@ export default function StudentsAdmin() {
   const getByDate = async () => {
     const today = new Date().toISOString().substring(0, 10);
     await getLogsByToday(today).then((response) => setDataDay(response.data));
+    setLoading(false);
   };
   useEffect(() => {
     getByDate();
   }, []);
-  const [isLoading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // Mettre à jour le state isLoading pour simuler une durée de chargement
-    setTimeout(() => {
-      setLoading(false);
-    }, 100); // Temps de chargement de 3 secondes
-  }, []);
+  // useEffect(() => {
+  //   // Mettre à jour le state isLoading pour simuler une durée de chargement
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 100); // Temps de chargement de 3 secondes
+  // }, []);
   const [searchText, setSearchText] = useState("");
 
   const handleSearch = () => {
@@ -113,7 +114,7 @@ export default function StudentsAdmin() {
             <ActivityIndicator size="large" color="blue" className="mt-64" />
           ) : (
             <ScrollView
-              className="w-full h-full ml-5"
+              className="w-full h-full ml-5 mt-3"
               showsVerticalScrollIndicator={false}
             >
               {dataDay &&
