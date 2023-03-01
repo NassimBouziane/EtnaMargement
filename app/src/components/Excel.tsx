@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Excel(props) {
+export default function Excel(props: any) {
     const generateShareableExcel = async (): Promise<string> => {
         const date = new Date(props.date);
         const fileName = date.toISOString().substring(0,10)+'_etnamargementSheet.xlsx';
