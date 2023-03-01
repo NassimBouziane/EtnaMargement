@@ -13,7 +13,7 @@ export default function CardStudent(props: any) {
 
   return (
     <View className="bg-[#D9D9D9] w-[280px] rounded-xl my-2">
-      <Pressable onPress={() => navigation.navigate("Detail")}>
+      <Pressable onPress={() => navigation.navigate("Detail", {propsToSend:{firstname:props.firstname, lastname:props.lastname}})}>
         <View className="flex flex-row gap-1 py-5 ml-3 items-center">
           <Image
             className="rounded-lg w-64"

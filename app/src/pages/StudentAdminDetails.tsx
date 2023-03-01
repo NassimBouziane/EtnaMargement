@@ -1,22 +1,41 @@
-import React from "react";
-import { Text, View } from "react-native";
+import React, { useEffect } from "react";
+import { ScrollView, Text, View } from "react-native";
 import Ticketlarge from "../components/TicketLarge";
+import { RouteProp, useRoute } from '@react-navigation/native';
+interface RouteParams {
+  propsToSend: {
+    firstname: String;
+    lastname:String
+  };
+}
+type RootStackParamList = {
+  Detail: RouteParams;
+};
 
-export default function StudentsAdminDetails(props: any) {
+type DetailScreenRouteProp = RouteProp<RootStackParamList, 'Detail'>;
+
+
+export default function StudentsAdminDetails() {
+  const route = useRoute<DetailScreenRouteProp>();
+  const props = route.params.propsToSend;
+  useEffect(()=>{
+
+    
+   
+
+  },[])
+
   return (
     <View>
       <View className="ml-5">
         <View className="flex flex-row gap-1 mt-5">
-          <Text className="text-xl">Mosbah</Text>
-          <Text className="text-xl">caca</Text>
+          <Text className="text-xl">{props.firstname}</Text>
+          <Text className="text-xl">{props.lastname}</Text>
         </View>
         <View className="mt-5">
           <Text className="text-xl">Tickets</Text>
-          <View>
-            <Ticketlarge />
-            <Ticketlarge />
-            <Ticketlarge />
-          </View>
+          <ScrollView>
+          </ScrollView>
         </View>
         <View className="mt-5">
           <Text className="text-xl">Présence</Text>
