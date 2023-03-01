@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   AsyncStorage,
   Button,
+  Pressable,
   ScrollView,
   Text,
   TextInput,
@@ -36,26 +37,10 @@ export default function StudentsAdmin() {
   const [retardFilter, setRetardFilter] = useState(false);
   const [presentFilter, setPresentFilter] = useState(false);
 
-  const handleclick = (button: String) => {
-    switch (button) {
-      case "Present":
-        setPresentFilter(!absentFilter);
-        setAbsentFilter(false);
-        setRetardFilter(false);
-        break;
-      case "Absent":
-        setPresentFilter(false);
-        setAbsentFilter(!absentFilter);
-        setRetardFilter(false);
-        break;
-      case "Retard":
-        setPresentFilter(false);
-        setAbsentFilter(false);
-        setRetardFilter(!absentFilter);
-        break;
-      default:
-        break;
-    }
+  const handleclick = (button: string) => {
+    setPresentFilter(button === "Present");
+    setAbsentFilter(button === "Absent");
+    setRetardFilter(button === "Retard");
   };
 
   const getByDate = async () => {
@@ -88,101 +73,98 @@ export default function StudentsAdmin() {
   };
   return (
     <View>
-      {isLoading ? (
-        <ActivityIndicator size="large" color="blue" className="mt-64" />
-      ) : (
-        <View className="flex flex-row h-full w-full ">
-          <Navbar />
-          <View>
-            <View className="ml-5">
-              <View className="flex-row w-[280px] items-center bg-gray-200 px-3 py-3 rounded-xl mt-5 mb-3">
-                <Ionicons
-                  name="search-outline"
-                  size={24}
-                  className="text-gray-500"
-                />
-                <TextInput
-                  className="flex-1 text-gray-700 ml-5"
-                  placeholder="Rechercher par login"
-                  onChangeText={(text) => setSearchValue(text)}
-                  onSubmitEditing={handleSearch}
-                  value={searchValue}
-                />
+      <View className="flex flex-row h-full w-full ">
+        <Navbar />
+        <View>
+          <View className="ml-5">
+            <View className="flex-row w-[280px] items-center bg-gray-200 px-3 py-3 rounded-xl mt-5 mb-3">
+              <Ionicons
+                name="search-outline"
+                size={24}
+                className="text-gray-500"
+              />
+              <TextInput
+                className="flex-1 text-gray-700 ml-5"
+                placeholder="Rechercher par login"
+                onChangeText={(text) => setSearchValue(text)}
+                onSubmitEditing={handleSearch}
+                value={searchValue}
+              />
+            </View>
+            <View className="flex flex-row w-full gap-6 ">
+              <View className="bg-[#92F866] px-4 py-2 rounded-xl">
+                <Pressable onPress={() => handleclick("Present")}>
+                  <Text className="text-lg">Prés.</Text>
+                </Pressable>
               </View>
-              <View className="flex flex-row w-full gap-6 ">
-                <View className="bg-[#92F866] px-4 py-2 rounded-xl">
-                  <Button
-                    title={"Absent"}
-                    onPress={() => handleclick("Absent")}
-                  ></Button>
-                </View>
-                <View className="bg-[#FBB733] px-4 py-2 rounded-xl">
-                  <Button
-                    title={"Present"}
-                    onPress={() => handleclick("Present")}
-                  ></Button>
-                </View>
-                <View className="bg-[#F04C4C] px-4 py-2 rounded-xl">
-                  <Button
-                    title={"Retard"}
-                    onPress={() => handleclick("Retard")}
-                  ></Button>
-                </View>
+              <View className="bg-[#FBB733] px-4 py-2 rounded-xl">
+                <Pressable onPress={() => handleclick("Retard")}>
+                  <Text className="text-lg">Retard</Text>
+                </Pressable>
+              </View>
+              <View className="bg-[#F04C4C] px-4 py-2 rounded-xl">
+                <Pressable onPress={() => handleclick("Absent")}>
+                  <Text className="text-lg">Abs.</Text>
+                </Pressable>
               </View>
             </View>
-            <ScrollView
-              className=" h-full ml-5"
-              showsVerticalScrollIndicator={false}
-            >
-              {/* <CardStudent
+          </View>
+        </View>
+        {isLoading ? (
+          <ActivityIndicator size="large" color="blue" className="mt-64" />
+        ) : (
+          <ScrollView
+            className=" h-full ml-5"
+            showsVerticalScrollIndicator={false}
+          >
+            {/* <CardStudent
                 fistname="Raphaël"
                 lastname="Plassart"
                 login="plassa_r"
               /> */}
-              {dataDay &&
-                dataDay
-                  .filter((item: Logs) => {
-                    if (
-                      absentFilter &&
-                      item.morning !== "Absent" &&
-                      item.afternoon !== "Absent"
-                    ) {
-                      return false;
-                    }
-                    if (
-                      retardFilter &&
-                      item.morning !== "Retard" &&
-                      item.afternoon !== "Retard"
-                    ) {
-                      return false;
-                    }
-                    if (
-                      presentFilter &&
-                      item.morning !== "Present" &&
-                      item.afternoon !== "Present"
-                    ) {
-                      return false;
-                    }
-                    return item.login
-                      .toLowerCase()
-                      .includes(searchValue.toLowerCase());
-                  })
-                  .map((items: Logs, i: Number) => {
-                    return (
-                      <CardStudent
-                        key={items.id}
-                        login={items.login}
-                        morning={items.morning}
-                        afternoon={items.afternoon}
-                        firstname={items.firstname}
-                        lastname={items.lastname}
-                      />
-                    );
-                  })}
-            </ScrollView>
-          </View>
-        </View>
-      )}
+            {dataDay &&
+              dataDay
+                .filter((item: Logs) => {
+                  if (
+                    absentFilter &&
+                    item.morning !== "Absent" &&
+                    item.afternoon !== "Absent"
+                  ) {
+                    return false;
+                  }
+                  if (
+                    retardFilter &&
+                    item.morning !== "Retard" &&
+                    item.afternoon !== "Retard"
+                  ) {
+                    return false;
+                  }
+                  if (
+                    presentFilter &&
+                    item.morning !== "Present" &&
+                    item.afternoon !== "Present"
+                  ) {
+                    return false;
+                  }
+                  return item.login
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase());
+                })
+                .map((items: Logs, i: Number) => {
+                  return (
+                    <CardStudent
+                      key={items.id}
+                      login={items.login}
+                      morning={items.morning}
+                      afternoon={items.afternoon}
+                      firstname={items.firstname}
+                      lastname={items.lastname}
+                    />
+                  );
+                })}
+          </ScrollView>
+        )}
+      </View>
     </View>
   );
 }
