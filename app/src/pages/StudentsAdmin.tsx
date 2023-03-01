@@ -7,8 +7,10 @@ import {
   ScrollView,
   Text,
   TextInput,
-  View,
+  View
 } from "react-native";
+import Modal from "react-native-modal";
+
 import Navbar from "../components/Navbar";
 import { Ionicons } from "@expo/vector-icons";
 import CardStudent from "../components/CardStudent";
@@ -17,6 +19,7 @@ import {
   fetchUserConnected,
   getUserByLogin,
 } from "../../services/users/users.services";
+import ReactNativeModal from "react-native-modal";
 interface Logs {
   id: any;
   login: String;
@@ -60,6 +63,8 @@ export default function StudentsAdmin() {
   //   }, 100); // Temps de chargement de 3 secondes
   // }, []);
   const [searchText, setSearchText] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+
 
   const handleSearch = () => {
     console.log(`Recherche: ${searchText}`);
@@ -91,6 +96,7 @@ export default function StudentsAdmin() {
                 onSubmitEditing={handleSearch}
                 value={searchValue}
               />
+              <Pressable onPress={() =>{setModalVisible(!modalVisible)}}><Text>CALENDRIER</Text></Pressable>
             </View>
             <View className="flex flex-row w-full gap-6 ">
               <View className="bg-[#92F866] px-4 py-2 rounded-xl">
@@ -112,11 +118,19 @@ export default function StudentsAdmin() {
           </View>
           {isLoading ? (
             <ActivityIndicator size="large" color="blue" className="mt-64" />
+
+
           ) : (
             <ScrollView
               className="w-full h-full ml-5 mt-3"
               showsVerticalScrollIndicator={false}
             >
+          <Modal isVisible={modalVisible}>
+        <View className="flex ">
+          <Text onPress={() => {setModalVisible(!modalVisible)}}  >I am the modal content!</Text>
+
+        </View>
+      </Modal>
               {dataDay &&
                 dataDay
                   .filter((item: Logs) => {
