@@ -42,6 +42,13 @@ async function getWallByPromo(req: Request, res: Response){
   .catch(() => {res.sendStatus(500);})
 }
 
+async function getMessage(req: Request, res: Response){
+  return await apiEtna.get('/conversations/'+ req.body.id+'/messages',
+  {
+    headers: {Cookie: req.body.token}
+  }).then((response) => res.send(response.data))
+  .catch(() => {res.sendStatus(500);})
+} 
 
 async function getNote(req: Request, res: Response) {
   return await apiEtna.get('/terms/'+ req.body.promo +'/students/'+req.body.login+'/marks', 
@@ -68,7 +75,7 @@ async function getPromo(req: Request, res: Response) {
 }
 
 export {
-  getWall, getNote, getTicket, getPromo, getWallByName, getWallByPromo
+  getWall, getNote, getTicket, getPromo, getWallByName, getWallByPromo, getMessage
 }
 
 

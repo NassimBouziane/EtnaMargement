@@ -49,3 +49,11 @@ export const getPromo = async(token : any) => {
 		token
 	}).then((response) => response.data)
 }
+
+export const getMessage = async(id :any, token : any) => {
+	return await api.post('/etna/message',
+	{
+		id,
+		token
+	}).then((response) => response.data)
+}
