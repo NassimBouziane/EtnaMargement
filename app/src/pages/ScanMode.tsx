@@ -8,7 +8,7 @@ export default function ScanMode() {
     <View className="flex flex-row h-full">
       <Navbar />
       <Text>ScanMode Screen</Text>
-      <Excel/>
+      <Excel date="2023-02-28"/>
     </View>
   );
 }

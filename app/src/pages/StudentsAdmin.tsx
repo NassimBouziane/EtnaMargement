@@ -37,28 +37,11 @@ export default function StudentsAdmin() {
   const [presentFilter, setPresentFilter] = useState(false);
 
 
-const handleclick =(button: String)=>{
-  switch(button){
-    case "Present":
-      setPresentFilter(!absentFilter);
-      setAbsentFilter(false);
-      setRetardFilter(false)
-    break;
-    case "Absent":
-      setPresentFilter(false);
-      setAbsentFilter(!absentFilter);
-      setRetardFilter(false)
-    break;
-    case "Retard":
-      setPresentFilter(false);
-      setAbsentFilter(false);
-      setRetardFilter(!absentFilter)
-    break;
-    default:
-      break;
+  const handleclick = (button: string) => {
+    setPresentFilter(button === "Present");
+    setAbsentFilter(button === "Absent");
+    setRetardFilter(button === "Retard");
   }
-
-}
 
   const getByDate = async() => {
     const today = new Date().toISOString().substring(0,10);

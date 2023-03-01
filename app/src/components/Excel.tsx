@@ -20,26 +20,26 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function App() {
+export default function Excel(props) {
 
     const generateShareableExcel = async (): Promise<string> => {
-        const now = new Date();
-        const fileName = now.toISOString().substring(0,10)+'_etnamargement_Sheet.xlsx';
+        const date = new Date(props.date);
+        const fileName = date.toISOString().substring(0,10)+'_etnamargement_Sheet.xlsx';
         const fileUri = FileSystem.cacheDirectory + fileName;
         return new Promise<string>(async (resolve, reject) => {
           const workbook = new ExcelJS.Workbook();
           workbook.creator = 'Etnamargment App';
-          workbook.created = now;
-          workbook.modified = now;
+          workbook.created = date;
+          workbook.modified = date;
           // Add a sheet to work on
           const worksheet = workbook.addWorksheet('Etnamargement Sheet', {});
           // Just some columns as used on ExcelJS Readme
           worksheet.columns = [
-            { header: 'Login', key: 'login', width: 10 },
+            { header: 'Login', key: 'login', width: 15 },
             { header: 'Matin', key: 'matin', width: 10 },
             { header: 'Après-midi', key: 'apm', width: 10, },
-            { header: 'Retard Matin', key: 'retard_morning', width: 10 },
-						{ header: 'Retard Après-Midi', key: 'retard_apm', width: 10}
+            { header: 'Retard Matin', key: 'retard_morning', width: 20 },
+						{ header: 'Retard Après-Midi', key: 'retard_apm', width: 20}
           ];
           // Add some test data
           let matin = '';
@@ -50,7 +50,7 @@ export default function App() {
 					let retard_apm = '';
 
 					try {
-					const logs = await getLogsByToday(now.toISOString().substring(0, 10));
+					const logs = await getLogsByToday(date.toISOString().substring(0, 10));
 
 					logs.data.forEach((element: any, index: number) => {
 						retard_morning=' '
@@ -98,7 +98,7 @@ export default function App() {
 							default:
 									break;
 							}
-							
+
 							worksheet.addRow({
 								login: element.login,
 								matin,
@@ -117,10 +117,17 @@ export default function App() {
 								pattern : 'solid',
 								fgColor: { argb: colorApm }
 							};
+
+							worksheet.getCell(`B${index + 2}`).alignment = { vertical: 'middle', horizontal: 'center' };
+    					worksheet.getCell(`C${index + 2}`).alignment = { vertical: 'middle', horizontal: 'center' };
+							worksheet.getCell(`D${index + 2}`).alignment = { vertical: 'middle', horizontal: 'center' };
+    					worksheet.getCell(`E${index + 2}`).alignment = { vertical: 'middle', horizontal: 'center' };
+							
 					});
 					} catch (error) {
 					console.error(error);
 					}
+					
       
           workbook.xlsx.writeBuffer().then((buffer: ExcelJS.Buffer) => {
             const nodeBuffer = NodeBuffer.from(buffer);
