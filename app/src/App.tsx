@@ -13,6 +13,7 @@ import ScanMode from "./pages/ScanMode";
 import Scanner from "./pages/Scanner";
 import Settings from "./pages/Settings";
 import StudentsAdminDetails from "./pages/StudentAdminDetails";
+import StudentHomePage from "./pages/StudentHomePage";
 import Students from "./pages/Students";
 import StudentsAdmin from "./pages/StudentsAdmin";
 import Tickets from "./pages/Tickets";
@@ -88,14 +89,7 @@ function App() {
             animation: "none",
           }}
         />
-        <Stack.Screen
-          name="StudentsAdminHome"
-          component={StudentsAdminHome}
-          options={{
-            headerShown: true,
-            animation: "none",
-          }}
-        />
+
         <Stack.Screen
           name="Students"
           component={Students}

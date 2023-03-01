@@ -144,14 +144,17 @@ export default function Excel(props) {
     const shareExcel = async () => {
         const shareableExcelUri: string = await generateShareableExcel();
         Sharing.shareAsync(shareableExcelUri, {
-          mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // Android
-          dialogTitle: 'Your dialog title here', // Android and Web
-          UTI: 'com.microsoft.excel.xlsx' // iOS
-        }).catch(error => {
-          console.error('Error', error);
-        }).then(() => {
-          console.log('Return from sharing dialog');
-        });
+          mimeType:
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // Android
+          dialogTitle: "Your dialog title here", // Android and Web
+          UTI: "com.microsoft.excel.xlsx", // iOS
+        })
+          .catch((error: any) => {
+            console.error("Error", error);
+          })
+          .then(() => {
+            console.log("Return from sharing dialog");
+          });
       }
   return (
     <View style={styles.container}>

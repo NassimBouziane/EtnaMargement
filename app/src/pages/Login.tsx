@@ -78,7 +78,9 @@ export default function Login() {
     }
     setChecked(false)
     if(await AsyncStorage.getItem('token') && await AsyncStorage.getItem('remember')){
-      const user = await fetchUserConnected(await JSON.parse(await AsyncStorage.getItem('token')));
+      const user = await fetchUserConnected(
+        await AsyncStorage.getItem("token")
+      );
       if (user.groups.includes("adm") || user.login == "boular_t") {
         console.log("jsuis la porte de derriere")
         navigation.navigate('Home')

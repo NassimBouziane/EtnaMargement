@@ -6,14 +6,6 @@ import {
   Text,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  Dimensions,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
 import Navbar from "../components/Navbar";
 import Ticketlarge from "../components/TicketLarge";
 
