@@ -52,11 +52,21 @@ export default function StudentsAdmin() {
   const [isLoading, setLoading] = useState(true);
 
   const handleclick = (button: string) => {
-    setPresentFilter(button === "Present");
-    setAbsentFilter(button === "Absent");
-    setRetardFilter(button === "Retard");
+    const isPresent = button === "Present";
+    const isAbsent = button === "Absent";
+    const isRetard = button === "Retard";
+  
+    if ((isPresent && !presentFilter) || (isAbsent && !absentFilter) || (isRetard && !retardFilter)) {
+      setPresentFilter(isPresent);
+      setAbsentFilter(isAbsent);
+      setRetardFilter(isRetard);
+    } else {
+      setPresentFilter(false);
+      setAbsentFilter(false);
+      setRetardFilter(false);
+    }
   };
-
+  
   const getByDate = async (date: String) => {
     await getLogsByToday(date).then((response) => setDataDay(response.data));
     setLoading(false);
