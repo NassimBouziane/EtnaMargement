@@ -1,8 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
+import SelectDropdown from 'react-native-select-dropdown'
+import { updatelogs } from "../../services/logs/logs.services";
+
 
 export default function CardStudent(props: any) {
+  const status = ["Justifié", "Non Justifié", "En Attente"]
+
   const navigation: any = useNavigation();
   let notifColor: any = require("../../assets/notif_red.png");
   if (props.morning == "Present") {
@@ -28,11 +33,18 @@ export default function CardStudent(props: any) {
             }}
             style={{ width: "15%", height: "180%" }}
           />
-          <View className="overflow-hidden w-48">
-            <Text className="pl-2" numberOfLines={1}>
+          <View className="overflow-hidden w-48"><Text className="pl-2" numberOfLines={1}>
               {props.firstname} {props.lastname}
             </Text>
-            {props.date && <Text>  {props.date}</Text>}
+            {props.date && <View><Text>{props.date}</Text>
+            <SelectDropdown
+	data={status}
+  defaultValue={props.status}
+	onSelect={(selectedItem, index) => {
+		updatelogs({status:selectedItem},props.id).then((res) => res)
+    return selectedItem
+	}}
+/></View>}
           </View>
           <Image source={notifColor} />
           <Image source={notifColor2} />

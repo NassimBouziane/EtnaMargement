@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import Modal from "react-native-modal";
 
+
 import Navbar from "../components/Navbar";
 import { Ionicons } from "@expo/vector-icons";
 import CardStudent from "../components/CardStudent";
@@ -51,6 +52,7 @@ export default function StudentsAdmin() {
   const [presentFilter, setPresentFilter] = useState(false);
   const [isLoading, setLoading] = useState(true);
 
+
   const handleclick = (button: string) => {
     const isPresent = button === "Present";
     const isAbsent = button === "Absent";
@@ -68,8 +70,8 @@ export default function StudentsAdmin() {
   };
   
   const getByDate = async (date: String) => {
-    await getLogsByToday(date).then((response) => setDataDay(response.data));
-    setLoading(false);
+    await getLogsByToday(date).then((response) => {setDataDay(response.data),setLoading(false);});
+    
   };
   useEffect(() => {
     const today = new Date().toISOString().substring(0, 10);

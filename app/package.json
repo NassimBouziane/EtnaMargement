@@ -46,6 +46,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-modal": "^13.0.1",
     "react-native-qrcode-svg": "^6.2.0",
+    "react-native-select-dropdown": "^3.3.0",
     "react-native-svg": "13.4.0",
     "react-native-webview": "^11.23.1",
     "react-responsive": "^9.0.2",

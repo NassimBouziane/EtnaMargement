@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
-import Ticketlarge from "../components/TicketLarge";
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { getLogsUser } from "../../services/logs/logs.services";
 import CardStudent from "../components/CardStudent";
+import SelectDropdown from 'react-native-select-dropdown'
+
 interface RouteParams {
   propsToSend: {
     firstname: String;
@@ -22,15 +23,13 @@ export default function StudentsAdminDetails() {
   const route = useRoute<DetailScreenRouteProp>();
   const props = route.params.propsToSend;
   const[data,setData] = useState<any>();
+
   const getLogs = async()=>{
     await getLogsUser(props.login).then((res)=> setData(res))
   }
   useEffect(()=>{
     getLogs()
-    
-
-
-   
+  
 
   },[])
 
@@ -47,15 +46,20 @@ export default function StudentsAdminDetails() {
             {data && data.map((items:any,i: Number)=>{
               
               return(
+                <View key={items.id}>
                 <CardStudent
                 key={items.id}
+                id={items.id}
                 login={items.login}
                 morning={items.morning}
                 afternoon={items.afternoon}
                 firstname={items.firstname}
                 lastname={items.lastname}
                 date={items.date}
-              /> 
+                status={items.status}
+              />
+
+               </View>
               )
             })}
           </ScrollView>
