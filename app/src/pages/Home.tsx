@@ -97,9 +97,9 @@ export default function Home({ navigation }: any) {
                     screenWidth < 768 ? "center" : "space-between",
                 }}
               >
-                <View className="mb-10">
+                <View className="mb-3">
                   <Text
-                    className="text-lg rounded-lg text-center mb-5 py-2 px-3 bg-[#363D97] color-white"
+                    className="text-lg rounded-lg text-center mb-6 py-2 px-3 bg-[#363D97] color-white"
                     style={{
                       fontSize: screenWidth < 768 ? 20 : 32,
                       marginTop: screenWidth < 768 ? "5%" : "8%",
