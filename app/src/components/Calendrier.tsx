@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import {Calendar, LocaleConfig} from 'react-native-calendars';
 import Excel from './Excel';
+
+
 
 LocaleConfig.locales['fr'] = {
   monthNames: [
@@ -25,11 +27,11 @@ LocaleConfig.locales['fr'] = {
 };
 LocaleConfig.defaultLocale = 'fr';
 
-export default function Calendrier(props) {
+export default function Calendrier(props : any) {
 	const [dayChoose, setDayChoose] = useState<any>();
 	const [markedDates, setMarkedDates] = useState({});
 
-  const handleDayPress = (day) => {
+  const handleDayPress = (day: any) => {
     setMarkedDates({ [day.dateString]: { color: 'red' } });
     props.onDayPress && props.onDayPress(day);
   };
@@ -71,9 +73,9 @@ export default function Calendrier(props) {
         disabledArrowColor: '#d9e1e8',
         monthTextColor: 'blue',
         indicatorColor: 'blue',
-        textDayFontFamily: 'monospace',
-        textMonthFontFamily: 'monospace',
-        textDayHeaderFontFamily: 'monospace',
+        // textDayFontFamily: 'monospace',
+        // textMonthFontFamily: 'monospace',
+        // textDayHeaderFontFamily: 'monospace',
         textDayFontWeight: '300',
         textMonthFontWeight: 'bold',
         textDayHeaderFontWeight: '300',
@@ -83,7 +85,7 @@ export default function Calendrier(props) {
       }}
     />
 		{ dayChoose && props.component === 'Excel' && <Excel date={dayChoose.dateString} /> }
-		{ dayChoose && props.component === 'TonTruc' && <Excel date={dayChoose.dateString} /> }
+		{ dayChoose && props.component === 'Logs' && <Text className='text-xl color-white mx-auto'> Vous avez selectionnés le jour {dayChoose.dateString} </Text>}
 		</View>
   );
 };

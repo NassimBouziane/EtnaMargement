@@ -1,22 +1,64 @@
-import React from "react";
-import { Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ScrollView, Text, View } from "react-native";
 import Ticketlarge from "../components/TicketLarge";
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { getLogsUser } from "../../services/logs/logs.services";
+import CardStudent from "../components/CardStudent";
+interface RouteParams {
+  propsToSend: {
+    firstname: String;
+    lastname:String;
+    login:String
+  };
+}
+type RootStackParamList = {
+  Detail: RouteParams;
+};
 
-export default function StudentsAdminDetails(props: any) {
+type DetailScreenRouteProp = RouteProp<RootStackParamList, 'Detail'>;
+
+
+export default function StudentsAdminDetails() {
+  const route = useRoute<DetailScreenRouteProp>();
+  const props = route.params.propsToSend;
+  const[data,setData] = useState<any>();
+  const getLogs = async()=>{
+    await getLogsUser(props.login).then((res)=> setData(res))
+  }
+  useEffect(()=>{
+    getLogs()
+    
+
+
+   
+
+  },[])
+
   return (
     <View>
       <View className="ml-5">
         <View className="flex flex-row gap-1 mt-5">
-          <Text className="text-xl">Mosbah</Text>
-          <Text className="text-xl">caca</Text>
+          <Text className="text-xl">{props.firstname}</Text>
+          <Text className="text-xl">{props.lastname}</Text>
         </View>
         <View className="mt-5">
           <Text className="text-xl">Tickets</Text>
-          <View>
-            <Ticketlarge />
-            <Ticketlarge />
-            <Ticketlarge />
-          </View>
+          <ScrollView>
+            {data && data.map((items:any,i: Number)=>{
+              
+              return(
+                <CardStudent
+                key={items.id}
+                login={items.login}
+                morning={items.morning}
+                afternoon={items.afternoon}
+                firstname={items.firstname}
+                lastname={items.lastname}
+                date={items.date}
+              /> 
+              )
+            })}
+          </ScrollView>
         </View>
         <View className="mt-5">
           <Text className="text-xl">Présence</Text>

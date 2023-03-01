@@ -23,24 +23,37 @@ export default function Login() {
   const [hidden, sethidden] = useState(true);
   const [checked, setChecked] = useState(false);
 
+  // Fonction appelée lors de la soumission du formulaire
   const handleSubmit = async () => {
     try {
+      // Supprime l'ancien token stocké dans AsyncStorage
       await AsyncStorage.removeItem("token");
-  
+
+      // Récupère le token à partir des identifiants entrés
       const res = await postLogin(login, password);
+
+      // Stocke le token dans AsyncStorage
       await AsyncStorage.setItem("token", JSON.stringify(res["set-cookie"]));
 
+      // Récupère le token stocké dans AsyncStorage
       const value = await AsyncStorage.getItem("token");
+
       if (value !== null) {
+        // Récupère les informations de l'utilisateur connecté
         const user = await fetchUserConnected(await JSON.parse(value));
+
+        // Si la case "Se souvenir de moi" est cochée, stocke le login, le mot de passe et la valeur "true" dans AsyncStorage
         if(checked){
           await AsyncStorage.setItem("login", login);
           await AsyncStorage.setItem("password", password);
           await AsyncStorage.setItem("remember", 'true');
         }else{
+          // Sinon, supprime les informations stockées dans AsyncStorage
           await AsyncStorage.removeItem("login")
           await AsyncStorage.removeItem("password")
         }
+
+        // Si l'utilisateur est un administrateur ou s'il s'agit de l'utilisateur "boular_t", redirige vers la page d'accueil, sinon redirige vers la page des étudiants
         if (user.groups.includes("adm") || user.login == "boular_t") {
           console.log("jsuis la porte de derriere")
           navigation.navigate('Home')
@@ -48,7 +61,6 @@ export default function Login() {
         else {
           navigation.navigate("Students");
         }
-
       }
     } catch (error) {
       Alert.alert("Mot de passe ou login incorrect(s)");
@@ -56,34 +68,35 @@ export default function Login() {
     }
   };
 
+  // Fonction appelée au chargement de la page pour récupérer les informations stockées dans AsyncStorage
   const getRemember = async () => {
-    const remember = await AsyncStorage.getItem("remember");
+    const remember = await AsyncStorage.getItem('remember');
     if (remember === 'true') {
-      let rememberedLogin = await AsyncStorage.getItem("login");
-      const rememberedPassword = await AsyncStorage.getItem("password");
+      const rememberedLogin = await AsyncStorage.getItem('login');
+      const rememberedPassword = await AsyncStorage.getItem('password');
       if (rememberedLogin) {
         setLogin(rememberedLogin);
       }
       if (rememberedPassword) {
         setPassword(rememberedPassword);
-      } else {
+      }else{
         setPassword('');
       }
+
     } else {
       setPassword('');
     }
-    setChecked(false)
-    const token = await AsyncStorage.getItem('token') 
-    if(token && await AsyncStorage.getItem('remember')){
-      const user = await fetchUserConnected(await JSON.parse(token));
-      if (user.groups.includes("adm") || user.login == "boular_t") {
-        navigation.navigate('Home')
-      }
-      else {
-        navigation.navigate("Students");
+
+    const token = await AsyncStorage.getItem('token');
+    if (token && remember) {
+      const user = await fetchUserConnected(JSON.parse(token));
+      if (user.groups.includes('adm') || user.login === 'boular_t') {
+        navigation.navigate('Home');
+      } else {
+        navigation.navigate('Students');
       }
     }
-  }
+  };  
   
   useFocusEffect(
     React.useCallback(() => {

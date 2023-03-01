@@ -79,9 +79,6 @@ function App() {
             animation: "none",
           }}
         />
-
-
-
         <Stack.Screen
           name="Students"
           component={Students}

@@ -61,3 +61,11 @@ export const getLogsByToday = async(date: String) =>{
     // THIS GETS STATS
     return await api.get('/logs/today/'+date).then((response) => response)
 }
+
+export const getLogsByLogin = async(login : String) =>{
+    return await api.get('/logs/stats/'+login).then((response) => response)
+}
+
+export const getLogsUser = async(login:String) =>{
+    return await api.get('/logs/'+login).then((response)=>response.data).catch((e)=>console.log("[FAIL]:",e))
+}
