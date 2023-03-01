@@ -67,21 +67,9 @@ export default function StudentsAdmin() {
     getByDate(today);
   }, []);
 
-  const [searchText, setSearchText] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
 
-  const handleSearch = () => {
-    console.log(`Recherche: ${searchText}`);
-    // implémenter la logique de la recherche
-  };
-  const getUserInfo = async (login: String) => {
-    const token: any = await AsyncStorage.getItem("token");
-    const user = await getUserByLogin(login, await JSON.parse(token));
-    return user;
-
-    //firstname={user.firstname ? user.firstname : ""} lastname={user.lastname ? user.lastname : ""}
-  };
   return (
     <View>
       <View className="flex flex-row h-full w-full ">
@@ -98,7 +86,6 @@ export default function StudentsAdmin() {
                 className="flex-1 text-gray-700 ml-5"
                 placeholder="Rechercher par login"
                 onChangeText={(text) => setSearchValue(text)}
-                onSubmitEditing={handleSearch}
                 value={searchValue}
               />
               <Pressable onPress={() =>{setModalVisible(!modalVisible)}}><Image
@@ -135,7 +122,7 @@ export default function StudentsAdmin() {
             >
           <Modal isVisible={modalVisible} onBackdropPress={() => {setModalVisible(false)}}>
         <View className="flex">
-          <Calendrier component="Logs" onDayPress={(e: Calendar_Date)=> {getByDate(e.dateString)}}/>
+          <Calendrier component="Logs" onDayPress={(e: Calendar_Date)=> {getByDate(e.dateString),handleclick('reset')}}/>
 
 
         </View>
