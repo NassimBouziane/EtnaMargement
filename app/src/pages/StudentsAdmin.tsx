@@ -85,116 +85,114 @@ export default function StudentsAdmin() {
 
   return (
     <View>
-      <View className="flex flex-row h-full w-full ">
-        <Navbar />
-        <View>
-          <View className="ml-5">
-            <View className="flex-row w-[280px] items-center bg-gray-200 px-3 py-3 rounded-xl mt-5 mb-3">
-              <Ionicons
-                name="search-outline"
-                size={24}
-                className="text-gray-500"
+      <View className="flex flex-col h-full w-full">
+        <View className="ml-5">
+          <View className="flex-row w-[280px] items-center bg-gray-200 px-3 py-3 rounded-xl mt-5 mb-3">
+            <Ionicons
+              name="search-outline"
+              size={24}
+              className="text-gray-500"
+            />
+            <TextInput
+              className="flex-1 text-gray-700 ml-5"
+              placeholder="Rechercher par login"
+              onChangeText={(text) => setSearchValue(text)}
+              value={searchValue}
+            />
+            <Pressable
+              onPress={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Image
+                source={require("../../assets/calendar.png")}
+                style={{ width: 32, height: 32 }}
               />
-              <TextInput
-                className="flex-1 text-gray-700 ml-5"
-                placeholder="Rechercher par login"
-                onChangeText={(text) => setSearchValue(text)}
-                value={searchValue}
-              />
-              <Pressable
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                }}
-              >
-                <Image
-                  source={require("../../assets/calendar.png")}
-                  style={{ width: 32, height: 32 }}
-                />
+            </Pressable>
+          </View>
+          <View className="flex flex-row w-full gap-6 ">
+            <View className="bg-[#92F866] px-4 py-2 rounded-xl">
+              <Pressable onPress={() => handleclick("Present")}>
+                <Text className="text-lg">Prés.</Text>
               </Pressable>
             </View>
-            <View className="flex flex-row w-full gap-6 ">
-              <View className="bg-[#92F866] px-4 py-2 rounded-xl">
-                <Pressable onPress={() => handleclick("Present")}>
-                  <Text className="text-lg">Prés.</Text>
-                </Pressable>
-              </View>
-              <View className="bg-[#FBB733] px-4 py-2 rounded-xl">
-                <Pressable onPress={() => handleclick("Retard")}>
-                  <Text className="text-lg">Retard</Text>
-                </Pressable>
-              </View>
-              <View className="bg-[#F04C4C] px-4 py-2 rounded-xl">
-                <Pressable onPress={() => handleclick("Absent")}>
-                  <Text className="text-lg">Abs.</Text>
-                </Pressable>
-              </View>
+            <View className="bg-[#FBB733] px-4 py-2 rounded-xl">
+              <Pressable onPress={() => handleclick("Retard")}>
+                <Text className="text-lg">Retard</Text>
+              </Pressable>
+            </View>
+            <View className="bg-[#F04C4C] px-4 py-2 rounded-xl">
+              <Pressable onPress={() => handleclick("Absent")}>
+                <Text className="text-lg">Abs.</Text>
+              </Pressable>
             </View>
           </View>
-          {isLoading ? (
-            <ActivityIndicator size="large" color="blue" className="mt-64" />
-          ) : (
-            <ScrollView
-              className="w-full h-full ml-5 mt-3"
-              showsVerticalScrollIndicator={false}
-            >
-              <Modal
-                isVisible={modalVisible}
-                onBackdropPress={() => {
-                  setModalVisible(false);
-                }}
-              >
-                <View className="flex">
-                  <Calendrier
-                    component="Logs"
-                    onDayPress={(e: Calendar_Date) => {
-                      getByDate(e.dateString), handleclick("reset");
-                    }}
-                  />
-                </View>
-              </Modal>
-              {dataDay &&
-                dataDay
-                  .filter((item: Logs) => {
-                    if (
-                      absentFilter &&
-                      item.morning !== "Absent" &&
-                      item.afternoon !== "Absent"
-                    ) {
-                      return false;
-                    }
-                    if (
-                      retardFilter &&
-                      item.morning !== "Retard" &&
-                      item.afternoon !== "Retard"
-                    ) {
-                      return false;
-                    }
-                    if (
-                      presentFilter &&
-                      item.morning !== "Present" &&
-                      item.afternoon !== "Present"
-                    ) {
-                      return false;
-                    }
-                    return item.login
-                      .toLowerCase()
-                      .includes(searchValue.toLowerCase());
-                  })
-                  .map((items: Logs, i: Number) => {
-                    return (
-                      <CardStudent
-                        key={items.id}
-                        login={items.login}
-                        morning={items.morning}
-                        afternoon={items.afternoon}
-                        firstname={items.firstname}
-                        lastname={items.lastname}
-                      />
-                    );
-                  })}
-            </ScrollView>
-          )}
         </View>
+        {isLoading ? (
+          <ActivityIndicator size="large" color="blue" className="mt-64" />
+        ) : (
+          <ScrollView
+            className="w-full h-full ml-5 mt-3"
+            showsVerticalScrollIndicator={false}
+          >
+            <Modal
+              isVisible={modalVisible}
+              onBackdropPress={() => {
+                setModalVisible(false);
+              }}
+            >
+              <View className="flex">
+                <Calendrier
+                  component="Logs"
+                  onDayPress={(e: Calendar_Date) => {
+                    getByDate(e.dateString), handleclick("reset");
+                  }}
+                />
+              </View>
+            </Modal>
+            {dataDay &&
+              dataDay
+                .filter((item: Logs) => {
+                  if (
+                    absentFilter &&
+                    item.morning !== "Absent" &&
+                    item.afternoon !== "Absent"
+                  ) {
+                    return false;
+                  }
+                  if (
+                    retardFilter &&
+                    item.morning !== "Retard" &&
+                    item.afternoon !== "Retard"
+                  ) {
+                    return false;
+                  }
+                  if (
+                    presentFilter &&
+                    item.morning !== "Present" &&
+                    item.afternoon !== "Present"
+                  ) {
+                    return false;
+                  }
+                  return item.login
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase());
+                })
+                .map((items: Logs, i: Number) => {
+                  return (
+                    <CardStudent
+                      key={items.id}
+                      login={items.login}
+                      morning={items.morning}
+                      afternoon={items.afternoon}
+                      firstname={items.firstname}
+                      lastname={items.lastname}
+                    />
+                  );
+                })}
+          </ScrollView>
+        )}
+        <Navbar />
       </View>
     </View>
   );
