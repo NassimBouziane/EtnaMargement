@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
 });
 
 export default function Excel(props) {
-
     const generateShareableExcel = async (): Promise<string> => {
         const date = new Date(props.date);
         const fileName = date.toISOString().substring(0,10)+'_etnamargement_Sheet.xlsx';
@@ -122,7 +121,7 @@ export default function Excel(props) {
     					worksheet.getCell(`C${index + 2}`).alignment = { vertical: 'middle', horizontal: 'center' };
 							worksheet.getCell(`D${index + 2}`).alignment = { vertical: 'middle', horizontal: 'center' };
     					worksheet.getCell(`E${index + 2}`).alignment = { vertical: 'middle', horizontal: 'center' };
-							
+
 					});
 					} catch (error) {
 					console.error(error);
@@ -157,7 +156,8 @@ export default function Excel(props) {
           });
       }
   return (
-    <View style={styles.container}>
+    <View>
+			{console.log(props.date)}
       <Button title='Generate Excel' onPress={shareExcel} />
     </View>
   );

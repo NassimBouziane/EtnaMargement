@@ -19,9 +19,13 @@ import {
   fetchUserConnected,
   getUserByLogin,
 } from "../../services/users/users.services";
+import Calendrier from "../components/Calendrier";
+
+
 
 export default function Home({ navigation }: any) {
   const [user, setUser] = React.useState<any>("");
+  const [chooseDate, setChooseDate] = useState(false)
   const UserInfo = async () => {
     const token: any = await AsyncStorage.getItem("token");
     const user_logs = await fetchUserConnected(await JSON.parse(token));
@@ -29,6 +33,7 @@ export default function Home({ navigation }: any) {
 
     setUser(user);
   };
+  
 
   useEffect(() => {
     UserInfo();
@@ -43,6 +48,15 @@ export default function Home({ navigation }: any) {
       setLoading(false);
     }, 100); // Temps de chargement de 3 secondes
   }, []);
+  if(chooseDate){
+    return (
+      <View>
+        <Text> Selectionner le jour pour l'export du excel</Text>
+        <Calendrier component='Excel'/>
+        <Button title='back' onPress={() =>{setChooseDate(false)}}/>
+      </View>
+    )
+  }
   const screenWidth = Dimensions.get("window").width;
   return (
     <View>
@@ -164,7 +178,7 @@ export default function Home({ navigation }: any) {
                     image={require("./../../assets/scanIcon2.png")}
                   />
                 </Pressable>
-                <Pressable onPress={() => navigation.navigate("Logs")}>
+                <Pressable onPress={() => setChooseDate(true)}>
                   <CardActions
                     title="Export"
                     image={require("./../../assets/logsIcon.png")}
