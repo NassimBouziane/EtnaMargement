@@ -7,6 +7,7 @@ import {
   View,
   Image,
   ActivityIndicator,
+  RefreshControl,
 } from "react-native";
 import CardActions from "../components/CardActions";
 import Navbar from "../components/Navbar";
@@ -29,6 +30,7 @@ export default function Home({ navigation }: any) {
   const [tickets, setTickets] = React.useState<any>();
   const [lentickets, setLentickets] = React.useState<any>(3);
   const [buttonlentickets, setButtonlentickets] = React.useState<any>(true);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   const UserInfo = async () => {
     const token: any = await AsyncStorage.getItem("token");
@@ -39,6 +41,17 @@ export default function Home({ navigation }: any) {
       setTickets(res);
     });
   };
+  const onRefresh = React.useCallback(() => {
+
+    setRefreshing(true);
+    // reload data
+    UserInfo();
+    setLentickets(3);
+    setButtonlentickets(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   useEffect(() => {
     UserInfo();
@@ -78,6 +91,9 @@ export default function Home({ navigation }: any) {
           <ScrollView
             className="w-full h-full"
             showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
           >
             <View
               className="flex w-full h-full rounded-3xl"
