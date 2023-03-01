@@ -47,7 +47,7 @@ export default function CardStudent(props: any) {
             <Text className="pl-4 text-base" numberOfLines={1}>
               {props.firstname} {props.lastname}
             </Text>
-            {props.date && <View><Text>{props.date}</Text>
+            {props.date && <View><Text>{"    "}{props.date}</Text>
             <SelectDropdown
 	data={status}
   defaultValue={props.status}
@@ -56,9 +56,10 @@ export default function CardStudent(props: any) {
     return selectedItem
 	}}
 /></View>}
-          </View>
+          </View> 
           <Image source={notifColor} />
           <Image source={notifColor2} />
+
         </View>
       </Pressable>
     </View>
