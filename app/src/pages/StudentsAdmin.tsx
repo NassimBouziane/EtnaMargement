@@ -127,6 +127,10 @@ const handleclick =(button: String)=>{
 
               </View>
             </View>
+          </View>
+          {isLoading ? (
+            <ActivityIndicator size="large" color="blue" className="mt-64" />
+          ) : (
             <ScrollView
               className=" h-full ml-5"
               showsVerticalScrollIndicator={false}
@@ -158,9 +162,9 @@ const handleclick =(button: String)=>{
                
           }) }
             </ScrollView>
-          </View>
+          )}
         </View>
-      )}
+      </View>
     </View>
   );
 }
