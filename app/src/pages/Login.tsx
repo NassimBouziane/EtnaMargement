@@ -19,6 +19,9 @@ import { fetchUserConnected, postLogin } from "../../services/users/users.servic
 const { height, width } = Dimensions.get("window");
 
 // TODO : <Button title="reveal" onPress={() => {sethidden(current => !current)}}></Button>
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 export default function Login() {
   const [login, setLogin] = useState<any>('');
@@ -61,6 +64,7 @@ export default function Login() {
   };
 
   const getRemember = async () => {
+    await sleep(3000)
     const remember = await AsyncStorage.getItem("remember");
     if (remember === 'true') {
       let rememberedLogin = await AsyncStorage.getItem("login");
@@ -90,11 +94,13 @@ export default function Login() {
       }
     }
   }
-
+  
+  
+  // Utilisation :
   useFocusEffect(
     React.useCallback(() => {
       getRemember();
-    
+
       return () => {
 
       };

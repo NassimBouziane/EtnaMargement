@@ -3,11 +3,12 @@ import React, { useState } from "react";
 import { Image, Pressable, Text, View, Button } from "react-native";
 import Navbar from "../components/Navbar";
 import { NativeModules } from "react-native";
+import Calendrier from "../components/Calendrier";
 // import { extendTheme, withColorScheme } from "native-base";
 
 export default function Settings() {
   const [isDarkModeEnabled, setIsDarkModeEnabled] = useState(false);
-
+  const [chooseDate, setChooseDate] = useState(false)
   const toggleDarkMode = () => {
     if (isDarkModeEnabled) {
       NativeModules.DevSettings.reload();
@@ -19,6 +20,16 @@ export default function Settings() {
   // const theme = extendTheme(
   //   withColorScheme({ colorScheme: isDarkModeEnabled ? "dark" : "light" })
   // );
+  if(chooseDate){
+    return (
+      <View>
+        <Text> Selectionner le jour pour l'export du excel</Text>
+        <Calendrier component='Excel'/>
+        <Button title='back' onPress={() =>{setChooseDate(false)}}/>
+      </View>
+    )
+  }
+
   return (
     <View className="flex flex-row h-full">
       <Navbar />
@@ -37,7 +48,9 @@ export default function Settings() {
                 source={require("../../assets/dataIcon.png")}
                 className="w-6 h-6 mr-2"
               />
-              <Text className="my-5 text-xl">Exporter les données</Text>
+              <Pressable onPress={()=>{setChooseDate(true)}}>
+                <Text className="my-5 text-xl">Exporter les données</Text>
+              </Pressable>
             </View>
             <View className="flex flex-row items-center">
               <Image
