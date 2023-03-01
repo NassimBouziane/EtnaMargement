@@ -41,7 +41,7 @@ export default function CardStudent(props: any) {
             source={{
               uri: `https://auth.etna-alternance.net/api/users/${props.login}/photo`,
             }}
-            style={{ width: "20%", height: "260%" }}
+            style={{ width: "20%",  height: props.date ? "100%" : "220%" }}
           />
           <View className="overflow-hidden w-48 mr-10">
             <Text className="pl-4 text-base" numberOfLines={1}>
