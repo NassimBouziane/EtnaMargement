@@ -7,7 +7,8 @@ import {
   ScrollView,
   Text,
   TextInput,
-  View, Image
+  View,
+  Image,
 } from "react-native";
 import Modal from "react-native-modal";
 
@@ -22,7 +23,6 @@ import {
 import ReactNativeModal from "react-native-modal";
 import Calendrier from "../components/Calendrier";
 
-
 interface Logs {
   id: any;
   login: String;
@@ -35,12 +35,12 @@ interface Logs {
   firstname: String;
   lastname: String;
 }
- interface Calendar_Date{
-  dateString:String,
-  day:String,
-  month:String,
-  timestamp:Number,
-  year:Number
+interface Calendar_Date {
+  dateString: String;
+  day: String;
+  month: String;
+  timestamp: Number;
+  year: Number;
 }
 
 export default function StudentsAdmin() {
@@ -55,8 +55,12 @@ export default function StudentsAdmin() {
     const isPresent = button === "Present";
     const isAbsent = button === "Absent";
     const isRetard = button === "Retard";
-  
-    if ((isPresent && !presentFilter) || (isAbsent && !absentFilter) || (isRetard && !retardFilter)) {
+
+    if (
+      (isPresent && !presentFilter) ||
+      (isAbsent && !absentFilter) ||
+      (isRetard && !retardFilter)
+    ) {
       setPresentFilter(isPresent);
       setAbsentFilter(isAbsent);
       setRetardFilter(isRetard);
@@ -66,7 +70,7 @@ export default function StudentsAdmin() {
       setRetardFilter(false);
     }
   };
-  
+
   const getByDate = async (date: String) => {
     await getLogsByToday(date).then((response) => setDataDay(response.data));
     setLoading(false);
@@ -78,7 +82,6 @@ export default function StudentsAdmin() {
   }, []);
 
   const [modalVisible, setModalVisible] = useState(false);
-
 
   return (
     <View>
@@ -98,10 +101,16 @@ export default function StudentsAdmin() {
                 onChangeText={(text) => setSearchValue(text)}
                 value={searchValue}
               />
-              <Pressable onPress={() =>{setModalVisible(!modalVisible)}}><Image
-            source={require("../../assets/calendar.png")}
-            style={{ width: 32, height: 32 }}
-          /></Pressable>
+              <Pressable
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <Image
+                  source={require("../../assets/calendar.png")}
+                  style={{ width: 32, height: 32 }}
+                />
+              </Pressable>
             </View>
             <View className="flex flex-row w-full gap-6 ">
               <View className="bg-[#92F866] px-4 py-2 rounded-xl">
@@ -123,20 +132,26 @@ export default function StudentsAdmin() {
           </View>
           {isLoading ? (
             <ActivityIndicator size="large" color="blue" className="mt-64" />
-
-
           ) : (
             <ScrollView
               className="w-full h-full ml-5 mt-3"
               showsVerticalScrollIndicator={false}
             >
-          <Modal isVisible={modalVisible} onBackdropPress={() => {setModalVisible(false)}}>
-        <View className="flex">
-          <Calendrier component="Logs" onDayPress={(e: Calendar_Date)=> {getByDate(e.dateString),handleclick('reset')}}/>
-
-
-        </View>
-      </Modal>
+              <Modal
+                isVisible={modalVisible}
+                onBackdropPress={() => {
+                  setModalVisible(false);
+                }}
+              >
+                <View className="flex">
+                  <Calendrier
+                    component="Logs"
+                    onDayPress={(e: Calendar_Date) => {
+                      getByDate(e.dateString), handleclick("reset");
+                    }}
+                  />
+                </View>
+              </Modal>
               {dataDay &&
                 dataDay
                   .filter((item: Logs) => {

@@ -20,19 +20,26 @@ import {
   getUserByLogin,
 } from "../../services/users/users.services";
 import Calendrier from "../components/Calendrier";
-
-
+import CardTicket from "../components/CardTicket";
+import { getTicket } from "../../services/etna/etna.services";
 
 export default function Home({ navigation }: any) {
   const [user, setUser] = React.useState<any>("");
-  const [chooseDate, setChooseDate] = useState(false)
+  const [chooseDate, setChooseDate] = useState(false);
+  const [tickets, setTickets] = React.useState<any>();
+  const [lentickets, setLentickets] = React.useState<any>(3);
+  const [buttonlentickets, setButtonlentickets] = React.useState<any>(true);
+
   const UserInfo = async () => {
     const token: any = await AsyncStorage.getItem("token");
     const user_logs = await fetchUserConnected(await JSON.parse(token));
     const user = await getUserByLogin(user_logs.login, await JSON.parse(token));
     setUser(user);
+    const tickets = await getTicket(await JSON.parse(token)).then((res) => {
+      setTickets(res);
+    });
   };
-  
+
   useEffect(() => {
     UserInfo();
     // user change => re-render
@@ -47,21 +54,24 @@ export default function Home({ navigation }: any) {
       setLoading(false);
     }, 100); // Temps de chargement de 3 secondes
   }, []);
-
-  if(chooseDate){
+  if (chooseDate) {
     return (
       <View>
         <Text> Selectionner le jour pour l'export du excel</Text>
-        <Calendrier component='Excel'/>
-        <Button title='back' onPress={() =>{setChooseDate(false)}}/>
+        <Calendrier component="Excel" />
+        <Button
+          title="back"
+          onPress={() => {
+            setChooseDate(false);
+          }}
+        />
       </View>
-    )
+    );
   }
 
   return (
     <View>
-      <View className="flex flex-row h-full w-full ">
-        <Navbar />
+      <View className="flex flex-col h-full w-full">
         {isLoading ? (
           <ActivityIndicator size="large" color="blue" className="mt-64" />
         ) : (
@@ -108,9 +118,6 @@ export default function Home({ navigation }: any) {
                     Graphique journalier
                   </Text>
                   <GraphDay />
-                  {/* <Image
-                    source={require("../../assets/graphPlaceholder.png")}
-                  /> */}
                 </View>
                 <View
                   className="right-5"
@@ -118,24 +125,61 @@ export default function Home({ navigation }: any) {
                     right: screenWidth < 768 ? "0%" : "5%",
                   }}
                 >
-                  <Text
-                    className="text-lg rounded-lg text-center mb-5 py-2 px-3 bg-[#363D97] color-white"
-                    style={{
-                      fontSize: screenWidth < 768 ? 20 : 32,
-                      marginTop: screenWidth < 768 ? "0%" : "8%",
-                    }}
-                  >
-                    Derniers tickets
-                  </Text>
-                  <Ticket />
-                  <Ticket />
-                  <Ticket />
-                  <Text className="w-fit text-lg text-center mt-2 py-2 px-2 rounded-2xl bg-gray-300">
-                    Voir plus
-                  </Text>
+                  <View className="flex flex-row mb-5 justify-center mx-0 items-center py-2 px-3 bg-[#363D97] rounded-xl">
+                    <Text
+                      className="bg-red-500 text-white py-1 px-2 rounded-2xl"
+                      style={{
+                        fontSize: screenWidth < 768 ? 14 : 32,
+                      }}
+                    >
+                      {tickets ? tickets.data.length : ""}
+                    </Text>
+                    <Text className="ml-5 text-xl text-white">Tickets</Text>
+                  </View>
+
+                  <View className="flex h-fit w-full mx-auto mt-[10px] rounded-lg">
+                    <View style={{ alignSelf: "center" }}>
+                      {tickets &&
+                        tickets.data
+                          .slice(0, lentickets)
+                          .map((ticket: any) => (
+                            <CardTicket
+                              key={ticket.id}
+                              login={ticket?.creator?.login || ""}
+                              name={
+                                user
+                                  ? `${user.lastname
+                                      .charAt(0)
+                                      .toUpperCase()}${user.lastname
+                                      .slice(1)
+                                      .toLowerCase()} ${user.firstname}`
+                                  : "Lastname"
+                              }
+                              title={ticket.title}
+                              time={`à: ${ticket.created_at.split(" ")[1]}`}
+                              status={ticket.status}
+                            />
+                          ))}
+                    </View>
+                    {buttonlentickets && (
+                      <Pressable
+                        className="w-fit text-lg text-center mt-2 py-2 px-2 rounded-2xl bg-gray-300 active:bg-slate-400"
+                        onPress={() => {
+                          setLentickets(lentickets + 3);
+                          if (lentickets + 3 >= tickets.data.length) {
+                            setButtonlentickets(false);
+                          }
+                        }}
+                      >
+                        <Text className="w-full text-center">
+                          Afficher plus
+                        </Text>
+                      </Pressable>
+                    )}
+                  </View>
                 </View>
               </View>
-              <View className="mt-2 mb-2">
+              <View className="mt-10 mb-2">
                 <View
                   className="w-full"
                   style={{
@@ -143,22 +187,29 @@ export default function Home({ navigation }: any) {
                   }}
                 >
                   <Text
-                    className="text-3xl mb-5"
+                    className="text-lg rounded-lg text-center mb-6 py-2 px-3 bg-[#363D97] color-white"
                     style={{
-                      fontSize: screenWidth < 768 ? 24 : 32,
+                      fontSize: screenWidth < 768 ? 20 : 32,
                       marginTop: screenWidth < 768 ? "5%" : "8%",
                     }}
                   >
                     Graphique de la semaine
                   </Text>
-                  {/* <Image
-                    source={require("../../assets/graphPlaceholder.png")}
-                  /> */}
 
-                  <GraphWeek />
+                  <View className="flex h-[300px] mx-auto rounded-lg justify-center items-center">
+                    <GraphWeek />
+                  </View>
                 </View>
-                <Text className="text-2xl">Actions rapides</Text>
               </View>
+              <Text
+                className="text-lg rounded-lg text-center mb-8 py-2 px-3 bg-[#363D97] color-white"
+                style={{
+                  fontSize: screenWidth < 768 ? 20 : 32,
+                  marginTop: screenWidth < 768 ? "0%" : "8%",
+                }}
+              >
+                Actions rapides
+              </Text>
               <View className="flex flex-row flex-wrap justify-between w-full mb-12">
                 <Pressable onPress={() => navigation.navigate("Tickets")}>
                   <CardActions
@@ -188,6 +239,7 @@ export default function Home({ navigation }: any) {
             </View>
           </ScrollView>
         )}
+        <Navbar />
       </View>
     </View>
   );

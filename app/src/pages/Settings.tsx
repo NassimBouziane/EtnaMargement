@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { Image, Pressable, Text, View, Button } from "react-native";
+import { Image, Pressable, Text, View, Button, ScrollView } from "react-native";
 import Navbar from "../components/Navbar";
 import { NativeModules } from "react-native";
 import Calendrier from "../components/Calendrier";
@@ -8,7 +8,7 @@ import Calendrier from "../components/Calendrier";
 
 export default function Settings() {
   const [isDarkModeEnabled, setIsDarkModeEnabled] = useState(false);
-  const [chooseDate, setChooseDate] = useState(false)
+  const [chooseDate, setChooseDate] = useState(false);
   const toggleDarkMode = () => {
     if (isDarkModeEnabled) {
       NativeModules.DevSettings.reload();
@@ -20,26 +20,30 @@ export default function Settings() {
   // const theme = extendTheme(
   //   withColorScheme({ colorScheme: isDarkModeEnabled ? "dark" : "light" })
   // );
-  if(chooseDate){
+  if (chooseDate) {
     return (
       <View>
         <Text> Selectionner le jour pour l'export du excel</Text>
-        <Calendrier component='Excel'/>
-        <Button title='back' onPress={() =>{setChooseDate(false)}}/>
+        <Calendrier component="Excel" />
+        <Button
+          title="back"
+          onPress={() => {
+            setChooseDate(false);
+          }}
+        />
       </View>
-    )
+    );
   }
 
   return (
-    <View className="flex flex-row h-full">
-      <Navbar />
-      <View className="mt-6 ml-5">
+    <View className="flex flex-col h-full w-full">
+      <ScrollView className="mt-3 ml-5" showsVerticalScrollIndicator={false}>
         <View>
           <Text className="mt-3 mb-3 text-xl font-semibold">
             Paramètres généraux
           </Text>
           <View
-            className="h-[1px] w-64 bg-black  mb-5
+            className="h-[1px] w-64 bg-black  mb-3
           "
           ></View>
           <View>
@@ -48,7 +52,11 @@ export default function Settings() {
                 source={require("../../assets/dataIcon.png")}
                 className="w-6 h-6 mr-2"
               />
-              <Pressable onPress={()=>{setChooseDate(true)}}>
+              <Pressable
+                onPress={() => {
+                  setChooseDate(true);
+                }}
+              >
                 <Text className="my-5 text-xl">Exporter les données</Text>
               </Pressable>
             </View>
@@ -72,7 +80,7 @@ export default function Settings() {
           </View>
           <Text className="mt-10 mb-3 text-xl font-semibold">Compte</Text>
           <View
-            className="h-[1px] w-64 bg-black mb-5
+            className="h-[1px] w-64 bg-black mb-3
           "
           ></View>
           <View>
@@ -102,13 +110,14 @@ export default function Settings() {
           ></View>
           <View>
             <Text>Version 1.0</Text>
-            <Text className="w-1/2">
+            <Text className="w-10/12">
               Contributeurs : Thomas BOULARD, Nassim Abderaouf BOUZIANE, Paul
               MENUT, Raphaël PLASSART
             </Text>
           </View>
         </View>
-      </View>
+      </ScrollView>
+      <Navbar />
     </View>
   );
 }

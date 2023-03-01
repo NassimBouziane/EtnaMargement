@@ -19,20 +19,30 @@ export default function CardStudent(props: any) {
 
   return (
     <View className="bg-[#D9D9D9] w-[300px] rounded-xl my-2">
-      <Pressable onPress={() => navigation.navigate("Detail", {propsToSend:{firstname:props.firstname, lastname:props.lastname, login:props.login}})}>
+      <Pressable
+        onPress={() =>
+          navigation.navigate("Detail", {
+            propsToSend: {
+              firstname: props.firstname,
+              lastname: props.lastname,
+              login: props.login,
+            },
+          })
+        }
+      >
         <View className="flex flex-row gap-1 py-5 ml-3 items-center">
           <Image
             className="rounded-lg w-64"
             source={{
               uri: `https://auth.etna-alternance.net/api/users/${props.login}/photo`,
             }}
-            style={{ width: "15%", height: "180%" }}
+            style={{ width: "20%", height: "260%" }}
           />
-          <View className="overflow-hidden w-48">
-            <Text className="pl-2" numberOfLines={1}>
+          <View className="overflow-hidden w-48 mr-10">
+            <Text className="pl-4 text-base" numberOfLines={1}>
               {props.firstname} {props.lastname}
             </Text>
-            {props.date && <Text>  {props.date}</Text>}
+            {props.date && <Text> {props.date}</Text>}
           </View>
           <Image source={notifColor} />
           <Image source={notifColor2} />
