@@ -21,7 +21,7 @@ export default function GraphWeek() {
       navigation.getState().routes[navigation.getState().index].name
     );
     if (currentPage === "Home") {
-      setGraphWidth(100);
+      setGraphWidth(50);
     }
     [];
   });

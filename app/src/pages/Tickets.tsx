@@ -60,7 +60,7 @@ export default function Tickets() {
             <ActivityIndicator size="large" color="blue" className="mt-64" />
           ) : (
             <View>
-              <View className="flex flex-row mb-5 justify-center mx-0 items-center py-2 px-3 bg-[#363D97] rounded-xl">
+              <View className=" mx-auto text-center w-10/12 mt-3 flex flex-row mb-3 justify-center items-center py-2 px-3 bg-[#363D97] rounded-xl">
                 <Text
                   className="bg-red-500 text-white py-1 px-2 rounded-2xl"
                   style={{
@@ -72,7 +72,7 @@ export default function Tickets() {
                 <Text className="ml-5 text-xl text-white">Tickets</Text>
               </View>
 
-              <View className="flex h-fit w-full mx-auto mt-[10px] rounded-lg">
+              <View className="flex h-fit w-full mx-auto mt-[10px] rounded-lg mb-5">
                 <View style={{ alignSelf: "center" }}>
                   {tickets &&
                     tickets.data
@@ -97,17 +97,19 @@ export default function Tickets() {
                       ))}
                 </View>
                 {buttonlentickets && (
-                  <Pressable
-                    className="w-fit text-lg text-center mt-2 py-2 px-2 rounded-2xl bg-gray-300 active:bg-slate-400"
-                    onPress={() => {
-                      setLentickets(lentickets + 3);
-                      if (lentickets + 3 >= tickets.data.length) {
-                        setButtonlentickets(false);
-                      }
-                    }}
-                  >
-                    <Text className="w-full text-center">Afficher plus</Text>
-                  </Pressable>
+                  <View className="flex justify-center">
+                    <Pressable
+                      className="mx-auto w-3/4 text-lg text-center mt-2 py-2 px-2 rounded-2xl bg-gray-300 active:bg-slate-400"
+                      onPress={() => {
+                        setLentickets(lentickets + 3);
+                        if (lentickets + 3 >= tickets.data.length) {
+                          setButtonlentickets(false);
+                        }
+                      }}
+                    >
+                      <Text className="text-center">Afficher plus</Text>
+                    </Pressable>
+                  </View>
                 )}
               </View>
             </View>
