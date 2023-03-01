@@ -50,7 +50,7 @@ export default function Login() {
           navigation.navigate('Home')
         }
         else {
-          navigation.navigate("Students");
+          navigation.navigate("StudentHomePage");
         }
 
       }

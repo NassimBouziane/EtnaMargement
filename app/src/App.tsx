@@ -79,6 +79,23 @@ function App() {
             animation: "none",
           }}
         />
+
+        <Stack.Screen
+          name="StudentHomePage"
+          component={StudentHomePage}
+          options={{
+            headerShown: true,
+            animation: "none",
+          }}
+        />
+        <Stack.Screen
+          name="StudentsAdminHome"
+          component={StudentsAdminHome}
+          options={{
+            headerShown: true,
+            animation: "none",
+          }}
+        />
         <Stack.Screen
           name="Students"
           component={Students}
