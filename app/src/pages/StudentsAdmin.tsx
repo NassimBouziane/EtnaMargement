@@ -110,6 +110,10 @@ export default function StudentsAdmin() {
 
               </View>
             </View>
+          </View>
+          {isLoading ? (
+            <ActivityIndicator size="large" color="blue" className="mt-64" />
+          ) : (
             <ScrollView
               className=" h-full ml-5"
               showsVerticalScrollIndicator={false}
@@ -141,9 +145,9 @@ export default function StudentsAdmin() {
                
           }) }
             </ScrollView>
-          </View>
+          )}
         </View>
-      )}
+      </View>
     </View>
   );
 }

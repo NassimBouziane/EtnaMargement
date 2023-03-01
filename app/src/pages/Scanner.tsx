@@ -61,18 +61,23 @@ export default function Scanner({ navigation }: any) {
   };
 
   if (data) {
+    const gifUrl = "https://media.giphy.com/media/xSM46ernAUN3y/giphy.gif";
+    setTimeout(() => {
+      setData(null);
+      setScanned(false);
+    }, 3000);
+
     return (
-      <View>
-        <Text> {data[0]} </Text>
-        <Text> {data[1]} </Text>
-        <Text> {data[2]} </Text>
-        <Button
-          title="Scan again"
-          onPress={() => {
-            setData(null);
-            setScanned(false);
+      <View style={{ flex: 1, justifyContent: "center" }}>
+        <Text className="text-2xl mb-10 text-center text-green-500">
+          QR code valide
+        </Text>
+        <Image
+          source={{
+            uri: "https://media.giphy.com/media/xSM46ernAUN3y/giphy.gif",
           }}
-        ></Button>
+          style={{ width: 200, height: 200, alignSelf: "center" }}
+        />
       </View>
     );
   }
@@ -146,7 +151,7 @@ export default function Scanner({ navigation }: any) {
           Bonjour ! Veuillez scanner le QRcode
         </Text>
         <BarCodeScanner
-          className="mt-10 w-full h-1/2 bord"
+          className="mt-10 w-full h-1/2"
           onBarCodeScanned={async ({ type, data }) => {
             setScanned(true);
             try {

@@ -46,11 +46,11 @@ export default function Home({ navigation }: any) {
   const screenWidth = Dimensions.get("window").width;
   return (
     <View>
-      {isLoading ? (
-        <ActivityIndicator size="large" color="blue" className="mt-64" />
-      ) : (
-        <View className="flex flex-row h-full w-full ">
-          <Navbar />
+      <View className="flex flex-row h-full w-full ">
+        <Navbar />
+        {isLoading ? (
+          <ActivityIndicator size="large" color="blue" className="mt-64" />
+        ) : (
           <ScrollView
             className="w-full h-full"
             showsVerticalScrollIndicator={false}
@@ -173,8 +173,8 @@ export default function Home({ navigation }: any) {
               </View>
             </View>
           </ScrollView>
-        </View>
-      )}
+        )}
+      </View>
     </View>
   );
 }
