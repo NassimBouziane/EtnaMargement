@@ -1,10 +1,14 @@
-import { getNote, getPromo, getTicket, getWall } from '../controllers/etna.controller';
+import { getNote, getPromo, getTicket, getWall, getWallByName, getWallByPromo } from '../controllers/etna.controller';
 
 const expressUser = require('express');
 
 const etna = expressUser.Router();
 
 etna.post('/wall', getWall);
+
+etna.post('/wall/name', getWallByName)
+
+etna.post('/wall/promo', getWallByPromo)
 
 etna.post('/ticket', getTicket);
 

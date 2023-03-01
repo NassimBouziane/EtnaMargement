@@ -7,6 +7,26 @@ export const getWall = async(token : any) => {
 	}).then((response) => response.data)
 }
 
+export const getWallByName = async(wallname:any,start:any,end:any,token : any) => {
+	return await api.post('/etna/wall/name', 
+	  {
+		  token,
+		  wallname,
+		  start,
+		  end
+	  }).then((response) => response.data)
+}
+
+export const getWallByPromo = async(wallname:any,start:any,end:any,token : any) => {
+	return await api.post('/etna/wall/promo', 
+	  {
+		token,
+		wallname,
+		start,
+		end
+	  }).then((response) => response.data)
+}
+
 export const getTicket = async(token : any) => {
 	return await api.post('/etna/ticket',
 	{
