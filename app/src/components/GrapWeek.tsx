@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
@@ -11,29 +12,30 @@ export default function GraphWeek() {
 
   
   const setData = async () => {
-    for(let i = 0; i < 5; i++){
-      const nextMonday = new Date();
-      nextMonday.setDate(nextMonday.getDate() + ((i+1) + 7 - nextMonday.getDay()) % 7)
-      await getLogsByDate(nextMonday.toISOString().substring(0,10)).then((res) => {
+    for(let i = 1; i < 6; i++){
+      const now = moment();
+      const weekNumber = now.isoWeek();
+      const day = moment().isoWeekday(i);
+      await getLogsByDate(day.toISOString().substring(0,10)).then((res) => {
         setRetardData(prevData => {
           const newData = [...prevData]; // Crée une copie du tableau précédent
-          newData[i] = res.data.Retard; // Modifie la valeur à l'indice i avec les nouvelles données
+          newData[i-1] = res.data.Retard; // Modifie la valeur à l'indice i avec les nouvelles données
           return newData; // Renvoie le nouveau tableau pour mettre à jour l'état
         });
         setAbsentData(prevData => {
           // Même principe pour les autres tableaux de données
           const newData = [...prevData];
-          newData[i] = res.data.Absent;
+          newData[i-1] = res.data.Absent;
           return newData;
         });
         setPresentData(prevData => {
           const newData = [...prevData];
-          newData[i] = res.data.Present;
+          newData[i-1] = res.data.Present;
           return newData;
         });
         setDistancielData(prevData => {
           const newData = [...prevData];
-          newData[i] = res.data.Distanciel;
+          newData[i-1] = res.data.Distanciel;
           return newData;
         });
       })

@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
@@ -27,9 +27,7 @@ export default function Login() {
   const [hidden, sethidden] = useState(true);
   const [checked, setChecked] = useState(false);
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     try {
       await AsyncStorage.removeItem("token");
   
@@ -52,7 +50,7 @@ export default function Login() {
           navigation.navigate('Home')
         }
         else {
-          navigation.navigate("StudentHome");
+          navigation.navigate("Students");
         }
 
       }
@@ -63,16 +61,43 @@ export default function Login() {
   };
 
   const getRemember = async () => {
-    if(await AsyncStorage.getItem("remember") == 'true') {
-      if(await AsyncStorage.getItem("login")) { setLogin(await AsyncStorage.getItem("login"))}
-      if(await AsyncStorage.getItem("password")) { setPassword(await AsyncStorage.getItem("password"))}
-      setChecked(true)
+    const remember = await AsyncStorage.getItem("remember");
+    if (remember === 'true') {
+      let rememberedLogin = await AsyncStorage.getItem("login");
+      const rememberedPassword = await AsyncStorage.getItem("password");
+      if (rememberedLogin) {
+        setLogin(rememberedLogin);
+      }
+      if (rememberedPassword) {
+        setPassword(rememberedPassword);
+      } else {
+        setPassword('');
+      }
+    } else {
+      setPassword('');
+    }
+    setChecked(false)
+    if(await AsyncStorage.getItem('token') && await AsyncStorage.getItem('remember')){
+      const user = await fetchUserConnected(await JSON.parse(await AsyncStorage.getItem('token')));
+      if (user.groups.includes("adm") || user.login == "boular_t") {
+        console.log("jsuis la porte de derriere")
+        navigation.navigate('Home')
+      }
+      else {
+        navigation.navigate("Students");
+      }
     }
   }
 
-  useEffect(() => {
-    getRemember()
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getRemember();
+    
+      return () => {
+
+      };
+    }, [])
+  );
 
   React.useLayoutEffect(() => {
     navigation.setOptions({

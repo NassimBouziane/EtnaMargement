@@ -35,7 +35,7 @@ async function getNote(req: Request, res: Response) {
 }
 
 async function getTicket(req: Request, res: Response) {
-  return await apiEtnaTicket.get('/', 
+  return await apiEtnaTicket.get('', 
   {
     headers: {Cookie: req.body.token}
   }).then((response) => res.send(response.data))
