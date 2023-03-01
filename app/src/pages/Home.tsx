@@ -99,10 +99,10 @@ export default function Home({ navigation }: any) {
               >
                 <View className="mb-10">
                   <Text
-                    className="text-3xl mb-5"
+                    className="text-lg rounded-lg text-center mb-5 py-2 px-3 bg-[#363D97] color-white"
                     style={{
-                      fontSize: screenWidth < 768 ? 24 : 32,
-                      marginTop: screenWidth < 768 ? "0%" : "8%",
+                      fontSize: screenWidth < 768 ? 20 : 32,
+                      marginTop: screenWidth < 768 ? "5%" : "8%",
                     }}
                   >
                     Graphique journalier
@@ -119,13 +119,13 @@ export default function Home({ navigation }: any) {
                   }}
                 >
                   <Text
-                    className="text-3xl"
+                    className="text-lg rounded-lg text-center mb-5 py-2 px-3 bg-[#363D97] color-white"
                     style={{
-                      fontSize: screenWidth < 768 ? 24 : 32,
+                      fontSize: screenWidth < 768 ? 20 : 32,
                       marginTop: screenWidth < 768 ? "0%" : "8%",
                     }}
                   >
-                    Derniers tickets:
+                    Derniers tickets
                   </Text>
                   <Ticket />
                   <Ticket />

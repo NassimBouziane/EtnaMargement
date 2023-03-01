@@ -56,12 +56,6 @@ export default function StudentsAdmin() {
     getByDate();
   }, []);
 
-  // useEffect(() => {
-  //   // Mettre à jour le state isLoading pour simuler une durée de chargement
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 100); // Temps de chargement de 3 secondes
-  // }, []);
   const [searchText, setSearchText] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 

@@ -35,6 +35,8 @@ export default function Students() {
   const [promo, setPromo] = React.useState<any>("");
   const [qr_value, setQr_value] = React.useState<any>("");
   const [tickets, setTickets] = React.useState<any>();
+  const [lentickets, setLentickets] = React.useState<any>(3);
+  const [buttonlentickets, setButtonlentickets] = React.useState<any>(true);
 
   const UserInfo = async () => {
     const token: any = await AsyncStorage.getItem("token");
@@ -42,7 +44,9 @@ export default function Students() {
     const user = await getUserByLogin(user_logs.login, await JSON.parse(token));
     const promo = await getPromo(await JSON.parse(token));
     const qr_value = `${user.login}|${user.id}|${promo[0].id}`;
-    const tickets = await getTicket(await JSON.parse(token)).then((res) => {setTickets(res);});
+    const tickets = await getTicket(await JSON.parse(token)).then((res) => {
+      setTickets(res);
+    });
 
     // console.log(tickets.data.length);
     // console.log(tickets.data[0].creator.login);
@@ -52,7 +56,6 @@ export default function Students() {
     // console.log(tickets.data[0].created_at.split(" ")[0]);
     // console.log(tickets.data[0].created_at.split(" ")[1]);
 
-
     //const promo = await getPromo(await JSON.parse(token))
     //const lastNote = await getNote(await JSON.parse(token), user.login, promo[0].id.toString()).then((res) => res[res.length-1])
     //console.log(lastNote.activity_name)
@@ -61,7 +64,6 @@ export default function Students() {
     setUser(user);
     setPromo(promo[0]);
     setQr_value(qr_value);
-
   };
 
   useEffect(() => {
@@ -143,31 +145,46 @@ export default function Students() {
           </Text>
           <GraphWeek />
         </View>
+        <Text className="text-[22px] w-full text-center mt-[10px]">({tickets ? tickets.data.length : "" }) Ticket(s)</Text>
+        <View className="flex h-fit w-[95%] mx-auto mt-[10px] rounded-lg">
+          <View>
+            {tickets &&
+              tickets.data.slice(0, lentickets).map((ticket: any) => {
+                return (
+                  <View className="mx-auto">
+                    <CardTicket
+                      login={ticket ? ticket.creator.login : ""}
+                      name={
+                        user
+                          ? user.lastname.charAt(0).toUpperCase() +
+                            user.lastname.slice(1).toLowerCase() +
+                            " " +
+                            user.firstname
+                          : "Lastname"
+                      }
+                      title={ticket.title}
+                      time={"à: " + ticket.created_at.split(" ")[1]}
+                      status={ticket.status}
+                    />
+                  </View>
+                );
+              })}
+          </View>
+          {buttonlentickets && (
+            <Pressable
+              className="w-fit text-lg text-center mt-2 py-2 px-2 rounded-2xl bg-gray-300 active:bg-slate-400"
+              onPress={() => {
+                setLentickets(lentickets + 3);
+                if (lentickets + 3 >= tickets.data.length) {
+                  setButtonlentickets(false);
+                }
+              }}
+            >
+              <Text className="w-full text-center">Afficher plus</Text>
+            </Pressable>
+          )}
+        </View>
 
-        <ScrollView className="flex h-[600px] w-[95%] mx-auto bg-[#E3E3E3] mt-[50px] rounded-lg">
-          
-          
-            {tickets && tickets.data.map((ticket: any) => {
-              return (
-                <View className="w-[95%] mx-auto">
-                  <CardTicket
-                  login={ticket ? ticket.creator.login : ""}
-                  name={ user ? 
-                    user.lastname.charAt(0).toUpperCase() +
-                    user.lastname.slice(1).toLowerCase() +
-                    " " +
-                    user.firstname : "Lastname"
-                  }
-                  title={ticket.title}
-                  time={"à: " + ticket.created_at.split(" ")[1]}
-                  status={ticket.status}
-                />
-                </View>
-              );
-            })
-            }
-          </ScrollView>
-        
         <View className="flex h-[600px] w-[95%] mx-auto bg-[#E3E3E3] mt-[50px] rounded-lg">
           <Text className="text-[32px] my-auto mx-auto">Mur Promo</Text>
         </View>
