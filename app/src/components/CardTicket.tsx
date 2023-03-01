@@ -3,10 +3,10 @@ import { Image, Text, View } from "react-native";
 
 export default function CardTicket(props: any) {
   return (
-    <View className="bg-[#D9D9D9] rounded-2xl my-3">
+    <View className="bg-[#D9D9D9] rounded-2xl my-2">
       <View className="flex flex-row gap-1 py-3 ml-3 items-center">
         <Image
-          className="rounded-lg w-64"
+          className="rounded-lg"
           source={{
             uri: `https://auth.etna-alternance.net/api/users/${props.login}/photo`,
           }}
