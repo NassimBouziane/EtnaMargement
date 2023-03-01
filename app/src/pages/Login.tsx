@@ -16,11 +16,6 @@ import { fetchUserConnected, postLogin } from "../../services/users/users.servic
 
 const { height, width } = Dimensions.get("window");
 
-// TODO : <Button title="reveal" onPress={() => {sethidden(current => !current)}}></Button>
-function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 export default function Login() {
   const [login, setLogin] = useState<any>('');
   const [password, setPassword] = useState<any>('');
@@ -62,7 +57,6 @@ export default function Login() {
   };
 
   const getRemember = async () => {
-    await sleep(3000)
     const remember = await AsyncStorage.getItem("remember");
     if (remember === 'true') {
       let rememberedLogin = await AsyncStorage.getItem("login");
@@ -79,12 +73,10 @@ export default function Login() {
       setPassword('');
     }
     setChecked(false)
-    if(await AsyncStorage.getItem('token') && await AsyncStorage.getItem('remember')){
-      const user = await fetchUserConnected(
-        await AsyncStorage.getItem("token")
-      );
+    const token = await AsyncStorage.getItem('token') 
+    if(token && await AsyncStorage.getItem('remember')){
+      const user = await fetchUserConnected(await JSON.parse(token));
       if (user.groups.includes("adm") || user.login == "boular_t") {
-        console.log("jsuis la porte de derriere")
         navigation.navigate('Home')
       }
       else {
@@ -93,8 +85,6 @@ export default function Login() {
     }
   }
   
-  
-  // Utilisation :
   useFocusEffect(
     React.useCallback(() => {
       getRemember();
