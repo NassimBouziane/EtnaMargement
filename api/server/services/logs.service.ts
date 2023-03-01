@@ -69,49 +69,59 @@ else{
 
 
 }
-async function statlogs_bylogin(req:Request, res:Response){
+async function serviceStatLogsByLogin(req:Request, res:Response){
   const { login } = req.params;
-  
   const absentCount = await prisma.logs.groupBy({
     where: {
       login: login,
-      OR: [
-        { morning: "Absent" },
-        { afternoon: "Absent" }
-      ]
     },
-    by: ['morning', 'afternoon'],
+    by: ['morning','afternoon'],
     _count: true
   });
   let countAbsent = 0;
   let countRetard = 0;
+  let countPresent = 0;
+  let countDistanciel = 0;
 
 
   absentCount.forEach((item) => {
-    if (item.morning === 'Absent') {
-      countAbsent += item._count;
+    switch (item.morning) {
+      case 'Absent':
+        countAbsent += item._count;
+        break;
+      case 'Retard':
+        countRetard += item._count;
+        break;
+      case 'Present':
+        countPresent += item._count;
+        break;
+      case 'Distanciel':
+        countDistanciel += item._count;
+        break;
     }
-  
-    if (item.afternoon === 'Absent') {
-      countAbsent += item._count;
+    switch (item.afternoon) {
+      case 'Absent':
+        countAbsent += item._count;
+        break;
+      case 'Retard':
+        countRetard += item._count;
+        break;
+      case 'Present':
+        countPresent += item._count;
+        break;
+      case 'Distanciel':
+        countDistanciel += item._count;
+        break;
     }
-    if (item.morning === 'Retard') {
-      countRetard += item._count;
-    }
-  
-    if (item.afternoon === 'Retard') {
-      countRetard += item._count;
-    }
+
   });
-  
-  if (countAbsent >= 0 && countRetard >= 0) {
-    res.json({
-      Absent: countAbsent.toString(),
-      Retard: countRetard.toString()
-    });
-  } else {
-    res.json("Wrong login");
-  }
+
+  res.json({
+    Absent: countAbsent.toString(),
+    Retard: countRetard.toString(),
+    Present: countPresent.toString(),
+    Distanciel: countDistanciel.toString()
+  });
 }
 
 async function serviceStatLogsByDate(req:Request, res:Response){
@@ -153,4 +163,4 @@ async function serviceStatLogsByDate(req:Request, res:Response){
 }
 
 
-export { deletebylogin,createlog,statlogs_bylogin, insertintologs_service, serviceStatLogsByDate }
+export { deletebylogin, createlog, serviceStatLogsByLogin, insertintologs_service, serviceStatLogsByDate }

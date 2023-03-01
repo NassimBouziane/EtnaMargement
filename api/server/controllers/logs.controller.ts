@@ -1,7 +1,7 @@
 import { query, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
-import { statlogs_bylogin, insertintologs_service, deletebylogin, createlog, serviceStatLogsByDate } from '../services/logs.service';
+import { serviceStatLogsByLogin, insertintologs_service, deletebylogin, createlog, serviceStatLogsByDate } from '../services/logs.service';
 
 async function getAll(req: Request, res:Response){
     const QueryResult = await prisma.logs.findMany();
@@ -45,7 +45,7 @@ async function createLog(req: Request, res:Response){
     await createlog(req,res)
 }
 async function getstats(req:Request, res:Response){
-    await statlogs_bylogin(req,res)
+    await serviceStatLogsByLogin(req,res)
 }
 async function insertintologs(req:Request, res:Response){
     await insertintologs_service(req,res)
