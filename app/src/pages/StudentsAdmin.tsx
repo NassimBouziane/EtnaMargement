@@ -27,39 +27,39 @@ export default function StudentsAdmin() {
   };
   return (
     <View>
-      {isLoading ? (
-        <ActivityIndicator size="large" color="blue" className="mt-64" />
-      ) : (
-        <View className="flex flex-row h-full w-full ">
-          <Navbar />
-          <View>
-            <View className="ml-5">
-              <View className="flex-row w-[280px] items-center bg-gray-200 px-3 py-3 rounded-xl mt-5 mb-3">
-                <Ionicons
-                  name="search-outline"
-                  size={24}
-                  className="text-gray-500"
-                />
-                <TextInput
-                  className="flex-1 text-gray-700 ml-5"
-                  placeholder="Rechercher"
-                  onChangeText={setSearchText}
-                  onSubmitEditing={handleSearch}
-                  value={searchText}
-                />
+      <View className="flex flex-row h-full w-full ">
+        <Navbar />
+        <View>
+          <View className="ml-5">
+            <View className="flex-row w-[280px] items-center bg-gray-200 px-3 py-3 rounded-xl mt-5 mb-3">
+              <Ionicons
+                name="search-outline"
+                size={24}
+                className="text-gray-500"
+              />
+              <TextInput
+                className="flex-1 text-gray-700 ml-5"
+                placeholder="Rechercher"
+                onChangeText={setSearchText}
+                onSubmitEditing={handleSearch}
+                value={searchText}
+              />
+            </View>
+            <View className="flex flex-row w-full gap-6 ">
+              <View className="bg-[#92F866] px-4 py-2 rounded-xl">
+                <Text className="text-lg">Prés.</Text>
               </View>
-              <View className="flex flex-row w-full gap-6 ">
-                <View className="bg-[#92F866] px-4 py-2 rounded-xl">
-                  <Text className="text-lg">Prés.</Text>
-                </View>
-                <View className="bg-[#FBB733] px-4 py-2 rounded-xl">
-                  <Text className="text-lg">Retard</Text>
-                </View>
-                <View className="bg-[#F04C4C] px-4 py-2 rounded-xl">
-                  <Text className="text-lg">Abs.</Text>
-                </View>
+              <View className="bg-[#FBB733] px-4 py-2 rounded-xl">
+                <Text className="text-lg">Retard</Text>
+              </View>
+              <View className="bg-[#F04C4C] px-4 py-2 rounded-xl">
+                <Text className="text-lg">Abs.</Text>
               </View>
             </View>
+          </View>
+          {isLoading ? (
+            <ActivityIndicator size="large" color="blue" className="mt-64" />
+          ) : (
             <ScrollView
               className=" h-full ml-5"
               showsVerticalScrollIndicator={false}
@@ -165,9 +165,9 @@ export default function StudentsAdmin() {
                 login="plassa_r"
               />
             </ScrollView>
-          </View>
+          )}
         </View>
-      )}
+      </View>
     </View>
   );
 }

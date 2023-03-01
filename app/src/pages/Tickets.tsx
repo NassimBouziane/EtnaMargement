@@ -23,15 +23,15 @@ export default function Tickets() {
 
   return (
     <View>
-      {isLoading ? (
-        <ActivityIndicator size="large" color="blue" className="mt-64" />
-      ) : (
-        <View className="flex flex-row h-full">
-          <Navbar />
-          <ScrollView
-            className="w-full h-full"
-            showsVerticalScrollIndicator={false}
-          >
+      <View className="flex flex-row h-full">
+        <Navbar />
+        <ScrollView
+          className="w-full h-full"
+          showsVerticalScrollIndicator={false}
+        >
+          {isLoading ? (
+            <ActivityIndicator size="large" color="blue" className="mt-64" />
+          ) : (
             <View
               style={{
                 marginLeft: screenWidth < 768 ? "5%" : "10%",
@@ -103,9 +103,9 @@ export default function Tickets() {
                 </View>
               </View>
             </View>
-          </ScrollView>
-        </View>
-      )}
+          )}
+        </ScrollView>
+      </View>
     </View>
   );
 }

@@ -54,7 +54,9 @@ export default function Navbar() {
               width: screenWidth < 768 ? "50%" : "100%",
               height: screenWidth < 768 ? "75%" : "100%",
             }}
-            className={`${currentPage === "Home" ? "bg-black" : ""}`}
+            className={`${
+              currentPage === "Home" ? "bg-[#363D97]" : ""
+            } rounded-lg`}
           />
         </Pressable>
       </View>
@@ -72,7 +74,9 @@ export default function Navbar() {
               width: screenWidth < 768 ? "50%" : "100%",
               height: screenWidth < 768 ? "64%" : "100%",
             }}
-            className={`${currentPage === "Tickets" ? "bg-black" : ""}`}
+            className={`${
+              currentPage === "Tickets" ? "bg-[#363D97]" : ""
+            } rounded-lg`}
           />
         </Pressable>
       </View>
@@ -89,7 +93,9 @@ export default function Navbar() {
               width: screenWidth < 768 ? "50%" : "100%",
               height: screenWidth < 768 ? "75%" : "100%",
             }}
-            className={`${currentPage === "Messages" ? "bg-black" : ""}`}
+            className={`${
+              currentPage === "Messages" ? "bg-[#363D97]" : ""
+            } rounded-lg`}
           />
         </Pressable>
       </View>
@@ -107,7 +113,9 @@ export default function Navbar() {
               width: screenWidth < 768 ? "50%" : "100%",
               height: screenWidth < 768 ? "62%" : "100%",
             }}
-            className={`${currentPage === "Etudiants" ? "bg-black" : ""}`}
+            className={`${
+              currentPage === "Etudiants" ? "bg-[#363D97]" : ""
+            } rounded-lg`}
           />
         </Pressable>
       </View>
@@ -125,7 +133,9 @@ export default function Navbar() {
               width: screenWidth < 768 ? "50%" : "100%",
               height: screenWidth < 768 ? "68%" : "100%",
             }}
-            className={`${currentPage === "Scanner" ? "bg-black" : ""}`}
+            className={`${
+              currentPage === "Scanner" ? "bg-[#363D97]" : ""
+            } rounded-lg`}
           />
         </Pressable>
       </View>
@@ -143,7 +153,9 @@ export default function Navbar() {
               width: screenWidth < 768 ? "50%" : "100%",
               height: screenWidth < 768 ? "75%" : "100%",
             }}
-            className={`${currentPage === "Settings" ? "bg-black" : ""}`}
+            className={`${
+              currentPage === "Settings" ? "bg-[#363D97]" : ""
+            } rounded-lg`}
           />
         </Pressable>
       </View>
@@ -163,7 +175,9 @@ export default function Navbar() {
               width: screenWidth < 768 ? "50%" : "100%",
               height: screenWidth < 768 ? "75%" : "100%",
             }}
-            className={`${currentPage === "Login" ? "bg-black" : ""}`}
+            className={`${
+              currentPage === "Login" ? "bg-[#363D97]" : ""
+            } rounded-lg`}
           />
         </Pressable>
       </View>
