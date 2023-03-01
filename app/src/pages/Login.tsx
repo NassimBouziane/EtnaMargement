@@ -2,10 +2,8 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
   Alert,
-  Button,
   Dimensions,
   Image,
-  KeyboardAvoidingView,
   Pressable,
   Text,
   TextInput,
@@ -53,7 +51,7 @@ export default function Login() {
           navigation.navigate('Home')
         }
         else {
-          navigation.navigate("StudentHomePage");
+          navigation.navigate("Students");
         }
 
       }
