@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import Ticketlarge from "../components/TicketLarge";
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { getLogsUser } from "../../services/logs/logs.services";
+import CardStudent from "../components/CardStudent";
 interface RouteParams {
   propsToSend: {
     firstname: String;
-    lastname:String
+    lastname:String;
+    login:String
   };
 }
 type RootStackParamList = {
@@ -18,9 +21,15 @@ type DetailScreenRouteProp = RouteProp<RootStackParamList, 'Detail'>;
 export default function StudentsAdminDetails() {
   const route = useRoute<DetailScreenRouteProp>();
   const props = route.params.propsToSend;
+  const[data,setData] = useState<any>();
+  const getLogs = async()=>{
+    await getLogsUser(props.login).then((res)=> setData(res))
+  }
   useEffect(()=>{
-
+    getLogs()
     
+
+
    
 
   },[])
@@ -35,6 +44,20 @@ export default function StudentsAdminDetails() {
         <View className="mt-5">
           <Text className="text-xl">Tickets</Text>
           <ScrollView>
+            {data && data.map((items:any,i: Number)=>{
+              
+              return(
+                <CardStudent
+                key={items.id}
+                login={items.login}
+                morning={items.morning}
+                afternoon={items.afternoon}
+                firstname={items.firstname}
+                lastname={items.lastname}
+                date={items.date}
+              /> 
+              )
+            })}
           </ScrollView>
         </View>
         <View className="mt-5">
