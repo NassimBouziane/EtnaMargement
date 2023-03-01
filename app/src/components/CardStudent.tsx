@@ -61,6 +61,21 @@ export default function CardStudent(props: any) {
                 />
               </View>
             )}
+            {props.date && (
+              <View>
+                <Text>{props.date}</Text>
+                <SelectDropdown
+                  data={status}
+                  defaultValue={props.status}
+                  onSelect={(selectedItem: any, index: any) => {
+                    updatelogs({ status: selectedItem }, props.id).then(
+                      (res) => res
+                    );
+                    return selectedItem;
+                  }}
+                />
+              </View>
+            )}
           </View>
           <View className="flex flex-col gap-2">
             <Image source={notifColor} />
