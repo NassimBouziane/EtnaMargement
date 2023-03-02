@@ -89,7 +89,7 @@ export default function StudentsAdmin() {
     <View>
       <View className="flex flex-col h-full w-full">
         <View className="ml-5">
-          <View className="flex-row w-[280px] items-center bg-gray-200 px-3 py-3 rounded-xl mt-5 mb-3">
+          <View className="flex-row w-[92%] items-center bg-gray-200 px-3 py-3 rounded-xl mt-5 mb-3">
             <Ionicons
               name="search-outline"
               size={24}
@@ -115,7 +115,7 @@ export default function StudentsAdmin() {
           <View className="flex flex-row w-full gap-6 ">
             <View className="bg-[#92F866] px-4 py-2 rounded-xl">
               <Pressable onPress={() => handleclick("Present")}>
-                <Text className="text-lg">Prés.</Text>
+                <Text className="text-lg">Présents</Text>
               </Pressable>
             </View>
             <View className="bg-[#FBB733] px-4 py-2 rounded-xl">
@@ -125,13 +125,15 @@ export default function StudentsAdmin() {
             </View>
             <View className="bg-[#F04C4C] px-4 py-2 rounded-xl">
               <Pressable onPress={() => handleclick("Absent")}>
-                <Text className="text-lg">Abs.</Text>
+                <Text className="text-lg">Absents</Text>
               </Pressable>
             </View>
           </View>
         </View>
         {isLoading ? (
-          <ActivityIndicator size="large" color="blue" className="mt-64" />
+          <ScrollView className="w-full h-full ml-5">
+            <ActivityIndicator size="large" color="blue" className="mt-64" />
+          </ScrollView>
         ) : (
           <ScrollView
             className="w-full h-full ml-5 mt-3"

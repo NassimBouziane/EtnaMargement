@@ -33,11 +33,10 @@ export default function Tickets() {
     const user = await getUserByLogin(user_logs.login, await JSON.parse(token));
     setUser(user);
     const tickets = await getTicket(await JSON.parse(token)).then((res) => {
-      setTickets(res);
+      setTickets(res), setLoading(false);
     });
   };
   const onRefresh = React.useCallback(() => {
-
     setRefreshing(true);
     // reload data
     UserInfo();
@@ -52,13 +51,6 @@ export default function Tickets() {
     // user change => re-render
   }, []);
 
-  useEffect(() => {
-    // Mettre à jour le state isLoading pour simuler une durée de chargement
-    setTimeout(() => {
-      setLoading(false);
-    }, 50); // Temps de chargement de 3 secondes
-  }, []);
-
   const screenWidth = Dimensions.get("window").width;
 
   return (
@@ -71,22 +63,27 @@ export default function Tickets() {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         >
-          {isLoading ? (
-            <ActivityIndicator size="large" color="blue" className="mt-64" />
-          ) : (
-            <View>
-              <View className=" mx-auto text-center w-10/12 mt-3 flex flex-row mb-3 justify-center items-center py-2 px-3 bg-[#363D97] rounded-xl">
-                <Text
-                  className="bg-red-500 text-white py-1 px-2 rounded-2xl"
-                  style={{
-                    fontSize: screenWidth < 768 ? 14 : 32,
-                  }}
-                >
-                  {tickets ? tickets.data.length : ""}
-                </Text>
-                <Text className="ml-5 text-xl text-white">Tickets</Text>
-              </View>
-
+          <View>
+            <View className=" mx-auto text-center w-10/12 mt-3 flex flex-row mb-3 justify-center items-center py-2 px-3 bg-[#363D97] rounded-xl">
+              <Text
+                className="bg-red-500 text-white py-1 px-2 rounded-2xl"
+                style={{
+                  fontSize: screenWidth < 768 ? 14 : 32,
+                }}
+              >
+                {tickets ? tickets.data.length : ""}
+              </Text>
+              <Text className="ml-5 text-xl text-white">Tickets</Text>
+            </View>
+            {isLoading ? (
+              <ScrollView className="w-full h-full ml-5">
+                <ActivityIndicator
+                  size="large"
+                  color="blue"
+                  className="mt-64"
+                />
+              </ScrollView>
+            ) : (
               <View className="flex h-fit w-full mx-auto mt-[10px] rounded-lg mb-5">
                 <View style={{ alignSelf: "center" }}>
                   {tickets &&
@@ -127,8 +124,8 @@ export default function Tickets() {
                   </View>
                 )}
               </View>
-            </View>
-          )}
+            )}
+          </View>
         </ScrollView>
         <Navbar />
       </View>

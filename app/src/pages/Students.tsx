@@ -35,6 +35,7 @@ import Navbar from "../components/Navbar";
 import QRCODE from "../components/QRCode";
 
 export default function Students() {
+  const screenWidth = Dimensions.get("window").width;
   const navigation: any = useNavigation();
   const screen = Dimensions.get("window");
   const [user, setUser] = React.useState<any>("");
@@ -120,7 +121,7 @@ export default function Students() {
         <View>
           <Image
             source={require("../../assets/etna-logo.png")}
-            className="my-auto"
+            className="my-auto w-[100px] h-[31px]"
           />
         </View>
       ),
@@ -131,11 +132,17 @@ export default function Students() {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
+      showsVerticalScrollIndicator={false}
     >
       <View className="flex mt-5">
         <View className="flex flex-row w-full h-fit ml-1">
-          <Text className="font-medium text-[32px] mx-auto">
+          <Text className="text-[32px] mx-auto">
             Bienvenue, {user.firstname ? user.firstname : ""}
+          </Text>
+        </View>
+        <View className="flex mt-10 w-[90%] mx-auto rounded-lg justify-center items-center">
+          <Text className="text-lg w-[95%] rounded-lg text-center py-2 px-3 bg-[#363D97] color-white">
+            Carte étudiante
           </Text>
         </View>
         <View className="flex h-[270px] w-[95%] mx-auto bg-[#E3E3E3] mt-[50px] rounded-lg">
@@ -187,7 +194,7 @@ export default function Students() {
           </View>
         </View>
         <View className="flex h-[300px] w-[95%] mx-auto mt-[50px] rounded-lg justify-center items-center">
-          <Text className="text-[px] my-auto mx-auto">
+          <Text className="text-lg w-[90%] rounded-lg text-center mb-6 py-2 px-3 bg-[#363D97] color-white">
             Graphique de Présence
           </Text>
 
