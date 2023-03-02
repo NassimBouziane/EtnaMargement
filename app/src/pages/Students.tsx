@@ -166,7 +166,8 @@ export default function Students() {
       <View className="flex mt-5">
         <View className="flex flex-row w-full h-fit ml-1">
           <Text className="text-[32px] mx-auto">
-            Bienvenue, {user.firstname ? user.firstname : ""}
+            Bienvenue,{" "}
+            {user.firstname ? user.firstname.replace(/Ã«/g, "ë") : ""}
           </Text>
         </View>
         <View className="flex mt-10 w-[90%] mx-auto rounded-lg justify-center items-center">
@@ -201,7 +202,9 @@ export default function Students() {
                 {user.lastname ? user.lastname : "Lastname"}
               </Text>
               <Text className="text-[11px]">
-                {user.firstname ? user.firstname : "Firstname"}
+                {user.firstname
+                  ? user.firstname.replace(/Ã«/g, "ë")
+                  : "Firstname"}
               </Text>
               <Text className="text-[11px]">
                 {user.email ? user.email : "email@etna-alternance.net"}
@@ -295,7 +298,7 @@ export default function Students() {
           </View>
           {buttonlentickets && (
             <Pressable
-              className="w-fit text-lg text-center mt-2 py-2 px-2 rounded-2xl bg-gray-300 active:bg-slate-400"
+              className="w-fit text-lg text-center mt-2 py-2 px-2 rounded-2xl bg-[#C8D9F0] active:bg-[#B4CBF0]"
               onPress={() => {
                 setLentickets(lentickets + 3);
                 if (lentickets + 3 >= tickets.data.length) {

@@ -81,7 +81,19 @@ export default function StudentsAdmin() {
     navigation.setOptions({ headerTitle: `Etudiant ${today}` });
     getByDate(today);
   }, []);
-
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <View>
+          <Image
+            source={require("../../assets/logoEtna.png")}
+            className=" ml-5 "
+            style={{ width: 96, height: 30 }}
+          />
+        </View>
+      ),
+    });
+  }, [navigation]);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);

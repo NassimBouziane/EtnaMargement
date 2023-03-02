@@ -30,6 +30,20 @@ export default function Settings() {
   //   withColorScheme({ colorScheme: isDarkModeEnabled ? "dark" : "light" })
   // );
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <View>
+          <Image
+            source={require("../../assets/logoEtna.png")}
+            className=" ml-5 "
+            style={{ width: 96, height: 30 }}
+          />
+        </View>
+      ),
+    });
+  }, [navigation]);
+
   const logOut = async () => {
     await AsyncStorage.removeItem("token");
     await AsyncStorage.removeItem("login");
