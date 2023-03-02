@@ -67,7 +67,6 @@ function App() {
             headerShown: true,
             animation: "none",
             gestureEnabled: false,
-            
           }}
         />
         <Stack.Screen

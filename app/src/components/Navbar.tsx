@@ -1,11 +1,10 @@
 import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { Fontisto } from "@expo/vector-icons";
+
 import React, { useEffect, useState } from "react";
-import {
-  Dimensions,
-  Image,
-  Pressable,
-  View,
-} from "react-native";
+import { Dimensions, Image, Pressable, View } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Navbar() {
   const screenWidth = Dimensions.get("window").width;
@@ -29,27 +28,25 @@ export default function Navbar() {
         width: screenWidth < 768 ? "100%" : "15%",
       }}
     >
-      <View className="flex justify-center gap-4 items-center flex-row left-4 w-[95%] mx-0">
-        <View className="bg-transparent w-[64px] h-[64px] top-4">
+      <View className="flex justify-around flex-row w-[100%] mx-0 top-3">
+        <View className="bg-transparent">
           <Pressable
             onPress={() => {
               setCurrentPage("Home");
               navigation.navigate("Home");
             }}
           >
-            <Image
-              source={require("../../assets/navig-home.png")}
+            <Fontisto
+              name="home"
+              size={26}
+              color="white"
               style={{
-                width: screenWidth < 768 ? "45%" : "100%",
-                height: screenWidth < 768 ? "70%" : "100%",
+                color: currentPage === "Home" ? "#242866" : "white",
               }}
-              className={`${
-                currentPage === "Home" ? "bg-[#363D97] rounded-lg" : ""
-              }`}
             />
           </Pressable>
         </View>
-        <View className="w-[64px] h-[64px] bg-transparent top-[4%]">
+        <View className="bg-transparent">
           <Pressable
             className=""
             onPress={() => {
@@ -57,20 +54,18 @@ export default function Navbar() {
               navigation.navigate("Tickets");
             }}
           >
-            <Image
-              source={require("../../assets/navig-ticket.png")}
+            <Fontisto
+              name="ticket"
+              size={26}
+              color="white"
               style={{
-                width: screenWidth < 768 ? "50%" : "100%",
-                height: screenWidth < 768 ? "75%" : "100%",
+                color: currentPage === "Tickets" ? "#242866" : "white",
               }}
-              className={`${
-                currentPage === "Tickets" ? "bg-[#363D97]" : ""
-              } rounded-lg`}
             />
           </Pressable>
         </View>
 
-        <View className="w-[64px] h-[64px] bg-transparent top-[3%]">
+        <View className="bg-transparent">
           <Pressable
             className=""
             onPress={() => {
@@ -78,19 +73,17 @@ export default function Navbar() {
               setCurrentPage("Etudiants");
             }}
           >
-            <Image
-              source={require("../../assets/navig-student.png")}
+            <Fontisto
+              name="search"
+              size={26}
+              color="white"
               style={{
-                width: screenWidth < 768 ? "60%" : "100%",
-                height: screenWidth < 768 ? "75%" : "100%",
+                color: currentPage === "Etudiants" ? "#242866" : "white",
               }}
-              className={`${
-                currentPage === "Etudiants" ? "bg-[#363D97]" : ""
-              } rounded-lg`}
             />
           </Pressable>
         </View>
-        <View className="w-[64px] h-[64px] bg-transparent top-4">
+        <View className="bg-transparent">
           <Pressable
             className=""
             onPress={() => {
@@ -98,19 +91,17 @@ export default function Navbar() {
               setCurrentPage("Scanner");
             }}
           >
-            <Image
-              source={require("../../assets/navig-scan.png")}
+            <MaterialCommunityIcons
+              name="qrcode-scan"
+              size={24}
+              color="white"
               style={{
-                width: screenWidth < 768 ? "50%" : "100%",
-                height: screenWidth < 768 ? "68%" : "100%",
+                color: currentPage === "Scanner" ? "#242866" : "white",
               }}
-              className={`${
-                currentPage === "Scanner" ? "bg-[#363D97]" : ""
-              } rounded-lg`}
             />
           </Pressable>
         </View>
-        <View className="w-[64px] h-[64px] bg-transparent top-3">
+        <View className=" bg-transparent">
           <Pressable
             className=""
             onPress={() => {
@@ -118,15 +109,13 @@ export default function Navbar() {
               setCurrentPage("Settings");
             }}
           >
-            <Image
-              source={require("../../assets/navig-settings.png")}
+            <Ionicons
+              name="settings-outline"
+              size={26}
+              color="white"
               style={{
-                width: screenWidth < 768 ? "50%" : "100%",
-                height: screenWidth < 768 ? "75%" : "100%",
+                color: currentPage === "Settings" ? "#242866" : "white",
               }}
-              className={`${
-                currentPage === "Settings" ? "bg-[#363D97]" : ""
-              } rounded-lg`}
             />
           </Pressable>
         </View>
