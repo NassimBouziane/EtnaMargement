@@ -4,25 +4,14 @@ import { Button, Dimensions, View } from 'react-native';
 import moment from 'moment-timezone';
 import { getLogsByDate } from '../../services/logs/logs.services';
 
-export default function GraphDay() {
-  const [dataGraph, setDataGraph] = useState<any>()
-
-  const setData = async() => {
-    const date = moment().tz('Europe/Paris').format('YYYY-MM-DD');
-    await getLogsByDate(date).then((res) => {
-      setDataGraph([res.data.Absent, res.data.Distanciel, res.data.Present, res.data.Retard])
-    })
-  }
-  useEffect( () => {
-    setData()
-  }, []);
+export default function GraphDay(props) {
 
   const chartData = {
     labels: ["Absent", "Distanciel", "Present", "Retard"],
     datasets: [
       {
         label: "My First Dataset",
-        data: dataGraph,
+        data: props.dataGraphDay,
         backgroundColor: ["red", "purple", "green", "yellow"],
         hoverOffset: 4,
       },
