@@ -118,9 +118,6 @@ export default function Students() {
           messageContent[0].content,
         ]);
       }
-      //console.log(idAndTitle)
-      //console.log(messagesUserAndContent)
-
       const finalMessagesList = [];
       for (let i = 0; i < 5; i++) {
         finalMessagesList.push([
@@ -151,8 +148,6 @@ export default function Students() {
       }
       setGrades(grades);
     });
-    //console.log(tickets)
-
     setUser(user);
     setPromo(promo[0]);
     setQr_value(qr_value);
@@ -475,5 +470,3 @@ export default function Students() {
     </ScrollView>
   );
 }
-
-// <CardTicket login={tickets ? tickets.data[0].creator.login : ''} name={user.lastname ? user.lastname.charAt(0).toUpperCase() + user.lastname.slice(1).toLowerCase() + " " + user.firstname : "Lastname"} title={tickets ? tickets.data[0].title : "title"} time={tickets ? "à: "+tickets.data[0].created_at.split(" ")[1]: "time"} status={tickets ? tickets.data[0].status : "status"}/>
