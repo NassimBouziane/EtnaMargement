@@ -6,6 +6,12 @@ export const checkUser = async(login : String, token : any) => {
     }).then((response) => response.data)
 }
 
+export const getUserByLogin = async(login : String, token : any) => {
+  return await api.post('/users/'+login, {
+    token
+  }).then((response) => response.data)
+}
+
 export const postLogin = async(login : String, password : String) => {
   return await api.post('/users/', {
       login,
@@ -18,4 +24,11 @@ export const fetchUserConnected = async(token:any) => {
     {
       token
     }).then((response) => response.data)
+}
+
+export const getPhoto = async(login: String ,token:any) => {
+  return await api.post('/users/'+ login +'/photo',
+  {
+    token
+  }).then((response) => response.data)
 }
