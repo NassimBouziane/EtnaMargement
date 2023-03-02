@@ -11,6 +11,7 @@ import {
   RefreshControl,
 } from "react-native";
 import {
+  getMessage,
   getNote,
   getPromo,
   getTicket,
@@ -43,6 +44,14 @@ export default function Students() {
     ["Activity 2: ", "16/20"],
     ["Activity 3: ", "20/20"],
   ]);
+  const [finalMessagesList, setFinalMessagesList] = React.useState<any>([
+    ["1", "title 1", "user 1", "content 1"],
+    ["2", "title 2", "user 2", "content 2"],
+    ["3", "title 3", "user 3", "content 3"],
+    ["4", "title 4", "user 4", "content 4"],
+    ["5", "title 5", "user 5", "content 5"],
+  ]);
+
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     // reload data
@@ -87,28 +96,54 @@ export default function Students() {
         even_max(max),
       ]);
     });
-    console.log(dataGraph);
-    const wall = await getWall(await JSON.parse(token));
 
+    const wall = await getWall(await JSON.parse(token));
     const wallByName = await getWallByName(
       wall[0],
       0,
       5,
       await JSON.parse(token)
     );
-    console.log(wallByName.hits[0]);
-    console.log(wallByName.hits[0].title);
-    console.log(wallByName.hits[0].content);
+    //console.log(wallByName.hits[0]);
+    //console.log(wallByName.hits[0].title);
+    // console.log(wallByName.hits[0].content);
+    //const author = await getUserByLogin(wallByName.hits[0].user.toString(), await JSON.parse(token))
+    //console.log(author)
+    //const messageContent =  await getMessage(wallByName.hits[0].id, await JSON.parse(token))
+    //console.log(messageContent[0].user)
+    //console.log(messageContent[0].content)
 
-    // console.log(tickets.data.length);
-    // console.log(tickets.data[0].creator.login);
-    // console.log(await getUserByLogin(tickets.data[0].creator.login, await JSON.parse(token)).then((res) => res.lastname.charAt(0).toUpperCase() + res.lastname.slice(1).toLowerCase() + " " + res.firstname));
-    // console.log(tickets.data[0].title);
-    // console.log(tickets.data[0].status);
-    // console.log(tickets.data[0].created_at.split(" ")[0]);
-    // console.log(tickets.data[0].created_at.split(" ")[1]);
+    const messagelist = async () => {
+      const idAndTitle = [];
+      const messagesUserAndContent = [];
+      for (let i = 0; i < 5; i++) {
+        idAndTitle.push([wallByName.hits[i].id, wallByName.hits[i].title]);
+        const messageContent = await getMessage(
+          idAndTitle[i][0],
+          await JSON.parse(token)
+        );
+        messagesUserAndContent.push([
+          messageContent[0].user,
+          messageContent[0].content,
+        ]);
+      }
+      //console.log(idAndTitle)
+      //console.log(messagesUserAndContent)
 
-    //const promo = await getPromo(await JSON.parse(token))
+      const finalMessagesList = [];
+      for (let i = 0; i < 5; i++) {
+        finalMessagesList.push([
+          idAndTitle[i][0],
+          idAndTitle[i][1],
+          messagesUserAndContent[i][0],
+          messagesUserAndContent[i][1],
+        ]);
+      }
+      setFinalMessagesList(finalMessagesList);
+    };
+
+    messagelist();
+    
     const grades = await getNote(
       await JSON.parse(token),
       user.login,
@@ -117,11 +152,11 @@ export default function Students() {
       // get 3 last grades and put grades.activity_name in grades[i][i] and  grades.grade in grades[i][i+1] like this ["Activity 1: ", "14/20"]
       res = res.slice(Math.max(res.length - 3, 1));
       let grades = [];
-      for(let i = 0; i < res.length; i++){
-        const mark = res[i].student_mark ? (res[i].student_mark + "/" + res[i].maximal) : "indisponible"
-        grades.push(
-          [res[i].activity_name+": ", mark]
-        )
+      for (let i = 0; i < res.length; i++) {
+        const mark = res[i].student_mark
+          ? res[i].student_mark + "/" + res[i].maximal
+          : "indisponible";
+        grades.push([res[i].activity_name + ": ", mark]);
       }
       setGrades(grades);
     });
@@ -315,8 +350,119 @@ export default function Students() {
           )}
         </View>
 
-        <View className="flex h-[600px] w-[95%] mx-auto bg-[#E3E3E3] mt-[50px] rounded-lg">
-          <Text className="text-[32px] my-auto mx-auto">Mur Promo</Text>
+        <View className="flex flex-row mb-1 w-[95%] mt-[50px] justify-center mx-auto items-center py-2 px-3 bg-[#363D97] rounded-xl">
+          <Text
+            className="bg-red-500 text-white py-1 px-2 rounded-2xl"
+            style={{
+              fontSize: screenWidth < 768 ? 14 : 32,
+            }}
+          >
+            5
+          </Text>
+          <Text className="ml-5 text-xl text-white">Messages</Text>
+        </View>
+        <View className="flex h-fit w-[95%] italic mx-auto mt-[10px] rounded-lg bg-[#E3E3E3]">
+          <Text>Les messages mettent un temps fou à s'afficher merci d'être patient et/ou refresh la page</Text>
+        </View>
+
+        <View className="flex h-fit w-[95%] mx-auto bg-[#E3E3E3] mt-[20px] rounded-lg">
+          <View className="flex w-full flex-row mt-[10px]">
+            <Image
+              className="rounded-lg  m-2"
+              source={{
+                uri: `https://auth.etna-alternance.net/api/users/${
+                  finalMessagesList ? finalMessagesList[0][2] : ""
+                }/photo`,
+              }}
+              style={{ width: 60, height: 80 }}
+            />
+            <View className="w-full">
+              <Text className="font-bold w-full" style={{width:200}}>
+                {finalMessagesList ? finalMessagesList[0][1] : "Title"}
+              </Text>
+              <Text className="w-full text-[11px]" style={{width:300}}>
+                {finalMessagesList ? finalMessagesList[0][3] : "Message"}
+              </Text>
+            </View>
+          </View>
+          <View className="flex w-full flex-row mt-[10px]">
+            <Image
+              className="rounded-lg  m-2"
+              source={{
+                uri: `https://auth.etna-alternance.net/api/users/${
+                  finalMessagesList ? finalMessagesList[1][2] : ""
+                }/photo`,
+              }}
+              style={{ width: 60, height: 80 }}
+            />
+            <View className="w-full">
+              <Text className="font-bold w-full" style={{width:200}}>
+                {finalMessagesList ? finalMessagesList[1][1] : "Title"}
+              </Text>
+              <Text className="w-full text-[11px]" style={{width:300}}>
+                {finalMessagesList ? finalMessagesList[1][3] : "Message"}
+              </Text>
+            </View>
+          </View>
+          <View className="flex w-full flex-row mt-[10px]">
+            <Image
+              className="rounded-lg  m-2"
+              source={{
+                uri: `https://auth.etna-alternance.net/api/users/${
+                  finalMessagesList ? finalMessagesList[2][2] : ""
+                }/photo`,
+              }}
+              style={{ width: 60, height: 80 }}
+            />
+            <View className="w-full">
+              <Text className="font-bold w-full" style={{width:200}}>
+                {finalMessagesList ? finalMessagesList[2][1] : "Title"}
+              </Text>
+              <Text className="w-full text-[11px]" style={{width:300}}>
+                {finalMessagesList ? finalMessagesList[2][3] : "Message"}
+              </Text>
+            </View>
+          </View>
+          <View className="flex w-full flex-row mt-[10px]">
+            <Image
+              className="rounded-lg  m-2"
+              source={{
+                uri: `https://auth.etna-alternance.net/api/users/${
+                  finalMessagesList ? finalMessagesList[3][2] : ""
+                }/photo`,
+              }}
+              style={{ width: 60, height: 80 }}
+            />
+            <View className="w-full">
+              <Text className="font-bold w-full" style={{width:200}}>
+                {finalMessagesList ? finalMessagesList[3][1] : "Title"}
+              </Text>
+              <Text className="w-full text-[11px]" style={{width:300}}>
+                {finalMessagesList  ? finalMessagesList[3][3] : "Message"}
+              </Text>
+            </View>
+          </View>
+
+          <View className="flex w-full flex-row mt-[10px]">
+            <Image
+              className="rounded-lg  m-2"
+              source={{
+                uri: `https://auth.etna-alternance.net/api/users/${
+                  finalMessagesList ? finalMessagesList[4][2] : ""
+                }/photo`,
+              }}
+              style={{ width: 60, height: 80 }}
+            />
+            <View className="w-full">
+              <Text className="font-bold w-full" style={{width:200}}>
+                {finalMessagesList ? finalMessagesList[4][1] : "Title"}
+              </Text>
+              <Text className="w-full text-[11px]" style={{width:300}}>
+                {finalMessagesList ? finalMessagesList[4][3] : "Message"}
+              </Text>
+            </View>
+          </View>
+          
         </View>
 
         <Pressable
@@ -333,6 +479,7 @@ export default function Students() {
           </View>
         </Pressable>
       </View>
+      
     </ScrollView>
   );
 }
