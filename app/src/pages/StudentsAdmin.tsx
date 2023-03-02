@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Pressable,
@@ -16,7 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 import CardStudent from "../components/CardStudent";
 import { getLogsByToday } from "../../services/logs/logs.services";
 import Calendrier from "../components/Calendrier";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 interface Logs {
   id: any;
@@ -47,6 +47,7 @@ export default function StudentsAdmin() {
   const [isLoading, setLoading] = useState(true);
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = React.useState(false);
+  const refFlatList = useRef(null)
  
 
   const handleclick = (button: string) => {
@@ -76,11 +77,11 @@ export default function StudentsAdmin() {
     
   };
   useEffect(() => {
-
     const today = new Date().toISOString().substring(0, 10);
     navigation.setOptions({ headerTitle: `Etudiant ${today}` });
     getByDate(today);
   }, []);
+
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -164,6 +165,7 @@ export default function StudentsAdmin() {
           </ScrollView>
         ) : (
           <FlatList
+            ref={refFlatList}
             className="w-full h-full ml-5 mt-3"
             data={dataDay.filter((item: Logs) => {
               if (
@@ -190,35 +192,47 @@ export default function StudentsAdmin() {
               return item.login.toLowerCase().includes(searchValue.toLowerCase());
             })}
             keyExtractor={(item: Logs) => item.id.toString()}
+            
             renderItem={({ item }: { item: Logs }) => {
-              let notifColor = require("../../assets/notif_red.png");
-              let notifColor2 = require("../../assets/notif_red.png");
-              
+              let notifColor;
+              let notifColor2;
               const color = () => {
-                console.log(item.morning)
-                if (item.morning == "Present") {
-                  notifColor = require("../../assets/notif_green.png");
-                } else if (item.morning == "Retard") {
-                  notifColor = require("../../assets/notif_yellow.png");
-                } else if (item.morning == "Distanciel") {
-                  notifColor = require("../../assets/notif_purple.png");
-                } else {
-                  notifColor = require("../../assets/notif_red.png");
+
+                switch (item.morning) {
+                  case 'Present':
+                    notifColor = require('../../assets/notif_green.png');
+                    break;
+                  case 'Retard':
+                    notifColor = require('../../assets/notif_yellow.png');
+                    break;
+                  case 'Distanciel':
+                    notifColor = require('../../assets/notif_purple.png');
+                    break;
+                  default:
+                    notifColor = require('../../assets/notif_red.png');
+                    break;
                 }
-                if (item.afternoon == "Present") {
-                  notifColor2 = require("../../assets/notif_green.png");
-                } else if (item.afternoon == "Retard") {
-                  notifColor2 = require("../../assets/notif_yellow.png");
-                }else if (item.morning == "Distanciel") {
-                  notifColor2 = require("../../assets/notif_purple.png");
-                } else {
-                  notifColor2 = require("../../assets/notif_red.png");
+                
+                switch (item.afternoon) {
+                  case 'Present':
+                    notifColor2 = require('../../assets/notif_green.png');
+                    break;
+                  case 'Retard':
+                    notifColor2 = require('../../assets/notif_yellow.png');
+                    break;
+                  case 'Distanciel':
+                    notifColor2 = require('../../assets/notif_purple.png');
+                    break;
+                  default:
+                    notifColor2 = require('../../assets/notif_red.png');
+                    break;
                 }
               };
-
+              
               color();
               return (
                 <CardStudent
+                  key={notifColor2}
                   login={item.login}
                   morning={item.morning}
                   afternoon={item.afternoon}
