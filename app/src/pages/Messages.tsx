@@ -17,7 +17,7 @@ export default function Messages() {
       {isLoading ? (
         <ActivityIndicator size="large" color="blue" />
       ) : (
-        <Text>Prout</Text>
+        <Text>Feature soon...</Text>
       )}
     </View>
   );
