@@ -22,10 +22,10 @@ export default function Tickets() {
   const [user, setUser] = React.useState<any>("");
   const [tickets, setTickets] = React.useState<any>();
   const [lentickets, setLentickets] = React.useState<any>(3);
-  const [buttonlentickets, setButtonlentickets] = React.useState<any>(true);
+  const [buttonlentickets, setButtonlentickets] = React.useState<any>(false);
   const [refreshing, setRefreshing] = React.useState(false);
   const [lenticketsclosed, setLenticketsclosed] = React.useState<any>(3);
-  const [buttonlenticketsclosed, setButtonlenticketsclosed] = React.useState<any>(true);
+  const [buttonlenticketsclosed, setButtonlenticketsclosed] = React.useState<any>(false);
 
   const UserInfo = async () => {
     const token: any = await AsyncStorage.getItem("token");
@@ -37,6 +37,13 @@ export default function Tickets() {
       setLoading(false)
       if (3 >= res.data.filter((data: any) => data.closed_at === null).length) {
         setButtonlenticketsclosed(false);
+      }else {
+        setButtonlenticketsclosed(true);
+      };
+      if (3 >= res.data.filter((data: any) => data.closed_at !== null).length) {
+        setButtonlentickets(false);
+      }else {
+        setButtonlentickets(true);
       };
     });
   };
@@ -45,14 +52,7 @@ export default function Tickets() {
     // reload data
     UserInfo();
     setLentickets(3);
-    setButtonlentickets(true);
     setLenticketsclosed(3);
-    if (3 >= tickets ? (tickets.data.filter((data: any) => data.closed_at === null).length): (0)) {
-      setButtonlenticketsclosed(false);
-    }else {
-      setButtonlenticketsclosed(true);
-    }
-
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
@@ -61,13 +61,7 @@ export default function Tickets() {
   useEffect(() => {
     UserInfo();
     setLentickets(3);
-    setButtonlentickets(true);
     setLenticketsclosed(3);
-    if (3 >= tickets ? (tickets.data.filter((data: any) => data.closed_at === null).length): (0)) {
-      setButtonlenticketsclosed(false);
-    }else {
-      setButtonlenticketsclosed(true);
-    }
     // user change => re-render
   }, []);
 
