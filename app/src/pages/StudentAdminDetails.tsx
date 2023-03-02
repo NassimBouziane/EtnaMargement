@@ -69,7 +69,9 @@ export default function StudentsAdminDetails() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView showsVerticalScrollIndicator={false} refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    }>
       <View className="mx-auto w-[90%] h-full">
         <View className="flex flex-row items-center gap-1 mt-12 mb-10 mx-auto">
           <Image
