@@ -88,6 +88,8 @@ export default function StudentsAdmin() {
     // reload data
     const today = new Date().toISOString().substring(0, 10);
     navigation.setOptions({ headerTitle: `Etudiant ${today}` });
+
+    getByDate(today);
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
