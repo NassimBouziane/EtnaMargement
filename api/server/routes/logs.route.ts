@@ -15,6 +15,7 @@ logs.post('/insert', insertintologs)
 logs.get('/date/:date/:login', getByDate)
 logs.get('/date/:date', statLogsByDate)
 logs.get('/today/:date', getByToday)
+
 export default logs
 
 

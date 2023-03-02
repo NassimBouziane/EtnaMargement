@@ -17,7 +17,7 @@ export default function GraphDay(props:any) {
 
   return (
     <WebView
-      className="flex "
+    className="flex "
       style={{
         width: 1000,
         height: 220,
@@ -34,6 +34,7 @@ export default function GraphDay(props:any) {
       "position": "bottom"
     },}});</script></body></html>`,
       }}
+
       javaScriptEnabled={true}
       scalesPageToFit={false}
     />

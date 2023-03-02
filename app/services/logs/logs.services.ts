@@ -52,7 +52,7 @@ export const checkLogs = async(login :String, date:any) => {
     }
     }
     else{
-
+        StartEmargement()
         return await api.post('/logs',{
             login:login,
             date:date,
@@ -60,7 +60,9 @@ export const checkLogs = async(login :String, date:any) => {
         }).then((response)=> {checkLogs(login,date)})
     } 
 }
-
+export const StartEmargement = async()=>{
+    return await api.post('/logs/insert').then((response) => response)
+}
 export const updatelogs = async(body:any,id: Number)=>{
     return await api.put('/logs/update/'+id,{body}).then((response) => response)
 }
