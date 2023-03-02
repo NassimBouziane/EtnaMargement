@@ -78,8 +78,6 @@ export default function StudentsAdmin() {
 
     const today = new Date().toISOString().substring(0, 10);
     navigation.setOptions({ headerTitle: `Etudiant ${today}` });
-
-
     getByDate(today);
   }, []);
 
