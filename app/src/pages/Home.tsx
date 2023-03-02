@@ -23,6 +23,7 @@ import {
 import Calendrier from "../components/Calendrier";
 import CardTicket from "../components/CardTicket";
 import { getTicket } from "../../services/etna/etna.services";
+import Students from "./Students";
 
 export default function Home({ navigation }: any) {
   const [user, setUser] = React.useState<any>("");
@@ -31,6 +32,7 @@ export default function Home({ navigation }: any) {
   const [lentickets, setLentickets] = React.useState<any>(3);
   const [buttonlentickets, setButtonlentickets] = React.useState<any>(true);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   const UserInfo = async () => {
     const token: any = await AsyncStorage.getItem("token");
@@ -38,11 +40,10 @@ export default function Home({ navigation }: any) {
     const user = await getUserByLogin(user_logs.login, await JSON.parse(token));
     setUser(user);
     const tickets = await getTicket(await JSON.parse(token)).then((res) => {
-      setTickets(res);
+      setTickets(res), setLoading(false);
     });
   };
   const onRefresh = React.useCallback(() => {
-
     setRefreshing(true);
     // reload data
     UserInfo();
@@ -58,15 +59,8 @@ export default function Home({ navigation }: any) {
     // user change => re-render
   }, []);
 
-  const [isLoading, setLoading] = useState(true);
   const screenWidth = Dimensions.get("window").width;
 
-  useEffect(() => {
-    // Mettre à jour le state isLoading pour simuler une durée de chargement
-    setTimeout(() => {
-      setLoading(false);
-    }, 100); // Temps de chargement de 3 secondes
-  }, []);
   if (chooseDate) {
     return (
       <View>
@@ -85,74 +79,81 @@ export default function Home({ navigation }: any) {
   return (
     <View>
       <View className="flex flex-col h-full w-full">
-        {isLoading ? (
-          <ActivityIndicator size="large" color="blue" className="mt-64" />
-        ) : (
-          <ScrollView
-            className="w-full h-full"
-            showsVerticalScrollIndicator={false}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
+        <ScrollView
+          className="w-full h-full"
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          <View
+            className="flex w-full h-full rounded-3xl"
+            style={{
+              left: screenWidth < 768 ? "5%" : "5%",
+              width: screenWidth < 768 ? "90%" : "80%",
+              height: screenWidth < 768 ? "100%" : "93%",
+            }}
           >
-            <View
-              className="flex w-full h-full rounded-3xl"
+            <Text
+              className="mt-12 text-4xl"
               style={{
-                left: screenWidth < 768 ? "5%" : "5%",
-                width: screenWidth < 768 ? "90%" : "80%",
-                height: screenWidth < 768 ? "100%" : "93%",
+                fontSize: screenWidth < 768 ? 24 : 32,
+                marginTop: screenWidth < 768 ? "10%" : "8%",
+                marginBottom: screenWidth < 768 ? "5%" : "8%",
               }}
             >
-              <Text
-                className="mt-12 text-4xl"
-                style={{
-                  fontSize: screenWidth < 768 ? 24 : 32,
-                  marginTop: screenWidth < 768 ? "10%" : "8%",
-                  marginBottom: screenWidth < 768 ? "5%" : "8%",
-                }}
-              >
-                Bonjour, {user.firstname ? user.firstname : ""}
-              </Text>
-
-              <View
-                className="flex flex-row justify-between"
-                style={{
-                  flexDirection: screenWidth < 768 ? "column" : "row",
-                  marginTop: screenWidth < 768 ? "0%" : "8%",
-                  justifyContent:
-                    screenWidth < 768 ? "center" : "space-between",
-                }}
-              >
-                <View className="mb-3">
-                  <Text
-                    className="text-lg rounded-lg text-center mb-6 py-2 px-3 bg-[#363D97] color-white"
-                    style={{
-                      fontSize: screenWidth < 768 ? 20 : 32,
-                      marginTop: screenWidth < 768 ? "5%" : "8%",
-                    }}
-                  >
-                    Graphique journalier
-                  </Text>
-                  <GraphDay />
-                </View>
-                <View
-                  className="right-5"
+              Bonjour, {user.firstname ? user.firstname : ""}
+            </Text>
+            {/* <Button
+              title="prout"
+              onPress={() => navigation.navigate(Students)}
+            ></Button> */}
+            <View
+              className="flex flex-row justify-between"
+              style={{
+                flexDirection: screenWidth < 768 ? "column" : "row",
+                marginTop: screenWidth < 768 ? "0%" : "8%",
+                justifyContent: screenWidth < 768 ? "center" : "space-between",
+              }}
+            >
+              <View className="mb-3">
+                <Text
+                  className="text-lg rounded-lg text-center mb-6 py-2 px-3 bg-[#363D97] color-white"
                   style={{
-                    right: screenWidth < 768 ? "0%" : "5%",
+                    fontSize: screenWidth < 768 ? 20 : 32,
+                    marginTop: screenWidth < 768 ? "5%" : "8%",
                   }}
                 >
-                  <View className="flex flex-row mb-5 justify-center mx-0 items-center py-2 px-3 bg-[#363D97] rounded-xl">
-                    <Text
-                      className="bg-red-500 text-white py-1 px-2 rounded-2xl"
-                      style={{
-                        fontSize: screenWidth < 768 ? 14 : 32,
-                      }}
-                    >
-                      {tickets ? tickets.data.length : ""}
-                    </Text>
-                    <Text className="ml-5 text-xl text-white">Tickets</Text>
-                  </View>
-
+                  Graphique journalier
+                </Text>
+                <GraphDay />
+              </View>
+              <View
+                className="right-5"
+                style={{
+                  right: screenWidth < 768 ? "0%" : "5%",
+                }}
+              >
+                <View className="flex flex-row mb-5 justify-center mx-0 items-center py-2 px-3 bg-[#363D97] rounded-xl">
+                  <Text
+                    className="bg-red-500 text-white py-1 px-2 rounded-2xl"
+                    style={{
+                      fontSize: screenWidth < 768 ? 14 : 32,
+                    }}
+                  >
+                    {tickets ? tickets.data.length : ""}
+                  </Text>
+                  <Text className="ml-5 text-xl text-white">Tickets</Text>
+                </View>
+                {isLoading ? (
+                  <ScrollView className="w-full h-full ml-5">
+                    <ActivityIndicator
+                      size="large"
+                      color="blue"
+                      className="mt-64"
+                    />
+                  </ScrollView>
+                ) : (
                   <View className="flex h-fit w-full mx-auto mt-[10px] rounded-lg">
                     <View style={{ alignSelf: "center" }}>
                       {tickets &&
@@ -193,68 +194,69 @@ export default function Home({ navigation }: any) {
                       </Pressable>
                     )}
                   </View>
-                </View>
-              </View>
-              <View className="mt-10 mb-2">
-                <View
-                  className="w-full"
-                  style={{
-                    marginBottom: screenWidth < 768 ? 100 : 0,
-                  }}
-                >
-                  <Text
-                    className="text-lg rounded-lg text-center mb-6 py-2 px-3 bg-[#363D97] color-white"
-                    style={{
-                      fontSize: screenWidth < 768 ? 20 : 32,
-                      marginTop: screenWidth < 768 ? "5%" : "8%",
-                    }}
-                  >
-                    Graphique de la semaine
-                  </Text>
-
-                  <View className="flex h-[300px] mx-auto rounded-lg justify-center items-center">
-                    <GraphWeek />
-                  </View>
-                </View>
-              </View>
-              <Text
-                className="text-lg rounded-lg text-center mb-8 py-2 px-3 bg-[#363D97] color-white"
-                style={{
-                  fontSize: screenWidth < 768 ? 20 : 32,
-                  marginTop: screenWidth < 768 ? "0%" : "8%",
-                }}
-              >
-                Actions rapides
-              </Text>
-              <View className="flex flex-row flex-wrap justify-between w-full mb-12">
-                <Pressable onPress={() => navigation.navigate("Tickets")}>
-                  <CardActions
-                    title="Tickets"
-                    image={require("./../../assets/ticketIcon.png")}
-                  />
-                </Pressable>
-                <Pressable onPress={() => navigation.navigate("Messages")}>
-                  <CardActions
-                    title="Messages"
-                    image={require("./../../assets/messageIcon.png")}
-                  />
-                </Pressable>
-                <Pressable onPress={() => navigation.navigate("Scanner")}>
-                  <CardActions
-                    title="Scanner"
-                    image={require("./../../assets/scanIcon2.png")}
-                  />
-                </Pressable>
-                <Pressable onPress={() => setChooseDate(true)}>
-                  <CardActions
-                    title="Export"
-                    image={require("./../../assets/logsIcon.png")}
-                  />
-                </Pressable>
+                )}
               </View>
             </View>
-          </ScrollView>
-        )}
+            <View className="mt-10 mb-2">
+              <View
+                className="w-full"
+                style={{
+                  marginBottom: screenWidth < 768 ? 100 : 0,
+                }}
+              >
+                <Text
+                  className="text-lg rounded-lg text-center mb-6 py-2 px-3 bg-[#363D97] color-white"
+                  style={{
+                    fontSize: screenWidth < 768 ? 20 : 32,
+                    marginTop: screenWidth < 768 ? "5%" : "8%",
+                  }}
+                >
+                  Graphique de la semaine
+                </Text>
+
+                <View className="flex h-[300px] mx-auto rounded-lg justify-center items-center">
+                  <GraphWeek />
+                </View>
+              </View>
+            </View>
+            <Text
+              className="text-lg rounded-lg text-center mb-8 py-2 px-3 bg-[#363D97] color-white"
+              style={{
+                fontSize: screenWidth < 768 ? 20 : 32,
+                marginTop: screenWidth < 768 ? "0%" : "8%",
+              }}
+            >
+              Actions rapides
+            </Text>
+            <View className="flex flex-row flex-wrap justify-between w-full mb-12">
+              <Pressable onPress={() => navigation.navigate("Tickets")}>
+                <CardActions
+                  title="Tickets"
+                  image={require("./../../assets/ticketIcon.png")}
+                />
+              </Pressable>
+              <Pressable onPress={() => navigation.navigate("Messages")}>
+                <CardActions
+                  title="Messages"
+                  image={require("./../../assets/messageIcon.png")}
+                />
+              </Pressable>
+              <Pressable onPress={() => navigation.navigate("Scanner")}>
+                <CardActions
+                  title="Scanner"
+                  image={require("./../../assets/scanIcon2.png")}
+                />
+              </Pressable>
+              <Pressable onPress={() => setChooseDate(true)}>
+                <CardActions
+                  title="Export"
+                  image={require("./../../assets/logsIcon.png")}
+                />
+              </Pressable>
+            </View>
+          </View>
+        </ScrollView>
+
         <Navbar />
       </View>
     </View>
