@@ -3,8 +3,6 @@ import { Text, View } from 'react-native';
 import {Calendar, LocaleConfig} from 'react-native-calendars';
 import Excel from './Excel';
 
-
-
 LocaleConfig.locales['fr'] = {
   monthNames: [
     'Janvier',

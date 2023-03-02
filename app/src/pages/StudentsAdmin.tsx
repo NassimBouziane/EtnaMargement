@@ -9,17 +9,10 @@ import {
   Image,
 } from "react-native";
 import Modal from "react-native-modal";
-
-
 import Navbar from "../components/Navbar";
 import { Ionicons } from "@expo/vector-icons";
 import CardStudent from "../components/CardStudent";
 import { getLogsByToday } from "../../services/logs/logs.services";
-import {
-  fetchUserConnected,
-  getUserByLogin,
-} from "../../services/users/users.services";
-import ReactNativeModal from "react-native-modal";
 import Calendrier from "../components/Calendrier";
 import { useNavigation } from "@react-navigation/native";
 

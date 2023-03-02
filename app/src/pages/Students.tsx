@@ -2,7 +2,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect } from "react";
 import {
-  Button,
   Dimensions,
   Image,
   Pressable,
@@ -11,27 +10,19 @@ import {
   ScrollView,
   RefreshControl,
 } from "react-native";
-import { Card } from "react-native-elements/dist/card/Card";
 import {
-  getNote,
   getPromo,
   getTicket,
   getWall,
   getWallByName,
-  getWallByPromo,
 } from "../../services/etna/etna.services";
 import { getLogsByLogin } from "../../services/logs/logs.services";
 import {
   fetchUserConnected,
-  getPhoto,
   getUserByLogin,
 } from "../../services/users/users.services";
-import CardStudent from "../components/CardStudent";
 import CardTicket from "../components/CardTicket";
-import GraphDay from "../components/GraphDay";
 import GraphStudent from "../components/GraphStudent";
-import GraphWeek from "../components/GrapWeek";
-import Navbar from "../components/Navbar";
 import QRCODE from "../components/QRCode";
 
 export default function Students() {
