@@ -34,24 +34,39 @@ export default function CardStudent(props: any) {
           })
         }
       >
-        <View className="flex flex-row gap-1 py-5 ml-1  items-center">
+        <View className="flex flex-row gap-1 py-5 ml-1 items-center">
           <Image
             className="rounded-lg w-64"
             source={{
               uri: `https://auth.etna-alternance.net/api/users/${props.login}/photo`,
             }}
-            style={{ width: "18%", height: props.date ? "100%" : "220%" }}
+            style={{
+              width: "18%",
+              height: props.date ? "110%" : "150%",
+              display: props.date ? "none" : "flex",
+            }}
           />
-          <View className="overflow-hidden w-48 mr-10">
-            <Text className="pl-4 text-base" numberOfLines={1}>
+          <View
+            className="overflow-hidden w-48 mr-10 "
+            style={{ width: props.date ? "70%" : "58%" }}
+          >
+            <Text
+              className="pl-4 text-base"
+              numberOfLines={1}
+              style={{ display: props.date ? "none" : "flex" }}
+            >
               {props.firstname} {props.lastname}
             </Text>
             {props.date && (
-              <View>
-                <Text>{props.date}</Text>
+              <View className="ml-5">
+                <Text className=" tex-xl mb-1 text-lg mb-1">{props.date}</Text>
                 <SelectDropdown
                   data={status}
+                  buttonStyle={{
+                    borderRadius: 5,
+                  }}
                   defaultValue={props.status}
+                  defaultButtonText={"Options"}
                   onSelect={(selectedItem: any, index: any) => {
                     updatelogs({ status: selectedItem }, props.id).then(
                       (res) => res

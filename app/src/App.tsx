@@ -16,6 +16,7 @@ import StudentsAdminDetails from "./pages/StudentAdminDetails";
 import Students from "./pages/Students";
 import StudentsAdmin from "./pages/StudentsAdmin";
 import Tickets from "./pages/Tickets";
+import QRCodeZoom from "./pages/QRCodeZoom";
 
 const Stack = createNativeStackNavigator();
 
@@ -82,6 +83,14 @@ function App() {
         <Stack.Screen
           name="Students"
           component={Students}
+          options={{
+            headerShown: true,
+            animation: "none",
+          }}
+        />
+        <Stack.Screen
+          name="QR Details"
+          component={QRCodeZoom}
           options={{
             headerShown: true,
             animation: "none",

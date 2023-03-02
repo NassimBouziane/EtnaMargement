@@ -23,6 +23,7 @@ import {
 } from "../../services/users/users.services";
 import ReactNativeModal from "react-native-modal";
 import Calendrier from "../components/Calendrier";
+import { useNavigation } from "@react-navigation/native";
 
 interface Logs {
   id: any;
@@ -51,7 +52,9 @@ export default function StudentsAdmin() {
   const [retardFilter, setRetardFilter] = useState(false);
   const [presentFilter, setPresentFilter] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const navigation = useNavigation();
 
+ 
 
   const handleclick = (button: string) => {
     const isPresent = button === "Present";
@@ -74,11 +77,16 @@ export default function StudentsAdmin() {
   };
 
   const getByDate = async (date: String) => {
-    await getLogsByToday(date).then((response) => {setDataDay(response.data),setLoading(false);});
+
+    await getLogsByToday(date).then((response) => {setDataDay(response.data),setLoading(false),navigation.setOptions({ headerTitle: `Etudiant ${date}` });
+    ;});
     
   };
   useEffect(() => {
+
     const today = new Date().toISOString().substring(0, 10);
+    navigation.setOptions({ headerTitle: `Etudiant ${today}` });
+
 
     getByDate(today);
   }, []);

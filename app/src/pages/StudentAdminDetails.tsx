@@ -39,14 +39,15 @@ export default function StudentsAdminDetails() {
   const getGraph= async(login:String) =>{
   await getLogsByLogin(login).then((res) => {
     const max = Number(res.data.Present) + Number(res.data.Absent) + Number(res.data.Retard) + Number(res.data.Distanciel)
-      const even_max = () => {
-        if (max % 2 == 0 ) {
-          return max + 2
-        } else {
-          return max + 1
-        }
-      } 
-      setDataGraph([res.data.Present, res.data.Absent, res.data.Retard, res.data.Distanciel, even_max()])
+    const even_max = (x: number) => {
+      let y = Math.ceil(x / 4) * 4; // Round up x/4 and multiply by 4 to get closest multiple of 4
+      if (y % 2 !== 0) {
+        // If y is odd, add 2 to make it even
+        y += 2;
+      }
+      return y;
+    };
+      setDataGraph([res.data.Present, res.data.Absent, res.data.Retard, res.data.Distanciel, even_max(max)])
   });}
 
   return (

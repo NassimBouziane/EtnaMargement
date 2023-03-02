@@ -70,17 +70,28 @@ export default function Students() {
 
     await getLogsByLogin(user_logs.login).then((res) => {
       console.log(res.data);
-      const max = Number(res.data.Present) + Number(res.data.Absent) + Number(res.data.Retard) + Number(res.data.Distanciel)
-        const even_max = () => {
-          if (max % 2 == 0 ) {
-            return max + 2
-          } else {
-            return max + 1
-          }
-        } 
-        setDataGraph([res.data.Present, res.data.Absent, res.data.Retard, res.data.Distanciel, even_max()])
+      const max =
+        Number(res.data.Present) +
+        Number(res.data.Absent) +
+        Number(res.data.Retard) +
+        Number(res.data.Distanciel);
+      const even_max = (x: number) => {
+        let y = Math.ceil(x / 4) * 4; // Round up x/4 and multiply by 4 to get closest multiple of 4
+        if (y % 2 !== 0) {
+          // If y is odd, add 2 to make it even
+          y += 2;
+        }
+        return y;
+      };
+      setDataGraph([
+        res.data.Present,
+        res.data.Absent,
+        res.data.Retard,
+        res.data.Distanciel,
+        even_max(max),
+      ]);
     });
-    console.log(dataGraph)
+    console.log(dataGraph);
     const wall = await getWall(await JSON.parse(token));
 
     const wallByName = await getWallByName(
@@ -142,10 +153,10 @@ export default function Students() {
         </View>
         <View className="flex mt-10 w-[90%] mx-auto rounded-lg justify-center items-center">
           <Text className="text-lg w-[95%] rounded-lg text-center py-2 px-3 bg-[#363D97] color-white">
-            Carte étudiante
+            Carte étudiante Digitale
           </Text>
         </View>
-        <View className="flex h-[270px] w-[95%] mx-auto bg-[#E3E3E3] mt-[50px] rounded-lg">
+        <View className="flex h-[270px] w-[95%] mx-auto bg-[#E3E3E3] mt-[20px] rounded-lg">
           <View className="flex flex-row justify-evenly w-full h-[64px] bg-[#5863F8]">
             <Text className="text-[11px] text-white w-[88px] h-fit text-center my-auto">
               Carte étudiante des métiers
@@ -182,27 +193,42 @@ export default function Students() {
               </Text>
             </View>
           </View>
-          <View className="absolute bottom-5 right-5">
+          <Pressable
+            className="absolute bottom-3 right-5"
+            onPress={() => {
+              navigation.navigate("QR Details");
+            }}
+          >
             <QRCODE
               value={
                 qr_value
                   ? qr_value
                   : "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
               }
+              size={70}
               className="absolute"
             />
-          </View>
+            <Text className="text-[8px] text-center underline">Zoom</Text>
+          </Pressable>
         </View>
         <View className="flex h-[300px] w-[95%] mx-auto mt-[50px] rounded-lg justify-center items-center">
           <Text className="text-lg w-[90%] rounded-lg text-center mb-6 py-2 px-3 bg-[#363D97] color-white">
             Graphique de Présence
           </Text>
 
-          <GraphStudent dataGraph={dataGraph ? dataGraph : [0,0,0,0,0]}/>
+          <GraphStudent dataGraph={dataGraph ? dataGraph : [0, 0, 0, 0, 0]} />
         </View>
-        <Text className="text-[22px] w-full text-center mt-[10px]">
-          ({tickets ? tickets.data.length : ""}) Ticket(s)
-        </Text>
+        <View className="flex flex-row mb-1 w-[90%] mt-[50px] justify-center mx-auto items-center py-2 px-3 bg-[#363D97] rounded-xl">
+          <Text
+            className="bg-red-500 text-white py-1 px-2 rounded-2xl"
+            style={{
+              fontSize: screenWidth < 768 ? 14 : 32,
+            }}
+          >
+            {tickets ? tickets.data.length : ""}
+          </Text>
+          <Text className="ml-5 text-xl text-white">Tickets</Text>
+        </View>
         <View className="flex h-fit w-full mx-auto mt-[10px] rounded-lg">
           <View style={{ alignSelf: "center" }}>
             {tickets &&
