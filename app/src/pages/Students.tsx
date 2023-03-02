@@ -58,6 +58,8 @@ export default function Students() {
     }, 2000);
   }, []);
 
+  
+
   const UserInfo = async () => {
     const token: any = await AsyncStorage.getItem("token");
     const user_logs = await fetchUserConnected(await JSON.parse(token));
@@ -122,12 +124,23 @@ export default function Students() {
     setQr_value(qr_value);
   };
 
+  const logOut = async () => {
+    await AsyncStorage.removeItem("token");
+    await AsyncStorage.removeItem("login");
+    await AsyncStorage.removeItem("password");
+    await AsyncStorage.removeItem("remember");
+  };
+
   useEffect(() => {
     UserInfo();
+    
   }, []);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
+      headerLeft: () => (
+        <View></View>
+      ),
       headerRight: () => (
         <View>
           <Image
@@ -271,6 +284,16 @@ export default function Students() {
         <View className="flex h-[600px] w-[95%] mx-auto bg-[#E3E3E3] mt-[50px] rounded-lg">
           <Text className="text-[32px] my-auto mx-auto">Mur Promo</Text>
         </View>
+
+        <Pressable onPress={() => {logOut().then(() => navigation.navigate("Login"))}}>
+              <View className="flex flex-row items-center ml-5">
+                <Image
+                  source={require("../../assets/logoutIcon.png")}
+                  className="w-6 h-8 mr-2"
+                />
+                <Text className="my-5 text-xl text-center">Se déconnecter</Text>
+              </View>
+            </Pressable>
       </View>
     </ScrollView>
   );

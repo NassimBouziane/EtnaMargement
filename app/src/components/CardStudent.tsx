@@ -22,7 +22,7 @@ export default function CardStudent(props: any) {
   }
   if (props.afternoon == "Present") {
     notifColor2 = require("../../assets/notif_green.png");
-  } else if (props.morning == "Retard") {
+  } else if (props.afternoon == "Retard") {
     notifColor2 = require("../../assets/notif_yellow.png");
   }
 

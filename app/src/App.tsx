@@ -66,6 +66,8 @@ function App() {
           options={{
             headerShown: true,
             animation: "none",
+            gestureEnabled: false,
+            
           }}
         />
         <Stack.Screen
