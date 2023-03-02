@@ -59,7 +59,7 @@ export default function CardStudent(props: any) {
 
   return (
     <View
-      className="bg-[#D9D9D9] active:bg-slate-500 w-[90%] rounded-xl my-2"
+      className="bg-[#D9D9D9]  w-[90%] rounded-xl my-2 active:bg-[#7b4040] ;"
       style={{ width: props.date ? "100%" : "90%" }}
     >
       <Pressable
