@@ -47,11 +47,12 @@ export default function Tickets() {
     setLentickets(3);
     setButtonlentickets(true);
     setLenticketsclosed(3);
-    if (3 >= tickets.data.filter((data: any) => data.closed_at === null).length) {
+    if (3 >= tickets ? (tickets.data.filter((data: any) => data.closed_at === null).length): (0)) {
       setButtonlenticketsclosed(false);
     }else {
       setButtonlenticketsclosed(true);
     }
+
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
@@ -59,6 +60,14 @@ export default function Tickets() {
 
   useEffect(() => {
     UserInfo();
+    setLentickets(3);
+    setButtonlentickets(true);
+    setLenticketsclosed(3);
+    if (3 >= tickets ? (tickets.data.filter((data: any) => data.closed_at === null).length): (0)) {
+      setButtonlenticketsclosed(false);
+    }else {
+      setButtonlenticketsclosed(true);
+    }
     // user change => re-render
   }, []);
 
