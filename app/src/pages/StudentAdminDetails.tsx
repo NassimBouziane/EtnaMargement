@@ -25,9 +25,20 @@ export default function StudentsAdminDetails() {
   const [data, setData] = useState<any>();
   const [dataGraph, setDataGraph] = React.useState<any>([]);
   const [refreshing, setRefreshing] = React.useState(false);
+
   const getLogs = async () => {
     await getLogsUser(props.login).then((res) => setData(res));
   };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    // reload data
+    getLogs();
+    getGraph(props.login);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
   useEffect(() => {
     getLogs();
     getGraph(props.login);
