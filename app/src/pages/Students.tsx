@@ -20,6 +20,7 @@ import {
   getWallByName,
   getWallByPromo,
 } from "../../services/etna/etna.services";
+import { getLogsByLogin } from "../../services/logs/logs.services";
 import {
   fetchUserConnected,
   getPhoto,
@@ -44,6 +45,8 @@ export default function Students() {
   const [lentickets, setLentickets] = React.useState<any>(3);
   const [buttonlentickets, setButtonlentickets] = React.useState<any>(true);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [dataGraph, setDataGraph] = React.useState<any>([]);
+
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     // reload data
@@ -65,6 +68,19 @@ export default function Students() {
       setTickets(res);
     });
 
+    await getLogsByLogin(user_logs.login).then((res) => {
+      console.log(res.data);
+      const max = Number(res.data.Present) + Number(res.data.Absent) + Number(res.data.Retard) + Number(res.data.Distanciel)
+        const even_max = () => {
+          if (max % 2 == 0 ) {
+            return max + 2
+          } else {
+            return max + 1
+          }
+        } 
+        setDataGraph([res.data.Present, res.data.Absent, res.data.Retard, res.data.Distanciel, even_max()])
+    });
+    console.log(dataGraph)
     const wall = await getWall(await JSON.parse(token));
 
     const wallByName = await getWallByName(
@@ -181,33 +197,35 @@ export default function Students() {
           <Text className="text-lg w-[90%] rounded-lg text-center mb-6 py-2 px-3 bg-[#363D97] color-white">
             Graphique de Présence
           </Text>
-          <GraphStudent login={user.login} />
+
+          <GraphStudent dataGraph={dataGraph ? dataGraph : [0,0,0,0,0]}/>
         </View>
-        <View className="mx-auto text-center w-10/12 mt-10 flex flex-row mb-3 justify-center items-center py-2 px-3 bg-[#363D97] rounded-xl">
-          <Text className="bg-red-500 text-white py-1 px-2 rounded-2xl">
-            {tickets ? tickets.data.length : ""}
-          </Text>
-          <Text className="ml-5 text-lg text-white">Tickets</Text>
-        </View>
-        <View className="flex h-fit w-[95%] mx-auto mt-[10px] rounded-lg">
-          <View className="bg-white rounded-lg">
-            {tickets?.data.slice(0, lentickets).map((ticket: any) => (
-              <View key={ticket.id} className="mx-auto">
-                <CardTicket
-                  login={ticket?.creator?.login || ""}
-                  name={
-                    user
-                      ? `${user.lastname.charAt(0).toUpperCase()}${user.lastname
-                          .slice(1)
-                          .toLowerCase()} ${user.firstname}`
-                      : "Lastname"
-                  }
-                  title={ticket.title}
-                  time={`à: ${ticket.created_at.split(" ")[1]}`}
-                  status={ticket.status}
-                />
-              </View>
-            ))}
+        <Text className="text-[22px] w-full text-center mt-[10px]">
+          ({tickets ? tickets.data.length : ""}) Ticket(s)
+        </Text>
+        <View className="flex h-fit w-full mx-auto mt-[10px] rounded-lg">
+          <View style={{ alignSelf: "center" }}>
+            {tickets &&
+              tickets.data
+                .slice(0, lentickets)
+                .map((ticket: any) => (
+                  <CardTicket
+                    key={ticket.id}
+                    login={ticket?.creator?.login || ""}
+                    name={
+                      user
+                        ? `${user.lastname
+                            .charAt(0)
+                            .toUpperCase()}${user.lastname
+                            .slice(1)
+                            .toLowerCase()} ${user.firstname}`
+                        : "Lastname"
+                    }
+                    title={ticket.title}
+                    time={`à: ${ticket.created_at.split(" ")[1]}`}
+                    status={ticket.status}
+                  />
+                ))}
           </View>
           {buttonlentickets && (
             <Pressable
