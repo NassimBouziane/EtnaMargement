@@ -26,6 +26,34 @@ export default function Scanner({ navigation }: any) {
   const [scanned, setScanned] = useState(false); // si le code a été scanné
   const [isLoading, setLoading] = useState(true); // chargement de la page
 
+  const urlNo = [
+    require("../../assets/the-rock-no.gif"),
+    require("../../assets/gif_not_validate_2.gif"),
+    require("../../assets/gif_not_validate_3.gif"),
+    require("../../assets/gif_not_validate_4.gif"),
+    require("../../assets/gif_not_validate_5.gif"),
+    require("../../assets/gif_not_validate_6.gif"),
+  ];
+
+  const urlYes = [
+    require("../../assets/the-rock-yes.gif"),
+    require("../../assets/gif_validate_2.gif"),
+    require("../../assets/gif_validate_3.gif"),
+    require("../../assets/gif_validate_5.gif"),
+  ];
+
+  const [selectedURL, setSelectedURL]: any = useState(null);
+
+  const selectRandomURLYes = () => {
+    const randomIndex = Math.floor(Math.random() * urlYes.length);
+    setSelectedURL(urlYes[randomIndex]);
+  };
+
+  const selectRandomURLNo = () => {
+    const randomIndex = Math.floor(Math.random() * urlNo.length);
+    setSelectedURL(urlNo[randomIndex]);
+  };
+
   // Demande d'autorisation pour la caméra au lancement de l'application
   useEffect(() => {
     requestCameraPermission();
@@ -68,6 +96,8 @@ export default function Scanner({ navigation }: any) {
 
   if (data) {
     setTimeout(() => {
+      selectRandomURLYes();
+
       setData(null);
       setScanned(false);
     }, 2000);
@@ -78,7 +108,7 @@ export default function Scanner({ navigation }: any) {
           QR code valide
         </Text>
         <Image
-          source={require("../../assets/the-rock-yes.gif")}
+          source={selectedURL}
           style={{ width: 200, height: 200, alignSelf: "center" }}
         />
         <Text className="text-center">{data[0]}</Text>
@@ -88,18 +118,19 @@ export default function Scanner({ navigation }: any) {
 
   if (error) {
     setTimeout(() => {
+      selectRandomURLNo();
       setData(null);
       setScanned(false);
       setError(false);
-    }, 2000);
+    }, 3000);
 
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
-        <Text className="text-2xl mb-10 text-center text-red-500">
+        <Text className="text-2xl mb-10 text-center border-2 w-[50%] text-red-400 bg-slate-200 border-red-300 rounded-xl mx-auto">
           QR code incorrect
         </Text>
         <Image
-          source={require("../../assets/the-rock-no.gif")}
+          source={selectedURL}
           style={{ width: 200, height: 200, alignSelf: "center" }}
         />
       </View>
