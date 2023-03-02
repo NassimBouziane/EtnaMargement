@@ -109,6 +109,12 @@ export default function StudentsAdmin() {
 
   const [modalVisible, setModalVisible] = useState(false);
 
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handlePress = (option: any) => {
+    setSelectedOption(option === selectedOption ? null : option);
+  };
+
   return (
     <View>
       <View className="flex flex-col h-full w-full">
@@ -152,27 +158,72 @@ export default function StudentsAdmin() {
             </Pressable>
           </View>
           <View className="flex flex-row justify-between w-[95%] ">
-            <View className="bg-[#92F866] px-4 py-2 rounded-xl">
-              <Pressable onPress={() => handleclick("Present")}>
+            <View
+              style={{
+                opacity: selectedOption === "Present" ? 1 : 0.5,
+                backgroundColor: "#92F866",
+                paddingHorizontal: 4,
+                paddingVertical: 2,
+                borderRadius: 10,
+              }}
+              className="px-5 py-2"
+            >
+              <Pressable
+                onPress={() => {
+                  handleclick("Present");
+                  handlePress("Present");
+                }}
+              >
                 <Text className="text-lg">Présents</Text>
               </Pressable>
             </View>
-            <View className="bg-[#FBB733] px-4 py-2 rounded-xl">
-              <Pressable onPress={() => handleclick("Retard")}>
+            <View
+              style={{
+                opacity: selectedOption === "Retard" ? 1 : 0.5,
+                backgroundColor: "#FBB733",
+                paddingHorizontal: 4,
+                paddingVertical: 2,
+                borderRadius: 10,
+              }}
+              className="px-5 py-2"
+            >
+              <Pressable
+                onPress={() => {
+                  handleclick("Retard");
+                  handlePress("Retard");
+                }}
+              >
                 <Text className="text-lg">Retard</Text>
               </Pressable>
             </View>
-            <View className="bg-[#F04C4C] px-4 py-2 rounded-xl">
-              <Pressable onPress={() => handleclick("Absent")}>
+            <View
+              style={{
+                opacity: selectedOption === "Absent" ? 1 : 0.5,
+                backgroundColor: "#F04C4C",
+                paddingHorizontal: 4,
+                paddingVertical: 2,
+                borderRadius: 10,
+              }}
+              className="px-5 py-2"
+            >
+              <Pressable
+                onPress={() => {
+                  handleclick("Absent");
+                  handlePress("Absent");
+                }}
+              >
                 <Text className="text-lg">Absents</Text>
               </Pressable>
             </View>
           </View>
         </View>
         {isLoading ? (
-          <ScrollView className="w-full h-full ml-5" refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }>
+          <ScrollView
+            className="w-full h-full ml-5"
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
             <ActivityIndicator size="large" color="blue" className="mt-64" />
           </ScrollView>
         ) : (
@@ -203,46 +254,46 @@ export default function StudentsAdmin() {
               ) {
                 return false;
               }
-              return item.login.toLowerCase().includes(searchValue.toLowerCase());
+              return item.login
+                .toLowerCase()
+                .includes(searchValue.toLowerCase());
             })}
             keyExtractor={(item: Logs) => item.id.toString()}
-            
             renderItem={({ item }: { item: Logs }) => {
               let notifColor;
               let notifColor2;
               const color = () => {
-
                 switch (item.morning) {
-                  case 'Present':
-                    notifColor = require('../../assets/notif_green.png');
+                  case "Present":
+                    notifColor = require("../../assets/notif_green.png");
                     break;
-                  case 'Retard':
-                    notifColor = require('../../assets/notif_yellow.png');
+                  case "Retard":
+                    notifColor = require("../../assets/notif_yellow.png");
                     break;
-                  case 'Distanciel':
-                    notifColor = require('../../assets/notif_purple.png');
+                  case "Distanciel":
+                    notifColor = require("../../assets/notif_purple.png");
                     break;
                   default:
-                    notifColor = require('../../assets/notif_red.png');
+                    notifColor = require("../../assets/notif_red.png");
                     break;
                 }
-                
+
                 switch (item.afternoon) {
-                  case 'Present':
-                    notifColor2 = require('../../assets/notif_green.png');
+                  case "Present":
+                    notifColor2 = require("../../assets/notif_green.png");
                     break;
-                  case 'Retard':
-                    notifColor2 = require('../../assets/notif_yellow.png');
+                  case "Retard":
+                    notifColor2 = require("../../assets/notif_yellow.png");
                     break;
-                  case 'Distanciel':
-                    notifColor2 = require('../../assets/notif_purple.png');
+                  case "Distanciel":
+                    notifColor2 = require("../../assets/notif_purple.png");
                     break;
                   default:
-                    notifColor2 = require('../../assets/notif_red.png');
+                    notifColor2 = require("../../assets/notif_red.png");
                     break;
                 }
               };
-              
+
               color();
               return (
                 <CardStudent
