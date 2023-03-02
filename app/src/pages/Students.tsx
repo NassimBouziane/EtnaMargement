@@ -38,7 +38,11 @@ export default function Students() {
   const [buttonlentickets, setButtonlentickets] = React.useState<any>(true);
   const [refreshing, setRefreshing] = React.useState(false);
   const [dataGraph, setDataGraph] = React.useState<any>([]);
-
+  const [grades, setGrades] = React.useState<any>([
+    ["Activity 1: ", "14/20"],
+    ["Activity 2: ", "16/20"],
+    ["Activity 3: ", "20/20"],
+  ]);
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     // reload data
@@ -105,14 +109,23 @@ export default function Students() {
     // console.log(tickets.data[0].created_at.split(" ")[1]);
 
     //const promo = await getPromo(await JSON.parse(token))
-    const lastNote = await getNote(
+    const grades = await getNote(
       await JSON.parse(token),
       user.login,
       promo[0].id.toString()
-    ).then((res) => res[res.length - 1]);
-    console.log(lastNote.activity_name);
-    console.log(lastNote.student_mark);
+    ).then((res) => {
+      // get 3 last grades and put grades.activity_name in grades[i][i] and  grades.grade in grades[i][i+1] like this ["Activity 1: ", "14/20"]
+      res = res.slice(Math.max(res.length - 3, 1));
+      let grades = [];
+      for(let i = 0; i < res.length; i++){
+        grades.push(
+          [res[i].activity_name+": ", res[i].student_mark + "/" + res[i].maximal]
+        )
+      }
+      setGrades(grades);
+    });
     //console.log(tickets)
+
     setUser(user);
     setPromo(promo[0]);
     setQr_value(qr_value);
@@ -220,13 +233,21 @@ export default function Students() {
             Dernières notes
           </Text>
           <View className="w-[90%] bg-[#D9D9D9] rounded-lg">
-            <Text className="py-3 text-center border-b-[1px] border-slate-500">
-              Activity 1: 14/20
-            </Text>
-            <Text className="py-3 text-center border-b-[1px] border-slate-500">
-              Activité 2: 16/20
-            </Text>
-            <Text className="py-3 text-center">Activité 3: 13/20</Text>
+            {/* map grades and display them*/
+            grades ? grades.map((grade, index) => {
+              return (
+                <View
+                  key={index}
+                  className="flex flex-row w-full h-[50px] justify-between items-center"
+                >
+                  <View className="flex flex-row w-full h-fit">
+                    <Text className="text-[11px] w-full text-center">
+                      {grade}
+                    </Text>
+                  </View>
+                </View>
+              );
+            }) : null}
           </View>
         </View>
         <View className="flex h-[300px] w-[95%] mx-auto mt-[25px] rounded-lg justify-center items-center">
