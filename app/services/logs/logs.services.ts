@@ -18,10 +18,12 @@ export const checkLogs = async(login :String, date:any) => {
    const hours = moment().tz('Europe/Paris').format("HH")
     const hours_minute = moment().tz('Europe/Paris').format("HH:mm")
     const isBefore930 = moment(hours_minute, "HH:mm").isBefore(moment("09:30", "HH:mm"));
+    const isBefore1650 = moment(hours_minute, "HH:mm").isBefore(moment("16:50", "HH:mm"));
+
     //TODO ADD RETARD IF STUDENTS ARRIVES BETWEEN 10h AND 14H
     
     if(Number(hours) > 12){
-        if(!isBefore930){
+        if(!isBefore1650){
             if(isAlready[0].afternoon == 'Present' || isAlready[0].afternoon == 'Retard'){
                 Alert.alert('Vous etes déja emmargé')
                 console.log(isAlready[0].afternoon)

@@ -39,7 +39,8 @@ export default function Scanner({ navigation }: any) {
     require("../../assets/the-rock-yes.gif"),
     require("../../assets/gif_validate_2.gif"),
     require("../../assets/gif_validate_3.gif"),
-    require("../../assets/gif_validate_5.gif"),
+    require("../../assets/gif_validate_4.gif"),
+    require("../../assets/gif_validate_3.gif"),
   ];
 
   const [selectedURL, setSelectedURL]: any = useState(null);
