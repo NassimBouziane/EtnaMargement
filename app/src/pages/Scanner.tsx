@@ -78,7 +78,7 @@ export default function Scanner({ navigation }: any) {
           source={require("../../assets/the-rock-yes.gif")}
           style={{ width: 200, height: 200, alignSelf: "center" }}
         />
-         <Text className="text-center">{data[0]}</Text>
+        <Text className="text-center">{data[0]}</Text>
       </View>
     );
   }
@@ -87,7 +87,7 @@ export default function Scanner({ navigation }: any) {
     setTimeout(() => {
       setData(null);
       setScanned(false);
-      setError(false)
+      setError(false);
     }, 2000);
 
     return (
@@ -99,7 +99,6 @@ export default function Scanner({ navigation }: any) {
           source={require("../../assets/the-rock-no.gif")}
           style={{ width: 200, height: 200, alignSelf: "center" }}
         />
-       
       </View>
     );
   }
