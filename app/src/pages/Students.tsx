@@ -196,8 +196,8 @@ export default function Students() {
         <Text className="text-[22px] w-full text-center mt-[10px]">
           ({tickets ? tickets.data.length : ""}) Ticket(s)
         </Text>
-        <View className="flex h-fit w-[95%] mx-auto mt-[10px] rounded-lg">
-          <View className="bg-white rounded-lg">
+        <View className="flex h-fit w-full mx-auto mt-[10px] rounded-lg">
+          <View style={{ alignSelf: "center" }}>
             {tickets &&
               tickets.data
                 .slice(0, lentickets)
