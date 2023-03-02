@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, ScrollView, Text, View } from "react-native";
+import { Image, RefreshControl, ScrollView, Text, View } from "react-native";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { getLogsByLogin, getLogsUser } from "../../services/logs/logs.services";
 import CardStudent from "../components/CardStudent";
@@ -24,7 +24,7 @@ export default function StudentsAdminDetails() {
   const props = route.params.propsToSend;
   const [data, setData] = useState<any>();
   const [dataGraph, setDataGraph] = React.useState<any>([]);
-
+  const [refreshing, setRefreshing] = React.useState(false);
   const getLogs = async () => {
     await getLogsUser(props.login).then((res) => setData(res));
   };
@@ -80,7 +80,9 @@ export default function StudentsAdminDetails() {
           <Text className="text-lg rounded-lg text-center mb-8 py-2 px-3 bg-[#363D97] color-white w-[100%] mx-auto">
             Historique d'assiduité de {props.login}
           </Text>
-          <ScrollView>
+          <ScrollView refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }>
             {data &&
               data.map((items: any, i: Number) => {
                 let notifColor = require("../../assets/notif_red.png")
