@@ -39,38 +39,23 @@ export default function StudentsAdminDetails() {
         Number(res.data.Absent) +
         Number(res.data.Retard) +
         Number(res.data.Distanciel);
-      const even_max = () => {
-        if (max % 2 == 0) {
-          return max + 2;
-        } else {
-          return max + 1;
+      const even_max = (x: number) => {
+        let y = Math.ceil(x / 4) * 4; // Round up x/4 and multiply by 4 to get closest multiple of 4
+        if (y % 2 !== 0) {
+          // If y is odd, add 2 to make it even
+          y += 2;
         }
+        return y;
       };
       setDataGraph([
         res.data.Present,
         res.data.Absent,
         res.data.Retard,
         res.data.Distanciel,
-        even_max(),
+        even_max(max),
       ]);
     });
   };
-  
-
-  },[])
-  const getGraph= async(login:String) =>{
-  await getLogsByLogin(login).then((res) => {
-    const max = Number(res.data.Present) + Number(res.data.Absent) + Number(res.data.Retard) + Number(res.data.Distanciel)
-    const even_max = (x: number) => {
-      let y = Math.ceil(x / 4) * 4; // Round up x/4 and multiply by 4 to get closest multiple of 4
-      if (y % 2 !== 0) {
-        // If y is odd, add 2 to make it even
-        y += 2;
-      }
-      return y;
-    };
-      setDataGraph([res.data.Present, res.data.Absent, res.data.Retard, res.data.Distanciel, even_max(max)])
-  });}
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -95,32 +80,29 @@ export default function StudentsAdminDetails() {
           <Text className="text-lg rounded-lg text-center mb-8 py-2 px-3 bg-[#363D97] color-white w-[100%] mx-auto">
             Historique d'assiduité de {props.login}
           </Text>
-
-          <View className="w-full">
-            <ScrollView>
-              {data &&
-                data.map((items: any, i: Number) => {
-                  return (
-                    <View key={items.id}>
-                      <CardStudent
-                        key={items.id}
-                        id={items.id}
-                        login={items.login}
-                        morning={items.morning}
-                        afternoon={items.afternoon}
-                        firstname={items.firstname}
-                        lastname={items.lastname}
-                        date={items.date}
-                        status={items.status}
-                      />
-                    </View>
-                  );
-                })}
-            </ScrollView>
-          </View>
+          <ScrollView>
+            {data &&
+              data.map((items: any, i: Number) => {
+                return (
+                  <View key={items.id}>
+                    <CardStudent
+                      key={items.id}
+                      id={items.id}
+                      login={items.login}
+                      morning={items.morning}
+                      afternoon={items.afternoon}
+                      firstname={items.firstname}
+                      lastname={items.lastname}
+                      date={items.date}
+                      status={items.status}
+                    />
+                  </View>
+                );
+              })}
+          </ScrollView>
         </View>
         <View className="mt-5">
-          <Text className="text-lg rounded-lg text-center mb-8 py-2 px-3 bg-[#363D97] color-white w-[100%] mx-auto mt-10">
+          <Text className="text-lg rounded-lg text-center mb-8 py-2 px-3 bg-[#363D97] color-white w-[100%] mx-auto">
             Présence
           </Text>
           {/* <View className="w-11/12 h-48 bg-slate-600 rounded-xl mt-2"></View> */}
