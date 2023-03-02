@@ -7,8 +7,21 @@ import { updatelogs } from "../../services/logs/logs.services";
 export default function CardStudent(props: any) {
   const status = ["Justifié", "Non Justifié", "En Attente"];
   const presence = ["Present", "Absent", "Retard", "Distanciel"];
+  const [notifColor, setnotifColor] = useState(props.notifColor);
+  const [notifColor2, setnotifColor2] = useState(props.notifColor2);
 
   const navigation: any = useNavigation();
+
+  const RefreshColorMorning = (item: string) => {
+    switch (item) {
+      case 'Present':
+        setnotifColor(require("../../assets/notif_green.png"))
+        break;
+    
+      default:
+        break;
+    }
+  }
 
 
   return (
@@ -63,6 +76,7 @@ export default function CardStudent(props: any) {
                     updatelogs({ morning: selectedItem }, props.id).then(
                       (res) => res
                     );
+                    RefreshColorMorning(selectedItem);
                     return selectedItem;
                   }}
                 />
@@ -107,8 +121,8 @@ export default function CardStudent(props: any) {
             )}
           </View>
           <View className="flex flex-col gap-2">
-            <Image source={props.notifColor ? props.notifColor : require("../../assets/notif_red.png")} />
-            <Image source={props.notifColor2 ? props.notifColor2 : require("../../assets/notif_red.png")} />
+            <Image source={notifColor ? notifColor : require("../../assets/notif_red.png")} />
+            <Image source={notifColor2 ? notifColor2 : require("../../assets/notif_red.png")} />
           </View>
         </View>
       </Pressable>
