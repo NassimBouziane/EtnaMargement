@@ -17,8 +17,35 @@ export default function CardStudent(props: any) {
       case 'Present':
         setnotifColor(require("../../assets/notif_green.png"))
         break;
-    
+      case 'Absent':
+        setnotifColor(require("../../assets/notif_red.png"))
+        break;
+      case 'Retard':
+        setnotifColor(require("../../assets/notif_yellow.png"))
+        break;
+      case 'Distanciel':
+        setnotifColor(require("../../assets/notif_purple.png"))
       default:
+        setnotifColor(require("../../assets/notif_red.png"))
+        break;
+    }
+  }
+
+  const RefreshColorAfternoon = (item: string) => {
+    switch (item) {
+      case 'Present':
+        setnotifColor2(require("../../assets/notif_green.png"))
+        break;
+      case 'Absent':
+        setnotifColor2(require("../../assets/notif_red.png"))
+        break;
+      case 'Retard':
+        setnotifColor2(require("../../assets/notif_yellow.png"))
+        break;
+      case 'Distanciel':
+        setnotifColor2(require("../../assets/notif_purple.png"))
+      default:
+        setnotifColor2(require("../../assets/notif_red.png"))
         break;
     }
   }
@@ -91,6 +118,7 @@ export default function CardStudent(props: any) {
                       updatelogs({ afternoon: selectedItem }, props.id).then(
                         (res) => res
                       );
+                      RefreshColorAfternoon(selectedItem);
                       return selectedItem;
                     }}
                   />
