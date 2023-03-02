@@ -157,6 +157,11 @@ export default function Students() {
           ? res[i].student_mark + "/" + res[i].maximal
           : "indisponible";
         grades.push([res[i].activity_name + ": ", mark]);
+      for (let i = 0; i < res.length; i++) {
+        const mark = res[i].student_mark
+          ? res[i].student_mark + "/" + res[i].maximal
+          : "indisponible";
+        grades.push([res[i].activity_name + ": ", mark]);
       }
       setGrades(grades);
     });
@@ -282,7 +287,7 @@ export default function Students() {
                         className="flex flex-row w-full h-[50px] justify-between items-center"
                       >
                         <View className="flex flex-row w-full h-fit">
-                          <Text className="text-[11px] w-full text-center">
+                          <Text className="text-[14px] w-full text-center">
                             {grade}
                           </Text>
                         </View>
@@ -469,8 +474,9 @@ export default function Students() {
           onPress={() => {
             logOut().then(() => navigation.navigate("Login"));
           }}
+          className="x mx-auto"
         >
-          <View className="flex flex-row items-center ml-5">
+          <View className="flex flex-row items-center">
             <Image
               source={require("../../assets/logoutIcon.png")}
               className="w-6 h-8 mr-2"

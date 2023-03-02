@@ -106,7 +106,7 @@ export default function Tickets() {
                 />
               </ScrollView>
             ) : (
-              <View className="flex h-fit w-full mx-auto mt-[10px] rounded-lg mb-5">
+              <View className="flex h-fit w-[90%] mx-auto mt-[10px] rounded-lg">
                 <View style={{ alignSelf: "center" }}>
                   {tickets &&
                     tickets.data
@@ -141,7 +141,12 @@ export default function Tickets() {
                       className="mx-auto w-3/4 text-lg text-center mt-2 py-2 px-2 rounded-2xl bg-[#C8D9F0] active:bg-[#B4CBF0]"
                       onPress={() => {
                         setLenticketsclosed(lenticketsclosed + 3);
-                        if (lenticketsclosed + 3 >= tickets.data.filter((data: any) => data.closed_at === null).length) {
+                        if (
+                          lenticketsclosed + 3 >=
+                          tickets.data.filter(
+                            (data: any) => data.closed_at === null
+                          ).length
+                        ) {
                           setButtonlenticketsclosed(false);
                         }
                       }}
@@ -155,7 +160,6 @@ export default function Tickets() {
           </View>
           <View>
             <View className=" mx-auto text-center w-10/12 mt-3 flex flex-row mb-3 justify-center items-center py-2 px-3 bg-[#363D97] rounded-xl">
-
               <Text className="ml-5 text-xl text-white">Tickets fermés</Text>
             </View>
             {isLoading ? (
@@ -167,7 +171,7 @@ export default function Tickets() {
                 />
               </ScrollView>
             ) : (
-              <View className="flex h-fit w-full mx-auto mt-[10px] rounded-lg mb-5">
+              <View className="flex h-fit w-[90%] mx-auto mt-[10px] rounded-lg">
                 <View style={{ alignSelf: "center" }}>
                   {tickets &&
                     tickets.data

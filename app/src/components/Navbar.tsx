@@ -28,7 +28,7 @@ export default function Navbar() {
         width: screenWidth < 768 ? "100%" : "15%",
       }}
     >
-      <View className="flex justify-around flex-row w-[100%] mx-0 top-3">
+      <View className="flex justify-around flex-row w-[100%] mx-0 top-4">
         <View className="bg-transparent">
           <Pressable
             onPress={() => {

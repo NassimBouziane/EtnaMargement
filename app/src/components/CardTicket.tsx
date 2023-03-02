@@ -3,14 +3,14 @@ import { Image, Text, View } from "react-native";
 
 export default function CardTicket(props: any) {
   return (
-    <View className="bg-[#D9D9D9] w-[300px] rounded-2xl py-1 my-3">
+    <View className="bg-[#D9D9D9] w-[100%] rounded-xl my-2">
       <View className="flex flex-row gap-1 py-3 ml-3 items-center w-full">
         <Image
           className="rounded-lg mr-3"
           source={{
             uri: `https://auth.etna-alternance.net/api/users/${props.login}/photo`,
           }}
-          style={{ width: "20%", height: "100%" }}
+          style={{ width: "18%", height: "100%" }}
         />
         <View className="flex flex-col mr-5">
           <Text className="font-bold mb-1">{props.name}</Text>
