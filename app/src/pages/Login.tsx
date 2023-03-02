@@ -76,25 +76,22 @@ export default function Login() {
       const rememberedPassword = await AsyncStorage.getItem('password');
       if (rememberedLogin) {
         setLogin(rememberedLogin);
+        if (rememberedPassword) {
+          setPassword(rememberedPassword);
+          const res = await postLogin(rememberedLogin, rememberedPassword);
+          await AsyncStorage.setItem("token", JSON.stringify(res["set-cookie"]));
+          const user = await fetchUserConnected(res["set-cookie"]);
+          if (user.groups.includes('adm') || rememberedLogin === 'boular_t') {
+            navigation.navigate('Home');
+          } else {
+            navigation.navigate('Students');
+          }
+        }else{
+          setPassword('');
+        }
       }
-      if (rememberedPassword) {
-        setPassword(rememberedPassword);
-      }else{
-        setPassword('');
-      }
-
     } else {
       setPassword('');
-    }
-
-    const token = await AsyncStorage.getItem('token');
-    if (token && remember) {
-      const user = await fetchUserConnected(JSON.parse(token));
-      if (user.groups.includes('adm') || user.login === 'boular_t') {
-        navigation.navigate('Home');
-      } else {
-        navigation.navigate('Students');
-      }
     }
   };
 
@@ -113,8 +110,8 @@ export default function Login() {
   
   useFocusEffect(
     React.useCallback(() => {
-      handleCheckInternetConnection()   
-
+      sethidden(true)
+      handleCheckInternetConnection()
       return () => {
 
       };
@@ -140,7 +137,6 @@ export default function Login() {
     : require("../../assets/login_showpass_02.png");
 
   const check = checked ? require("../../assets/login_check.png") : "";
-
   return (
     <View style={{ flex: 1, width: width, height: height }}>
       <View className="flex w-[80%] h-[30%] mx-auto mt-5">
