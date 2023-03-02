@@ -20,6 +20,7 @@ import {
   getWallByName,
   getWallByPromo,
 } from "../../services/etna/etna.services";
+import { getLogsByLogin } from "../../services/logs/logs.services";
 import {
   fetchUserConnected,
   getPhoto,
@@ -43,8 +44,9 @@ export default function Students() {
   const [lentickets, setLentickets] = React.useState<any>(3);
   const [buttonlentickets, setButtonlentickets] = React.useState<any>(true);
   const [refreshing, setRefreshing] = React.useState(false);
-  const onRefresh = React.useCallback(() => {
+  const [dataGraph, setDataGraph] = React.useState<any>([]);
 
+  const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     // reload data
     UserInfo();
@@ -65,14 +67,30 @@ export default function Students() {
       setTickets(res);
     });
 
+    await getLogsByLogin(user_logs.login).then((res) => {
+      console.log(res.data);
+      const max = Number(res.data.Present) + Number(res.data.Absent) + Number(res.data.Retard) + Number(res.data.Distanciel)
+        const even_max = () => {
+          if (max % 2 == 0 ) {
+            return max + 2
+          } else {
+            return max + 1
+          }
+        } 
+        setDataGraph([res.data.Present, res.data.Absent, res.data.Retard, res.data.Distanciel, even_max()])
+    });
+    console.log(dataGraph)
     const wall = await getWall(await JSON.parse(token));
 
-    
-
-    const wallByName = await getWallByName(wall[0], 0, 5, await JSON.parse(token))
-    console.log(wallByName.hits[0])
-    console.log(wallByName.hits[0].title)
-    console.log(wallByName.hits[0].content)
+    const wallByName = await getWallByName(
+      wall[0],
+      0,
+      5,
+      await JSON.parse(token)
+    );
+    console.log(wallByName.hits[0]);
+    console.log(wallByName.hits[0].title);
+    console.log(wallByName.hits[0].content);
 
     // console.log(tickets.data.length);
     // console.log(tickets.data[0].creator.login);
@@ -109,9 +127,11 @@ export default function Students() {
     });
   }, [navigation]);
   return (
-    <ScrollView refreshControl={
-      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-    }>
+    <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
       <View className="flex mt-5">
         <View className="flex flex-row w-full h-fit ml-1">
           <Text className="font-medium text-[32px] mx-auto">
@@ -170,32 +190,35 @@ export default function Students() {
           <Text className="text-[px] my-auto mx-auto">
             Graphique de Présence
           </Text>
-          <GraphStudent login={user.login}/>
+
+          <GraphStudent dataGraph={dataGraph ? dataGraph : [0,0,0,0,0]}/>
         </View>
-        <Text className="text-[22px] w-full text-center mt-[10px]">({tickets ? tickets.data.length : "" }) Ticket(s)</Text>
-        <View className="flex h-fit w-[95%] mx-auto mt-[10px] rounded-lg">
-          <View className="bg-white rounded-lg">
+        <Text className="text-[22px] w-full text-center mt-[10px]">
+          ({tickets ? tickets.data.length : ""}) Ticket(s)
+        </Text>
+        <View className="flex h-fit w-full mx-auto mt-[10px] rounded-lg">
+          <View style={{ alignSelf: "center" }}>
             {tickets &&
-              tickets.data.slice(0, lentickets).map((ticket: any) => {
-                return (
-                  <View className="mx-auto">
-                    <CardTicket
-                      login={ticket ?  ticket.creator.login : ""}
-                      name={
-                        user
-                          ? user.lastname.charAt(0).toUpperCase() +
-                            user.lastname.slice(1).toLowerCase() +
-                            " " +
-                            user.firstname
-                          : "Lastname"
-                      }
-                      title={ticket.title}
-                      time={"à: " + ticket.created_at.split(" ")[1]}
-                      status={ticket.status}
-                    />
-                  </View>
-                );
-              })}
+              tickets.data
+                .slice(0, lentickets)
+                .map((ticket: any) => (
+                  <CardTicket
+                    key={ticket.id}
+                    login={ticket?.creator?.login || ""}
+                    name={
+                      user
+                        ? `${user.lastname
+                            .charAt(0)
+                            .toUpperCase()}${user.lastname
+                            .slice(1)
+                            .toLowerCase()} ${user.firstname}`
+                        : "Lastname"
+                    }
+                    title={ticket.title}
+                    time={`à: ${ticket.created_at.split(" ")[1]}`}
+                    status={ticket.status}
+                  />
+                ))}
           </View>
           {buttonlentickets && (
             <Pressable
