@@ -1,4 +1,5 @@
 import moment from 'moment-timezone'
+import { useState } from 'react'
 import { Alert } from 'react-native'
 import { api } from '../ServiceHelper'
 
@@ -15,17 +16,13 @@ export const checkLogs = async(login :String, date:any) => {
 
     const isAlready : Array<log> = await api.get(`/logs/date/${date}/${login}`).then((response) => {return response.data})
     if(isAlready[0] != undefined ){
-   const hours = moment().tz('Europe/Paris').format("HH")
+    const hours = moment().tz('Europe/Paris').format("HH")
     const hours_minute = moment().tz('Europe/Paris').format("HH:mm")
     const isBefore930 = moment(hours_minute, "HH:mm").isBefore(moment("09:30", "HH:mm"));
     const isBefore1650 = moment(hours_minute, "HH:mm").isBefore(moment("16:50", "HH:mm"));
-
-    //TODO ADD RETARD IF STUDENTS ARRIVES BETWEEN 10h AND 14H
-    
     if(Number(hours) > 12){
-        if(!isBefore1650){
-            if(isAlready[0].afternoon == 'Present' || isAlready[0].afternoon == 'Retard'){
-                Alert.alert('Vous etes déja emmargé')
+        if(isBefore1650){
+            if(isAlready[0].afternoon == 'Present' || isAlready[0].afternoon == 'Retard'){          
                 console.log(isAlready[0].afternoon)
             }
             else{
@@ -35,7 +32,6 @@ export const checkLogs = async(login :String, date:any) => {
         else{
 
         if(isAlready[0].afternoon == 'Present' || isAlready[0].afternoon == 'Retard'){
-            //Alert.alert('Vous etes déja emmargé')
             console.log(isAlready[0].afternoon)
         }
         else{
@@ -46,19 +42,14 @@ export const checkLogs = async(login :String, date:any) => {
         if(!isBefore930){
             
             if(isAlready[0].morning == 'Present' || isAlready[0].morning == 'Retard'){
-                //ALERT por dire que vous etes déja emargé
-                //Alert.alert('Vous etes déja emmargé')
                 console.log(isAlready[0].morning)
             }
             else{
                 updatelogs({morning : "Retard", hours_morning:hours_minute, status:"Non Justifié"}, isAlready[0].id)}
-
         }
         else{
         
         if(isAlready[0].morning == 'Present' || isAlready[0].morning == 'Retard'){
-            //ALERT por dire que vous etes déja emargé
-            Alert.alert('Vous etes déja emmargé')
             console.log(isAlready[0].morning)
         }
         else{
@@ -80,12 +71,10 @@ export const updatelogs = async(body:any,id: Number)=>{
 }
 
 export const getLogsByDate = async(date: String) =>{
-    // THIS GETS STATS
     return await api.get('/logs/date/'+date).then((response) => response)
 }
 
 export const getLogsByToday = async(date: String) =>{
-    // THIS GETS STATS
     return await api.get('/logs/today/'+date).then((response) => response)
 }
 
