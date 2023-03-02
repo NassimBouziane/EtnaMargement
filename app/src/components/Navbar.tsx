@@ -29,8 +29,8 @@ export default function Navbar() {
         width: screenWidth < 768 ? "100%" : "15%",
       }}
     >
-      <View className="flex justify-center gap-4 items-center flex-row left-4">
-        <View className="bg-transparent w-[64px] h-[64px] top-3">
+      <View className="flex justify-center gap-4 items-center flex-row left-4 w-[95%] mx-0">
+        <View className="bg-transparent w-[64px] h-[64px] top-4">
           <Pressable
             onPress={() => {
               setCurrentPage("Home");
@@ -49,7 +49,7 @@ export default function Navbar() {
             />
           </Pressable>
         </View>
-        <View className="w-[64px] h-[64px] bg-transparent top-3">
+        <View className="w-[64px] h-[64px] bg-transparent top-[4%]">
           <Pressable
             className=""
             onPress={() => {
@@ -70,7 +70,7 @@ export default function Navbar() {
           </Pressable>
         </View>
 
-        <View className="w-[64px] h-[64px] bg-transparent top-4">
+        <View className="w-[64px] h-[64px] bg-transparent top-[3%]">
           <Pressable
             className=""
             onPress={() => {
@@ -81,8 +81,8 @@ export default function Navbar() {
             <Image
               source={require("../../assets/navig-student.png")}
               style={{
-                width: screenWidth < 768 ? "50%" : "100%",
-                height: screenWidth < 768 ? "62%" : "100%",
+                width: screenWidth < 768 ? "60%" : "100%",
+                height: screenWidth < 768 ? "75%" : "100%",
               }}
               className={`${
                 currentPage === "Etudiants" ? "bg-[#363D97]" : ""
@@ -90,7 +90,7 @@ export default function Navbar() {
             />
           </Pressable>
         </View>
-        <View className="w-[64px] h-[64px] bg-transparent top-3">
+        <View className="w-[64px] h-[64px] bg-transparent top-4">
           <Pressable
             className=""
             onPress={() => {
@@ -110,7 +110,7 @@ export default function Navbar() {
             />
           </Pressable>
         </View>
-        <View className="w-[64px] h-[64px] bg-transparent top-2">
+        <View className="w-[64px] h-[64px] bg-transparent top-3">
           <Pressable
             className=""
             onPress={() => {
