@@ -104,15 +104,6 @@ export default function Students() {
       5,
       await JSON.parse(token)
     );
-    //console.log(wallByName.hits[0]);
-    //console.log(wallByName.hits[0].title);
-    // console.log(wallByName.hits[0].content);
-    //const author = await getUserByLogin(wallByName.hits[0].user.toString(), await JSON.parse(token))
-    //console.log(author)
-    //const messageContent =  await getMessage(wallByName.hits[0].id, await JSON.parse(token))
-    //console.log(messageContent[0].user)
-    //console.log(messageContent[0].content)
-
     const messagelist = async () => {
       const idAndTitle = [];
       const messagesUserAndContent = [];
@@ -152,11 +143,6 @@ export default function Students() {
       // get 3 last grades and put grades.activity_name in grades[i][i] and  grades.grade in grades[i][i+1] like this ["Activity 1: ", "14/20"]
       res = res.slice(Math.max(res.length - 3, 1));
       let grades = [];
-      for (let i = 0; i < res.length; i++) {
-        const mark = res[i].student_mark
-          ? res[i].student_mark + "/" + res[i].maximal
-          : "indisponible";
-        grades.push([res[i].activity_name + ": ", mark]);
       for (let i = 0; i < res.length; i++) {
         const mark = res[i].student_mark
           ? res[i].student_mark + "/" + res[i].maximal
