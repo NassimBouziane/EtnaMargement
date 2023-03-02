@@ -152,14 +152,7 @@ export default function Tickets() {
           </View>
           <View>
             <View className=" mx-auto text-center w-10/12 mt-3 flex flex-row mb-3 justify-center items-center py-2 px-3 bg-[#363D97] rounded-xl">
-              {/* <Text
-                className="bg-red-500 text-white py-1 px-2 rounded-2xl"
-                style={{
-                  fontSize: screenWidth < 768 ? 14 : 32,
-                }}
-              >
-                {tickets ? tickets.data.length : ""}
-              </Text> */}
+
               <Text className="ml-5 text-xl text-white">Tickets fermés</Text>
             </View>
             {isLoading ? (
