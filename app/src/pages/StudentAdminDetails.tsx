@@ -83,6 +83,22 @@ export default function StudentsAdminDetails() {
           <ScrollView>
             {data &&
               data.map((items: any, i: Number) => {
+                let notifColor = require("../../assets/notif_red.png")
+                  let notifColor2 = require("../../assets/notif_red.png")
+
+                  const color = () => {
+                    if (items.morning == "Present") {
+                      notifColor = require("../../assets/notif_green.png")
+                    } else if (items.morning == "Retard") {
+                      notifColor = require("../../assets/notif_yellow.png");
+                    } if (items.afternoon == "Present") {
+                      notifColor2 = require("../../assets/notif_green.png");
+                    } else if (items.afternoon == "Retard") {
+                      notifColor2 = require("../../assets/notif_yellow.png");
+                    }
+                  }
+
+                  color()
                 return (
                   <View key={items.id}>
                     <CardStudent
@@ -95,6 +111,8 @@ export default function StudentsAdminDetails() {
                       lastname={items.lastname}
                       date={items.date}
                       status={items.status}
+                      notifColor2={notifColor2}
+                      notifColor={notifColor}
                     />
                   </View>
                 );

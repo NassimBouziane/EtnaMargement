@@ -9,19 +9,7 @@ export default function CardStudent(props: any) {
   const presence = ["Présent", "Absent", "Retard", "Distanciel"];
 
   const navigation: any = useNavigation();
-  let notifColor: any = require("../../assets/notif_red.png");
-  let notifColor2: any = require("../../assets/notif_red.png");
 
-  if (props.morning == "Present") {
-    notifColor = require("../../assets/notif_green.png");
-  } else if (props.morning == "Retard") {
-    notifColor = require("../../assets/notif_yellow.png");
-  }
-  if (props.afternoon == "Present") {
-    notifColor2 = require("../../assets/notif_green.png");
-  } else if (props.afternoon == "Retard") {
-    notifColor2 = require("../../assets/notif_yellow.png");
-  }
 
   return (
     <View
@@ -119,8 +107,8 @@ export default function CardStudent(props: any) {
             )}
           </View>
           <View className="flex flex-col gap-2">
-            <Image source={notifColor} />
-            <Image source={notifColor2} />
+            <Image source={props.notifColor ? props.notifColor : require("../../assets/notif_red.png")} />
+            <Image source={props.notifColor2 ? props.notifColor2 : require("../../assets/notif_red.png")} />
           </View>
         </View>
       </Pressable>
