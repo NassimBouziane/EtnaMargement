@@ -118,8 +118,9 @@ export default function Students() {
       res = res.slice(Math.max(res.length - 3, 1));
       let grades = [];
       for(let i = 0; i < res.length; i++){
+        const mark = res[i].student_mark ? (res[i].student_mark + "/" + res[i].maximal) : "indispobible"
         grades.push(
-          [res[i].activity_name+": ", res[i].student_mark + "/" + res[i].maximal]
+          [res[i].activity_name+": ", mark]
         )
       }
       setGrades(grades);
