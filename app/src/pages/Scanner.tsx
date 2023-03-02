@@ -1,12 +1,10 @@
-import { BarCodeScanner, PermissionStatus } from "expo-barcode-scanner";
+import { BarCodeScanner } from "expo-barcode-scanner";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
-  Alert,
   Button,
   Dimensions,
   Image,
-  Pressable,
   Text,
   View,
 } from "react-native";
