@@ -1,6 +1,14 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { Image, Pressable, Text, View, Button, ScrollView } from "react-native";
+import {
+  Image,
+  Pressable,
+  Text,
+  View,
+  Button,
+  ScrollView,
+  Alert,
+} from "react-native";
 import Navbar from "../components/Navbar";
 import { NativeModules } from "react-native";
 import Calendrier from "../components/Calendrier";
@@ -28,7 +36,7 @@ export default function Settings() {
     await AsyncStorage.removeItem("password");
     await AsyncStorage.removeItem("remember");
   };
-  
+
   if (chooseDate) {
     return (
       <View>
@@ -66,7 +74,7 @@ export default function Settings() {
                 setChooseDate(true);
               }}
             >
-              <View className="flex flex-row items-center ml-5">
+              <View className="flex flex-row items-center">
                 <Image
                   source={require("../../assets/dataIcon.png")}
                   className="w-6 h-6 mr-2"
@@ -75,20 +83,36 @@ export default function Settings() {
                 <Text className="my-5 text-xl">Exporter les données</Text>
               </View>
             </Pressable>
-            <View className="flex flex-row items-center ml-5">
-              <Image
-                source={require("../../assets/resetIcon.png")}
-                className="w-6 h-6 mr-2"
-              />
-              <Text className="my-5 text-xl">Réinitialiser l'émargement</Text>
-            </View>
-            <View className="flex flex-row items-center ml-5">
-              <Image
-                source={require("../../assets/darkModeIcon.png")}
-                className="w-6 h-6 mr-2"
-              />
-              <Text className="my-5 text-xl">Mode sombre</Text>
-            </View>
+            <Pressable
+              onPress={() =>
+                Alert.alert(
+                  "Cette fonctionnalité n'est pas encore implémentée."
+                )
+              }
+            >
+              <View className="flex flex-row items-center">
+                <Image
+                  source={require("../../assets/resetIcon.png")}
+                  className="w-6 h-6 mr-2"
+                />
+                <Text className="my-5 text-xl">Réinitialiser l'émargement</Text>
+              </View>
+            </Pressable>
+            <Pressable
+              onPress={() =>
+                Alert.alert(
+                  "Cette fonctionnalité n'est pas encore implémentée."
+                )
+              }
+            >
+              <View className="flex flex-row items-center">
+                <Image
+                  source={require("../../assets/darkModeIcon.png")}
+                  className="w-6 h-6 mr-2"
+                />
+                <Text className="my-5 text-xl">Mode sombre</Text>
+              </View>
+            </Pressable>
           </View>
           <Text className="mt-10 mb-3 text-xl font-semibold">Compte</Text>
           <View
@@ -97,7 +121,7 @@ export default function Settings() {
           ></View>
           <View>
             <Pressable onPress={() => navigation.navigate("Scanner")}>
-              <View className="flex flex-row items-center ml-5">
+              <View className="flex flex-row items-center">
                 <Image
                   source={require("../../assets/scanIcon.png")}
                   className="w-6 h-6 mr-2"
@@ -105,11 +129,13 @@ export default function Settings() {
                 <Text className="my-5 text-xl">Mode scan</Text>
               </View>
             </Pressable>
-            <Pressable onPress={() => {
-              logOut();
-              navigation.navigate("Login")
-            }}>
-              <View className="flex flex-row items-center ml-5">
+            <Pressable
+              onPress={() => {
+                logOut();
+                navigation.navigate("Login");
+              }}
+            >
+              <View className="flex flex-row items-center">
                 <Image
                   source={require("../../assets/logoutIcon.png")}
                   className="w-6 h-8 mr-2"
@@ -118,7 +144,7 @@ export default function Settings() {
               </View>
             </Pressable>
           </View>
-          <Text className="mt-10 mb-3 text-xl">À propos</Text>
+          <Text className="mt-3 mb-3 text-xl font-semibold">À propos</Text>
           <View
             className="h-[1px] w-64 bg-black mb-5
           "
