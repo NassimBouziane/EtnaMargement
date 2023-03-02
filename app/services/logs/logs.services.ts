@@ -22,12 +22,18 @@ export const checkLogs = async(login :String, date:any) => {
     
     if(Number(hours) > 12){
         if(!isBefore930){
-            updatelogs({afternoon : "Retard", hours_afternoon:hours_minute, status:"Non Justifié"}, isAlready[0].id)
+            if(isAlready[0].afternoon == 'Present' || isAlready[0].afternoon == 'Retard'){
+                Alert.alert('Vous etes déja emmargé')
+                console.log(isAlready[0].afternoon)
+            }
+            else{
+                updatelogs({afternoon : "Retard", hours_afternoon:hours_minute, status:"Non Justifié"}, isAlready[0].id)            }
 
-        }else{
+        }
+        else{
 
-        if(isAlready[0].afternoon == 'Present'){
-            Alert.alert('Vous etes déja emmargé')
+        if(isAlready[0].afternoon == 'Present' || isAlready[0].afternoon == 'Retard'){
+            //Alert.alert('Vous etes déja emmargé')
             console.log(isAlready[0].afternoon)
         }
         else{
@@ -36,12 +42,19 @@ export const checkLogs = async(login :String, date:any) => {
     }
     else if(Number(hours) < 12){
         if(!isBefore930){
-            updatelogs({morning : "Retard", hours_morning:hours_minute, status:"Non Justifié"}, isAlready[0].id)
+            
+            if(isAlready[0].morning == 'Present' || isAlready[0].morning == 'Retard'){
+                //ALERT por dire que vous etes déja emargé
+                //Alert.alert('Vous etes déja emmargé')
+                console.log(isAlready[0].morning)
+            }
+            else{
+                updatelogs({morning : "Retard", hours_morning:hours_minute, status:"Non Justifié"}, isAlready[0].id)}
 
         }
         else{
         
-        if(isAlready[0].morning == 'Present'){
+        if(isAlready[0].morning == 'Present' || isAlready[0].morning == 'Retard'){
             //ALERT por dire que vous etes déja emargé
             Alert.alert('Vous etes déja emmargé')
             console.log(isAlready[0].morning)
