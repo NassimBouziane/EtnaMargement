@@ -9,6 +9,7 @@ import {
   TextInput,
   View,
   Image,
+  RefreshControl,
 } from "react-native";
 import Modal from "react-native-modal";
 
@@ -53,7 +54,7 @@ export default function StudentsAdmin() {
   const [presentFilter, setPresentFilter] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const navigation = useNavigation();
-
+  const [refreshing, setRefreshing] = React.useState(false);
  
 
   const handleclick = (button: string) => {
@@ -89,6 +90,16 @@ export default function StudentsAdmin() {
 
 
     getByDate(today);
+  }, []);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    // reload data
+    const today = new Date().toISOString().substring(0, 10);
+    navigation.setOptions({ headerTitle: `Etudiant ${today}` });
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
   }, []);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -146,6 +157,9 @@ export default function StudentsAdmin() {
           <ScrollView
             className="w-full h-full ml-5 mt-3"
             showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
           >
             <Modal
               isVisible={modalVisible}
