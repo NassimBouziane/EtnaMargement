@@ -60,15 +60,15 @@ export default function StudentsAdminDetails() {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View className="mx-auto w-[90%] h-full">
-        <View className="flex flex-row items-center gap-1 mt-10 mb-5 mx-auto">
+        <View className="flex flex-row items-center gap-1 mt-12 mb-10 mx-auto">
           <Image
             className="rounded-lg w-64 mr-3"
             source={{
               uri: `https://auth.etna-alternance.net/api/users/${props.login}/photo`,
             }}
             style={{
-              width: "18%",
-              height: "200%",
+              width: "25%",
+              height: "310%",
             }}
           />
           <Text className="text-xl">{props.firstname}</Text>

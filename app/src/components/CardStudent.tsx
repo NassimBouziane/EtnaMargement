@@ -6,7 +6,7 @@ import { updatelogs } from "../../services/logs/logs.services";
 
 export default function CardStudent(props: any) {
   const status = ["Justifié", "Non Justifié", "En Attente"];
-  const presence = ["Present", "Absent", "Retard", "Distanciel"];
+  const presence = ["Présent", "Absent", "Retard", "Distanciel"];
 
   const navigation: any = useNavigation();
   let notifColor: any = require("../../assets/notif_red.png");
@@ -78,36 +78,40 @@ export default function CardStudent(props: any) {
                     return selectedItem;
                   }}
                 />
-                <SelectDropdown
-                  data={presence}
-                  buttonStyle={{
-                    borderRadius: 5,
-                  }}
-                  defaultValue={props.afternoon}
-                  onSelect={(selectedItem: any, index: any) => {
-                    updatelogs({ afternoon: selectedItem }, props.id).then(
-                      (res) => res
-                    );
-                    return selectedItem;
-                  }}
-                />
-                {props.morning === "Absent" ||
-                props.morning === "Retard" ||
-                props.afternoon === "Absent" ||
-                props.afternoon === "Retard" ? (
+                <View className="mt-2">
                   <SelectDropdown
-                    data={status}
+                    data={presence}
                     buttonStyle={{
                       borderRadius: 5,
                     }}
-                    defaultValue={props.status}
+                    defaultValue={props.afternoon}
                     onSelect={(selectedItem: any, index: any) => {
-                      updatelogs({ status: selectedItem }, props.id).then(
+                      updatelogs({ afternoon: selectedItem }, props.id).then(
                         (res) => res
                       );
                       return selectedItem;
                     }}
                   />
+                </View>
+                {props.morning === "Absent" ||
+                props.morning === "Retard" ||
+                props.afternoon === "Absent" ||
+                props.afternoon === "Retard" ? (
+                  <View className="mt-2">
+                    <SelectDropdown
+                      data={status}
+                      buttonStyle={{
+                        borderRadius: 5,
+                      }}
+                      defaultValue={props.status}
+                      onSelect={(selectedItem: any, index: any) => {
+                        updatelogs({ status: selectedItem }, props.id).then(
+                          (res) => res
+                        );
+                        return selectedItem;
+                      }}
+                    />
+                  </View>
                 ) : (
                   <></>
                 )}

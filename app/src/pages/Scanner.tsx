@@ -5,6 +5,7 @@ import {
   Button,
   Dimensions,
   Image,
+  ScrollView,
   Text,
   View,
 } from "react-native";
@@ -23,6 +24,7 @@ export default function Scanner({ navigation }: any) {
   const [error, setError] = useState(false); // erreur lors du scan
   const [token, setToken] = useState<any>(); // token de l'utilisateur
   const [scanned, setScanned] = useState(false); // si le code a été scanné
+  const [isLoading, setLoading] = useState(true); // chargement de la page
 
   // Demande d'autorisation pour la caméra au lancement de l'application
   useEffect(() => {
@@ -54,6 +56,7 @@ export default function Scanner({ navigation }: any) {
       if (status === "granted") {
         console.log("Access granted");
         setPermission(true);
+        setLoading(false);
       } else {
         setPermission(false);
       }
@@ -117,77 +120,64 @@ export default function Scanner({ navigation }: any) {
   if (permission) {
     return (
       <View>
-        <View
-          className="flex flex-row justify-between items-center mt-10"
-          style={{
-            marginTop: screenWidth < 768 ? "15%" : 0,
-            paddingRight: screenWidth < 768 ? 5 : 10,
-          }}
-        >
-          {/* <Pressable
-            className="pl-5 pr-5 pt-2 pb-2 bg-[#5863F8] rounded-2xl mr-12"
-            style={{
-              paddingLeft: screenWidth < 768 ? 5 : 10,
-              paddingRight: screenWidth < 768 ? 5 : 10,
-              paddingTop: screenWidth < 768 ? 5 : 10,
-              paddingBottom: screenWidth < 768 ? 5 : 10,
-              marginRight: screenWidth < 769 ? 10 : 20,
-            }}
-            onPress={() => navigation.navigate("Login")}
-          >
-            <Text
-              className="text-2xl px-5 py-1 text-white"
+        {isLoading ? (
+          <ScrollView className="w-full h-[300px] ml-5">
+            <ActivityIndicator size="large" color="blue" className="mt-64" />
+          </ScrollView>
+        ) : (
+          <View>
+            <View
+              className="flex flex-row justify-between items-center mt-10"
               style={{
-                fontSize: screenWidth < 768 ? 16 : 32,
+                marginTop: screenWidth < 768 ? "15%" : 0,
+                paddingRight: screenWidth < 768 ? 5 : 10,
+              }}
+            ></View>
+            <Text
+              className="mt-40 text-center text-5xl"
+              style={{
+                marginTop: screenWidth < 768 ? "20%" : 0,
               }}
             >
-              Connexion
+              {currentTime}
             </Text>
-          </Pressable> */}
-        </View>
-        <Text
-          className="mt-40 text-center text-5xl"
-          style={{
-            marginTop: screenWidth < 768 ? "20%" : 0,
-          }}
-        >
-          {currentTime}
-        </Text>
-        <Text className=" text-center text-3xl w-3/4 m-auto mt-12 mb-10">
-          Bonjour ! Veuillez scanner le QRcode
-        </Text>
-        <BarCodeScanner
-          className="mt-10 w-full h-1/2"
-          onBarCodeScanned={async ({ type, data }) => {
-            setScanned(true);
-            try {
-              const dataParse: any = data.split("|"); // TODO ENLEVER LE ANY
-              if (
-                dataParse.length === 3 &&
-                dataParse[0][dataParse[0].length - 2] === "_" &&
-                /^\d+$/.test(dataParse[1]) &&
-                /^\d+$/.test(dataParse[2])
-              ) {
-                if (await checkUser(dataParse[0], token)) {
-                  const timezone = "Europe/Paris"; // UTC+1
-                  const date = moment().tz(timezone).format("YYYY-MM-DD");
-                  await checkLogs(dataParse[0], date); // TODO ENLEVER LES HEURES DE LA DATE
-                  setData(dataParse);
-                } else {
-                  console.log("[FAIL] Login is not good");
-                  throw new Error("[FAIL] Login is not good");
+            <Text className=" text-center text-3xl w-3/4 m-auto mt-12 mb-10">
+              Bonjour ! Veuillez scanner le QRcode
+            </Text>
+            <BarCodeScanner
+              className="mt-10 w-full h-1/2"
+              onBarCodeScanned={async ({ type, data }) => {
+                setScanned(true);
+                try {
+                  const dataParse: any = data.split("|"); // TODO ENLEVER LE ANY
+                  if (
+                    dataParse.length === 3 &&
+                    dataParse[0][dataParse[0].length - 2] === "_" &&
+                    /^\d+$/.test(dataParse[1]) &&
+                    /^\d+$/.test(dataParse[2])
+                  ) {
+                    if (await checkUser(dataParse[0], token)) {
+                      const timezone = "Europe/Paris"; // UTC+1
+                      const date = moment().tz(timezone).format("YYYY-MM-DD");
+                      await checkLogs(dataParse[0], date); // TODO ENLEVER LES HEURES DE LA DATE
+                      setData(dataParse);
+                    } else {
+                      console.log("[FAIL] Login is not good");
+                      throw new Error("[FAIL] Login is not good");
+                    }
+                  } else {
+                    console.log("[FAIL] QR Code is not good");
+                    throw new Error("[FAIL] QR Code is not good");
+                  }
+                } catch (error) {
+                  setError(true);
+                  console.log(error);
                 }
-              } else {
-                console.log("[FAIL] QR Code is not good");
-                throw new Error("[FAIL] QR Code is not good");
-              }
-            } catch (error) {
-              setError(true);
-              console.log(error);
-            }
-          }}
-        ></BarCodeScanner>
-        <View className="w-full h-36 bg-[#f2f2f2] z-10 bottom-0 absolute"></View>
+              }}
+            ></BarCodeScanner>
+            <View className="w-full h-36 bg-[#f2f2f2] z-10 bottom-0 absolute"></View>
+          </View>
+        )}
       </View>
     );
   } else {
