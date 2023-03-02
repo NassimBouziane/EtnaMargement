@@ -10,7 +10,7 @@ export default function CardTicket(props: any) {
           source={{
             uri: `https://auth.etna-alternance.net/api/users/${props.login}/photo`,
           }}
-          style={{ width: "20%", height: "110%" }}
+          style={{ width: "18%", height: "100%" }}
         />
         <View className="flex flex-col mr-5">
           <Text className="font-bold mb-1">{props.name}</Text>
