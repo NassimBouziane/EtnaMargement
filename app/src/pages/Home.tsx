@@ -108,6 +108,22 @@ export default function Home({ navigation }: any) {
     // user change => re-render
   }, []);
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <View></View>
+      ),
+      headerRight: () => (
+        <View>
+          <Image
+            source={require("../../assets/etna-logo.png")}
+            className="my-auto w-[100px] h-[31px]"
+          />
+        </View>
+      ),
+    });
+  }, [navigation]);
+
   const screenWidth = Dimensions.get("window").width;
 
   if (chooseDate) {
