@@ -63,6 +63,20 @@ export default function Scanner({ navigation }: any) {
     });
   }, []);
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <View>
+          <Image
+            source={require("../../assets/logoEtna.png")}
+            className=" ml-5 "
+            style={{ width: 96, height: 30 }}
+          />
+        </View>
+      ),
+    });
+  }, [navigation]);
+
   // Récupération de l'heure locale
   const [currentTime, setCurrentTime] = useState(
     moment().locale("fr").utcOffset("+0100").format("LT")
@@ -102,6 +116,7 @@ export default function Scanner({ navigation }: any) {
       setData(null);
       setScanned(false);
     }, 2000);
+
 
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Image, RefreshControl, ScrollView, Text, View } from "react-native";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { getLogsByLogin, getLogsUser } from "../../services/logs/logs.services";
 import CardStudent from "../components/CardStudent";
 import SelectDropdown from "react-native-select-dropdown";
@@ -25,7 +25,7 @@ export default function StudentsAdminDetails() {
   const [data, setData] = useState<any>();
   const [dataGraph, setDataGraph] = React.useState<any>([]);
   const [refreshing, setRefreshing] = React.useState(false);
-
+  const navigation = useNavigation();
   const getLogs = async () => {
     await getLogsUser(props.login).then((res) => setData(res));
   };
@@ -67,6 +67,20 @@ export default function StudentsAdminDetails() {
       ]);
     });
   };
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <View>
+          <Image
+            source={require("../../assets/logoEtna.png")}
+            className=" ml-5 "
+            style={{ width: 96, height: 30 }}
+          />
+        </View>
+      ),
+    });
+  }, [navigation]);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} refreshControl={
