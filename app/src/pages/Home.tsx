@@ -326,7 +326,7 @@ export default function Home({ navigation }: any) {
               </Pressable>
               <Pressable onPress={() => navigation.navigate("Messages")}>
                 <CardActions
-                  title="Messages"
+                  title="Mur"
                   image={require("./../../assets/messageIcon.png")}
                 />
               </Pressable>
