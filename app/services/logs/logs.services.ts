@@ -1,4 +1,5 @@
 import moment from 'moment-timezone'
+import { Alert } from 'react-native'
 import { api } from '../ServiceHelper'
 
 interface log{
@@ -16,26 +17,38 @@ export const checkLogs = async(login :String, date:any) => {
     if(isAlready[0] != undefined ){
    const hours = moment().tz('Europe/Paris').format("HH")
     const hours_minute = moment().tz('Europe/Paris').format("HH:mm")
+    const isBefore930 = moment(hours_minute, "HH:mm").isBefore(moment("09:30", "HH:mm"));
     //TODO ADD RETARD IF STUDENTS ARRIVES BETWEEN 10h AND 14H
     
     if(Number(hours) > 12){
+        if(!isBefore930){
+            updatelogs({afternoon : "Retard", hours_afternoon:hours_minute, status:"Non Justifié"}, isAlready[0].id)
+
+        }else{
 
         if(isAlready[0].afternoon == 'Present'){
+            Alert.alert('Vous etes déja emmargé')
             console.log(isAlready[0].afternoon)
         }
         else{
-            updatelogs({afternoon : "Present", hours_afternoon:hours_minute, status:"Non Justifié"}, isAlready[0].id)
-        }
+            updatelogs({afternoon : "Present", hours_afternoon:hours_minute, status:""}, isAlready[0].id)
+        }}
     }
-    else{
+    else if(Number(hours) < 12){
+        if(!isBefore930){
+            updatelogs({morning : "Retard", hours_afternoon:hours_minute, status:"Non Justifié"}, isAlready[0].id)
+
+        }
+        else{
         
         if(isAlready[0].morning == 'Present'){
             //ALERT por dire que vous etes déja emargé
+            Alert.alert('Vous etes déja emmargé')
             console.log(isAlready[0].morning)
         }
         else{
-            updatelogs({morning : "Present", hours_morning:hours_minute, status:"Non Justifié"}, isAlready[0].id)
-        }
+            updatelogs({morning : "Present", hours_morning:hours_minute, status:""}, isAlready[0].id)
+        }}
     }
     }
     else{
