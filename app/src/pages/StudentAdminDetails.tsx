@@ -116,9 +116,12 @@ export default function StudentsAdminDetails() {
   }, [navigation]);
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} refreshControl={
-      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-    }>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
       <View className="mx-auto w-[90%] h-full">
         <View className="flex flex-row items-center gap-1 mt-12 mb-10 mx-auto">
           <Image
@@ -140,27 +143,30 @@ export default function StudentsAdminDetails() {
           <Text className="text-lg rounded-lg text-center mb-8 py-2 px-3 bg-[#363D97] color-white w-[100%] mx-auto">
             Historique d'assiduité de {props.login}
           </Text>
-          <ScrollView refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
             {data &&
               data.map((items: any, i: Number) => {
-                let notifColor = require("../../assets/notif_red.png")
-                  let notifColor2 = require("../../assets/notif_red.png")
+                let notifColor = require("../../assets/notif_red.png");
+                let notifColor2 = require("../../assets/notif_red.png");
 
-                  const color = () => {
-                    if (items.morning == "Present") {
-                      notifColor = require("../../assets/notif_green.png")
-                    } else if (items.morning == "Retard") {
-                      notifColor = require("../../assets/notif_yellow.png");
-                    } if (items.afternoon == "Present") {
-                      notifColor2 = require("../../assets/notif_green.png");
-                    } else if (items.afternoon == "Retard") {
-                      notifColor2 = require("../../assets/notif_yellow.png");
-                    }
+                const color = () => {
+                  if (items.morning == "Present") {
+                    notifColor = require("../../assets/notif_green.png");
+                  } else if (items.morning == "Retard") {
+                    notifColor = require("../../assets/notif_yellow.png");
                   }
+                  if (items.afternoon == "Present") {
+                    notifColor2 = require("../../assets/notif_green.png");
+                  } else if (items.afternoon == "Retard") {
+                    notifColor2 = require("../../assets/notif_yellow.png");
+                  }
+                };
 
-                  color()
+                color();
                 return (
                   <View key={items.id}>
                     <CardStudent
@@ -189,25 +195,29 @@ export default function StudentsAdminDetails() {
           <GraphStudent dataGraph={dataGraph ? dataGraph : [0, 0, 0, 0, 0]} />
         </View>
         <View className="flex h-[300px] w-[95%] mx-auto rounded-lg justify-center items-center">
-          <Text className="text-lg w-[90%] rounded-lg text-center mb-6 py-2 px-3 bg-[#363D97] color-white">
+          <Text className="text-lg w-[100%] rounded-lg text-center mb-6 py-2 px-3 bg-[#363D97] color-white">
             Dernières notes
           </Text>
           <View className="w-[90%] bg-[#D9D9D9] rounded-lg">
-            {/* map grades and display them*/
-            grades ? grades.map((grade, index) => {
-              return (
-                <View
-                  key={index}
-                  className="flex flex-row w-full h-[50px] justify-between items-center"
-                >
-                  <View className="flex flex-row w-full h-fit">
-                    <Text className="text-[11px] w-full text-center">
-                      {grade}
-                    </Text>
-                  </View>
-                </View>
-              );
-            }) : null}
+            {
+              /* map grades and display them*/
+              grades
+                ? grades.map((grade: any, index: any) => {
+                    return (
+                      <View
+                        key={index}
+                        className="flex flex-row w-full h-[50px] justify-between items-center"
+                      >
+                        <View className="flex flex-row w-full h-fit">
+                          <Text className="text-[14px] w-full text-center">
+                            {grade}
+                          </Text>
+                        </View>
+                      </View>
+                    );
+                  })
+                : null
+            }
           </View>
         </View>
       </View>
