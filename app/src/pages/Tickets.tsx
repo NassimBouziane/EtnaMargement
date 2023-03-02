@@ -24,15 +24,20 @@ export default function Tickets() {
   const [lentickets, setLentickets] = React.useState<any>(3);
   const [buttonlentickets, setButtonlentickets] = React.useState<any>(true);
   const [refreshing, setRefreshing] = React.useState(false);
-  const [ticketClosedLength, setTicketClosedLength] = React.useState(0);
+  const [lenticketsclosed, setLenticketsclosed] = React.useState<any>(3);
+  const [buttonlenticketsclosed, setButtonlenticketsclosed] = React.useState<any>(true);
 
   const UserInfo = async () => {
     const token: any = await AsyncStorage.getItem("token");
     const user_logs = await fetchUserConnected(await JSON.parse(token));
     const user = await getUserByLogin(user_logs.login, await JSON.parse(token));
     setUser(user);
-    const tickets = await getTicket(await JSON.parse(token)).then((res) => {
-      setTickets(res), setLoading(false);
+    await getTicket(await JSON.parse(token)).then((res) => {
+      setTickets(res)
+      setLoading(false)
+      if (3 >= res.data.filter((data: any) => data.closed_at === null).length) {
+        setButtonlenticketsclosed(false);
+      };
     });
   };
   const onRefresh = React.useCallback(() => {
@@ -41,6 +46,12 @@ export default function Tickets() {
     UserInfo();
     setLentickets(3);
     setButtonlentickets(true);
+    setLenticketsclosed(3);
+    if (3 >= tickets.data.filter((data: any) => data.closed_at === null).length) {
+      setButtonlenticketsclosed(false);
+    }else {
+      setButtonlenticketsclosed(true);
+    }
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
@@ -121,14 +132,14 @@ export default function Tickets() {
                         />
                       ))}
                 </View>
-                {buttonlentickets && (
+                {buttonlenticketsclosed && (
                   <View className="flex justify-center">
                     <Pressable
                       className="mx-auto w-3/4 text-lg text-center mt-2 py-2 px-2 rounded-2xl bg-[#C8D9F0] active:bg-[#B4CBF0]"
                       onPress={() => {
-                        setLentickets(lentickets + 3);
-                        if (lentickets + 3 >= tickets.data.length) {
-                          setButtonlentickets(false);
+                        setLenticketsclosed(lenticketsclosed + 3);
+                        if (lenticketsclosed + 3 >= tickets.data.filter((data: any) => data.closed_at === null).length) {
+                          setButtonlenticketsclosed(false);
                         }
                       }}
                     >
