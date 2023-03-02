@@ -3,7 +3,7 @@ import etna from './server/routes/etna.route';
 import logsroute from './server/routes/logs.route'
 import users from './server/routes/users.route';
 const app = express()
-const port = 3000
+const port = 3001
 app.use(express.json());
 app.use(
   express.urlencoded({
