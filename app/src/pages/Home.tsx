@@ -127,14 +127,19 @@ export default function Home({ navigation }: any) {
   if (chooseDate) {
     return (
       <View>
-        <Text> Selectionner le jour pour l'export du excel</Text>
+        <Text className="text-lg rounded-lg text-center py-2 px-3 bg-[#363D97] color-white w-[90%] mx-auto mt-5 mb-10">
+          Exporter les émargements
+        </Text>
         <Calendrier component="Excel" />
-        <Button
-          title="back"
+        <Pressable
           onPress={() => {
             setChooseDate(false);
           }}
-        />
+        >
+          <Text className="text-center mt-10 bg-slate-300 w-1/4 mx-auto py-2 rounded-xl text-lg">
+            Retour
+          </Text>
+        </Pressable>
       </View>
     );
   }

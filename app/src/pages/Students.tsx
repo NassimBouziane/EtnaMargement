@@ -302,7 +302,7 @@ export default function Students() {
           </View>
           {buttonlentickets && (
             <Pressable
-              className="w-fit text-lg text-center mt-2 py-2 px-2 rounded-2xl bg-[#C8D9F0] active:bg-[#B4CBF0]"
+              className="w-[80%] mx-auto text-lg text-center mt-2 py-2 px-2 rounded-2xl bg-[#C8D9F0] active:bg-[#B4CBF0]"
               onPress={() => {
                 setLentickets(lentickets + 3);
                 if (lentickets + 3 >= tickets.data.length) {
