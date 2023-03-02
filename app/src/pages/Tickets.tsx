@@ -4,6 +4,7 @@ import {
   AsyncStorage,
   Dimensions,
   Pressable,
+  RefreshControl,
   ScrollView,
   Text,
   View,
@@ -24,6 +25,7 @@ export default function Tickets() {
   const [tickets, setTickets] = React.useState<any>();
   const [lentickets, setLentickets] = React.useState<any>(3);
   const [buttonlentickets, setButtonlentickets] = React.useState<any>(true);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   const UserInfo = async () => {
     const token: any = await AsyncStorage.getItem("token");
@@ -34,7 +36,17 @@ export default function Tickets() {
       setTickets(res);
     });
   };
+  const onRefresh = React.useCallback(() => {
 
+    setRefreshing(true);
+    // reload data
+    UserInfo();
+    setLentickets(3);
+    setButtonlentickets(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
   useEffect(() => {
     UserInfo();
     // user change => re-render
@@ -55,6 +67,9 @@ export default function Tickets() {
         <ScrollView
           className="w-full h-full"
           showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         >
           {isLoading ? (
             <ActivityIndicator size="large" color="blue" className="mt-64" />

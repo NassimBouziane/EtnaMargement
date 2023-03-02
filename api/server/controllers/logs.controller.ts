@@ -27,6 +27,11 @@ async function updateLogs(req:Request, res:Response){
     const id = Number(req.params.id)
     const body = req.body.body
     const QueryResult = await prisma.logs.update({ where: {id:id}, data:body})
+    res.json(QueryResult)
+    if(QueryResult){
+        res.status(200)}
+  else{
+          res.status(404).json('Logs not Found')}
 }
 
 async function getByLogin(req: Request, res:Response){

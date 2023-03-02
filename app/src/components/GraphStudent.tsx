@@ -6,11 +6,17 @@ import { getLogsByLogin } from "../../services/logs/logs.services";
 
 export default function GraphStudent(props) {
     const [dataGraph, setDataGraph] = useState<any>([])
-
     const setData = async() => {
         await getLogsByLogin(props.login).then((res) => {
         const max = Number(res.data.Present) + Number(res.data.Absent) + Number(res.data.Retard) + Number(res.data.Distanciel)
-        setDataGraph([res.data.Present, res.data.Absent, res.data.Retard, res.data.Distanciel, max])
+        const even_max = () => {
+          if (max % 2 == 0 ) {
+            return max + 2
+          } else {
+            return max + 1
+          }
+        } 
+        setDataGraph([res.data.Present, res.data.Absent, res.data.Retard, res.data.Distanciel, even_max()])
         })
     }
     useEffect( () => {
@@ -19,7 +25,6 @@ export default function GraphStudent(props) {
 
     return (
       <View>
-        <Text>Contribution Graph</Text>
         <BarChart
         data={{
           labels: ['Present', 'Absent', 'Retard', 'Distanciel', ''],
@@ -27,26 +32,26 @@ export default function GraphStudent(props) {
             {
               data :dataGraph,
               colors: [
-                    (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                    (opacity = 1) => `rgba(0, 0, 70, ${opacity})`,
-                    (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                    (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                    (opacity = 0.1) => `rgba(255,255,255,${opacity})`
+                    (opacity = 1) => `rgba(0, 128, 0, ${opacity})`,
+                    (opacity = 1) => `rgba(255, 0, 0, ${opacity})`,
+                    (opacity = 1) => `rgba(255, 128, 0, ${opacity})`,
+                    (opacity = 1) => `rgba(207, 160, 233, ${opacity})`,
+                    (opacity = 0.1) => `rgba(227,227,227,${opacity})`
                 ],
             },
           ],
         }}
-        width={Dimensions.get('window').width - 100}
+        width={Dimensions.get('window').width - 25}
         height={250}
         fromZero={true}
         
         chartConfig={{
-          backgroundColor: '#1cc910',
-          backgroundGradientFrom: '#eff3ff',
-          backgroundGradientTo: '#efefef',
+          backgroundColor: '#E3E3E3',
+          backgroundGradientFrom: '#E3E3E3',
+          backgroundGradientTo: '#E3E3E3',
           decimalPlaces: 0,
 
-          color: (opacity = 1) => `rgba(0, 0, 500, ${opacity})`,
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
           style: {
             borderRadius: 16,
           },
