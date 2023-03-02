@@ -30,7 +30,7 @@ export default function Calendrier(props : any) {
 	const [markedDates, setMarkedDates] = useState({});
 
   const handleDayPress = (day: any) => {
-    setMarkedDates({ [day.dateString]: { color: 'red' } });
+    setMarkedDates({ [day.dateString]: { color: '#5863F8' } });
     props.onDayPress && props.onDayPress(day);
   };
 

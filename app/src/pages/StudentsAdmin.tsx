@@ -8,6 +8,7 @@ import {
   View,
   Image,
   RefreshControl,
+  FlatList,
 } from "react-native";
 import Modal from "react-native-modal";
 import Navbar from "../components/Navbar";
@@ -162,87 +163,85 @@ export default function StudentsAdmin() {
             <ActivityIndicator size="large" color="blue" className="mt-64" />
           </ScrollView>
         ) : (
-          <ScrollView
+          <FlatList
             className="w-full h-full ml-5 mt-3"
+            data={dataDay.filter((item: Logs) => {
+              if (
+                absentFilter &&
+                item.morning !== "Absent" &&
+                item.afternoon !== "Absent"
+              ) {
+                return false;
+              }
+              if (
+                retardFilter &&
+                item.morning !== "Retard" &&
+                item.afternoon !== "Retard"
+              ) {
+                return false;
+              }
+              if (
+                presentFilter &&
+                item.morning !== "Present" &&
+                item.afternoon !== "Present"
+              ) {
+                return false;
+              }
+              return item.login.toLowerCase().includes(searchValue.toLowerCase());
+            })}
+            keyExtractor={(item: Logs) => item.id.toString()}
+            renderItem={({ item }: { item: Logs }) => {
+              let notifColor = require("../../assets/notif_red.png");
+              let notifColor2 = require("../../assets/notif_red.png");
+
+              const color = () => {
+                if (item.morning == "Present") {
+                  notifColor = require("../../assets/notif_green.png");
+                } else if (item.morning == "Retard") {
+                  notifColor = require("../../assets/notif_yellow.png");
+                }
+                if (item.afternoon == "Present") {
+                  notifColor2 = require("../../assets/notif_green.png");
+                } else if (item.afternoon == "Retard") {
+                  notifColor2 = require("../../assets/notif_yellow.png");
+                }
+              };
+
+              color();
+              return (
+                <CardStudent
+                  login={item.login}
+                  morning={item.morning}
+                  afternoon={item.afternoon}
+                  firstname={item.firstname}
+                  lastname={item.lastname}
+                  notifColor={notifColor}
+                  notifColor2={notifColor2}
+                />
+              );
+            }}
             showsVerticalScrollIndicator={false}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
-          >
-            <Modal
-              isVisible={modalVisible}
-              onBackdropPress={() => {
-                setModalVisible(false);
-              }}
-            >
-              <View className="flex">
-                <Calendrier
-                  component="Logs"
-                  onDayPress={(e: Calendar_Date) => {
-                    getByDate(e.dateString), handleclick("reset");
-                  }}
-                />
-              </View>
-            </Modal>
-            {dataDay &&
-              dataDay
-                .filter((item: Logs) => {
-                  if (
-                    absentFilter &&
-                    item.morning !== "Absent" &&
-                    item.afternoon !== "Absent"
-                  ) {
-                    return false;
-                  }
-                  if (
-                    retardFilter &&
-                    item.morning !== "Retard" &&
-                    item.afternoon !== "Retard"
-                  ) {
-                    return false;
-                  }
-                  if (
-                    presentFilter &&
-                    item.morning !== "Present" &&
-                    item.afternoon !== "Present"
-                  ) {
-                    return false;
-                  }
-                  return item.login
-                    .toLowerCase()
-                    .includes(searchValue.toLowerCase());
-                })
-                .map((items: Logs, i: Number) => {
-                  let notifColor = require("../../assets/notif_red.png")
-                  let notifColor2 = require("../../assets/notif_red.png")
-
-                  const color = () => {
-                    if (items.morning == "Present") {
-                      notifColor = require("../../assets/notif_green.png")
-                    } else if (items.morning == "Retard") {
-                      notifColor = require("../../assets/notif_yellow.png");
-                    } if (items.afternoon == "Present") {
-                      notifColor2 = require("../../assets/notif_green.png");
-                    } else if (items.afternoon == "Retard") {
-                      notifColor2 = require("../../assets/notif_yellow.png");
-                    }
-                  }
-
-                  color()
-                  return (
-                    <CardStudent
-                      key={items.id}
-                      login={items.login}
-                      morning={items.morning}
-                      afternoon={items.afternoon}
-                      firstname={items.firstname}
-                      lastname={items.lastname}
-                      notifColor={notifColor}
-                      notifColor2={notifColor2}
-                    />
-                  );
-                })}
-          </ScrollView>
+            ListHeaderComponent={
+              <Modal
+                isVisible={modalVisible}
+                onBackdropPress={() => {
+                  setModalVisible(false);
+                }}
+              >
+                <View className="flex">
+                  <Calendrier
+                    component="Logs"
+                    onDayPress={(e: Calendar_Date) => {
+                      getByDate(e.dateString), handleclick("reset");
+                    }}
+                  />
+                </View>
+              </Modal>
+            }
+          />
         )}
         <Navbar />
       </View>
