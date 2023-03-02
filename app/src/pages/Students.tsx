@@ -166,7 +166,8 @@ export default function Students() {
       <View className="flex mt-5">
         <View className="flex flex-row w-full h-fit ml-1">
           <Text className="text-[32px] mx-auto">
-            Bienvenue, {user.firstname ? user.firstname : ""}
+            Bienvenue,{" "}
+            {user.firstname ? user.firstname.replace(/Ã«/g, "ë") : ""}
           </Text>
         </View>
         <View className="flex mt-10 w-[90%] mx-auto rounded-lg justify-center items-center">
@@ -201,7 +202,9 @@ export default function Students() {
                 {user.lastname ? user.lastname : "Lastname"}
               </Text>
               <Text className="text-[11px]">
-                {user.firstname ? user.firstname : "Firstname"}
+                {user.firstname
+                  ? user.firstname.replace(/Ã«/g, "ë")
+                  : "Firstname"}
               </Text>
               <Text className="text-[11px]">
                 {user.email ? user.email : "email@etna-alternance.net"}
