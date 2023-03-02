@@ -23,6 +23,8 @@ import {
 import Calendrier from "../components/Calendrier";
 import CardTicket from "../components/CardTicket";
 import { getTicket } from "../../services/etna/etna.services";
+import { getLogsByDate } from "../../services/logs/logs.services";
+import moment from "moment-timezone";
 
 export default function Home({ navigation }: any) {
   const [user, setUser] = React.useState<any>("");
@@ -31,16 +33,61 @@ export default function Home({ navigation }: any) {
   const [lentickets, setLentickets] = React.useState<any>(3);
   const [buttonlentickets, setButtonlentickets] = React.useState<any>(true);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [retardData, setRetardData] = useState<number[]>([0, 0, 0, 0, 0]);
+  const [absentData, setAbsentData] = useState<number[]>([0, 0, 0, 0, 0]);
+  const [presentData, setPresentData] = useState<number[]>([0, 0, 0, 0, 0]);
+  const [distancielData, setDistancielData] = useState<number[]>([0, 0, 0, 0, 0]);
+  const [dataGraphDay, setDataGraphDay] = useState<any>()
 
   const UserInfo = async () => {
     const token: any = await AsyncStorage.getItem("token");
     const user_logs = await fetchUserConnected(await JSON.parse(token));
     const user = await getUserByLogin(user_logs.login, await JSON.parse(token));
     setUser(user);
-    const tickets = await getTicket(await JSON.parse(token)).then((res) => {
+    await getTicket(await JSON.parse(token)).then((res) => {
       setTickets(res);
     });
   };
+  
+
+  const setDataDay = async() => {
+    const date = moment().tz('Europe/Paris').format('YYYY-MM-DD');
+    await getLogsByDate(date).then((res) => {
+      setDataGraphDay([res.data.Absent, res.data.Distanciel, res.data.Present, res.data.Retard])
+    })
+  }
+
+  const setDataWeek = async () => {
+    for (let i = 1; i < 6; i++) {
+      const now = moment();
+      const weekNumber = now.isoWeek();
+      const day = moment().isoWeekday(i);
+      await getLogsByDate(day.toISOString().substring(0, 10)).then((res) => {
+        setRetardData((prevData) => {
+          const newData = [...prevData]; // Crée une copie du tableau précédent
+          newData[i - 1] = res.data.Retard; // Modifie la valeur à l'indice i avec les nouvelles données
+          return newData; // Renvoie le nouveau tableau pour mettre à jour l'état
+        });
+        setAbsentData((prevData) => {
+          // Même principe pour les autres tableaux de données
+          const newData = [...prevData];
+          newData[i - 1] = res.data.Absent;
+          return newData;
+        });
+        setPresentData((prevData) => {
+          const newData = [...prevData];
+          newData[i - 1] = res.data.Present;
+          return newData;
+        });
+        setDistancielData((prevData) => {
+          const newData = [...prevData];
+          newData[i - 1] = res.data.Distanciel;
+          return newData;
+        });
+      });
+    }
+  };
+
   const onRefresh = React.useCallback(() => {
 
     setRefreshing(true);
@@ -55,6 +102,8 @@ export default function Home({ navigation }: any) {
 
   useEffect(() => {
     UserInfo();
+    setDataDay();
+    setDataWeek();
     // user change => re-render
   }, []);
 
@@ -133,7 +182,7 @@ export default function Home({ navigation }: any) {
                   >
                     Graphique journalier
                   </Text>
-                  <GraphDay />
+                  {dataGraphDay && <GraphDay dataGraphDay={dataGraphDay}/>}
                 </View>
                 <View
                   className="right-5"
@@ -213,7 +262,7 @@ export default function Home({ navigation }: any) {
                   </Text>
 
                   <View className="flex h-[300px] mx-auto rounded-lg justify-center items-center">
-                    <GraphWeek />
+                    {presentData && <GraphWeek retardData={retardData} absentData={absentData} presentData={presentData} distancielData={distancielData}/>}
                   </View>
                 </View>
               </View>

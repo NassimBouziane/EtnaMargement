@@ -5,13 +5,9 @@ import { Dimensions } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { getLogsByDate } from "../../services/logs/logs.services";
 
-export default function GraphWeek() {
-  const [retardData, setRetardData] = useState<number[]>([0, 0, 0, 0, 0]);
-  const [absentData, setAbsentData] = useState<number[]>([0, 0, 0, 0, 0]);
-  const [presentData, setPresentData] = useState<number[]>([0, 0, 0, 0, 0]);
-  const [distancielData, setDistancielData] = useState<number[]>([
-    0, 0, 0, 0, 0,
-  ]);
+export default function GraphWeek(props) {
+  
+
   const [currentPage, setCurrentPage] = useState("");
   const navigation: any = useNavigation();
   const [graphWidth, setGraphWidth] = useState(25);
@@ -26,60 +22,25 @@ export default function GraphWeek() {
     [];
   });
 
-  const setData = async () => {
-    for (let i = 1; i < 6; i++) {
-      const now = moment();
-      const weekNumber = now.isoWeek();
-      const day = moment().isoWeekday(i);
-      await getLogsByDate(day.toISOString().substring(0, 10)).then((res) => {
-        setRetardData((prevData) => {
-          const newData = [...prevData]; // Crée une copie du tableau précédent
-          newData[i - 1] = res.data.Retard; // Modifie la valeur à l'indice i avec les nouvelles données
-          return newData; // Renvoie le nouveau tableau pour mettre à jour l'état
-        });
-        setAbsentData((prevData) => {
-          // Même principe pour les autres tableaux de données
-          const newData = [...prevData];
-          newData[i - 1] = res.data.Absent;
-          return newData;
-        });
-        setPresentData((prevData) => {
-          const newData = [...prevData];
-          newData[i - 1] = res.data.Present;
-          return newData;
-        });
-        setDistancielData((prevData) => {
-          const newData = [...prevData];
-          newData[i - 1] = res.data.Distanciel;
-          return newData;
-        });
-      });
-    }
-  };
-
-  useEffect(() => {
-    setData();
-  }, []);
-
   return (
     <LineChart
       data={{
         labels: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"],
         datasets: [
           {
-            data: presentData,
+            data: props.presentData,
             color: () => "green",
           },
           {
-            data: absentData,
+            data: props.absentData,
             color: () => "red",
           },
           {
-            data: retardData,
+            data: props.retardData,
             color: () => "orange",
           },
           {
-            data: distancielData,
+            data: props.distancielData,
             color: () => "purple",
           },
           {
