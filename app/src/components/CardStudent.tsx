@@ -59,7 +59,7 @@ export default function CardStudent(props: any) {
 
   return (
     <View
-      className="bg-[#D9D9D9] w-[90%] rounded-xl my-2"
+      className="bg-[#D9D9D9] active:bg-slate-500 w-[90%] rounded-xl my-2"
       style={{ width: props.date ? "100%" : "90%" }}
     >
       <Pressable
@@ -155,8 +155,18 @@ export default function CardStudent(props: any) {
             )}
           </View>
           <View className="flex flex-col gap-2">
-            <Image source={notifColor ? notifColor : require("../../assets/notif_red.png")} />
-            <Image source={notifColor2 ? notifColor2 : require("../../assets/notif_red.png")} />
+            <Image
+              source={
+                notifColor ? notifColor : require("../../assets/notif_red.png")
+              }
+            />
+            <Image
+              source={
+                notifColor2
+                  ? notifColor2
+                  : require("../../assets/notif_red.png")
+              }
+            />
           </View>
         </View>
       </Pressable>
