@@ -5,6 +5,9 @@ import { getLogsByLogin, getLogsUser } from "../../services/logs/logs.services";
 import CardStudent from "../components/CardStudent";
 import SelectDropdown from "react-native-select-dropdown";
 import GraphStudent from "../components/GraphStudent";
+import { getNote, getPromo } from "../../services/etna/etna.services";
+import { getUserByLogin } from "../../services/users/users.services";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface RouteParams {
   propsToSend: {
@@ -25,16 +28,45 @@ export default function StudentsAdminDetails() {
   const [data, setData] = useState<any>();
   const [dataGraph, setDataGraph] = React.useState<any>([]);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [grades, setGrades] = React.useState<any>([
+    ["Activity 1: ", "14/20"],
+    ["Activity 2: ", "16/20"],
+    ["Activity 3: ", "20/20"],
+  ]);
   const navigation = useNavigation();
   const getLogs = async () => {
     await getLogsUser(props.login).then((res) => setData(res));
+    
   };
+
+  const getGrades = async () => {
+    const token = await AsyncStorage.getItem("token");
+    const user = await getUserByLogin(props.login, await JSON.parse(token));
+    const promo = await getPromo(await JSON.parse(token));
+    const grades = await getNote(
+      await JSON.parse(token),
+      user.login,
+      promo[0].id.toString()
+    ).then((res) => {
+      // get 3 last grades and put grades.activity_name in grades[i][i] and  grades.grade in grades[i][i+1] like this ["Activity 1: ", "14/20"]
+      res = res.slice(Math.max(res.length - 3, 1));
+      let grades = [];
+      for(let i = 0; i < res.length; i++){
+        const mark = res[i].student_mark ? (res[i].student_mark + "/" + res[i].maximal) : "indisponible"
+        grades.push(
+          [res[i].activity_name+": ", mark]
+        )
+      }
+      setGrades(grades);
+    });
+  }; 
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     // reload data
     getLogs();
     getGraph(props.login);
+    getGrades();
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
@@ -42,6 +74,7 @@ export default function StudentsAdminDetails() {
   useEffect(() => {
     getLogs();
     getGraph(props.login);
+    getGrades();
   }, []);
   const getGraph = async (login: String) => {
     await getLogsByLogin(login).then((res) => {
@@ -154,6 +187,28 @@ export default function StudentsAdminDetails() {
           </Text>
           {/* <View className="w-11/12 h-48 bg-slate-600 rounded-xl mt-2"></View> */}
           <GraphStudent dataGraph={dataGraph ? dataGraph : [0, 0, 0, 0, 0]} />
+        </View>
+        <View className="flex h-[300px] w-[95%] mx-auto rounded-lg justify-center items-center">
+          <Text className="text-lg w-[90%] rounded-lg text-center mb-6 py-2 px-3 bg-[#363D97] color-white">
+            Dernières notes
+          </Text>
+          <View className="w-[90%] bg-[#D9D9D9] rounded-lg">
+            {/* map grades and display them*/
+            grades ? grades.map((grade, index) => {
+              return (
+                <View
+                  key={index}
+                  className="flex flex-row w-full h-[50px] justify-between items-center"
+                >
+                  <View className="flex flex-row w-full h-fit">
+                    <Text className="text-[11px] w-full text-center">
+                      {grade}
+                    </Text>
+                  </View>
+                </View>
+              );
+            }) : null}
+          </View>
         </View>
       </View>
     </ScrollView>
