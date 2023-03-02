@@ -36,7 +36,7 @@ export const checkLogs = async(login :String, date:any) => {
     }
     else if(Number(hours) < 12){
         if(!isBefore930){
-            updatelogs({morning : "Retard", hours_afternoon:hours_minute, status:"Non Justifié"}, isAlready[0].id)
+            updatelogs({morning : "Retard", hours_morning:hours_minute, status:"Non Justifié"}, isAlready[0].id)
 
         }
         else{
@@ -61,7 +61,7 @@ export const checkLogs = async(login :String, date:any) => {
     } 
 }
 export const StartEmargement = async()=>{
-    return await api.post('/logs/insert').then((response) => response)
+    return await api.post('/logs/insert').then((response) => response).catch((e) => console.log(e))
 }
 export const updatelogs = async(body:any,id: Number)=>{
     return await api.put('/logs/update/'+id,{body}).then((response) => response)
