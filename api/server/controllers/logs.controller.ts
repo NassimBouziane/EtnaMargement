@@ -36,7 +36,7 @@ async function updateLogs(req:Request, res:Response){
 
 async function getByLogin(req: Request, res:Response){
     const { id } = req.params;
-    const QueryResult = await prisma.logs.findMany({where: {login:id}});
+    const QueryResult = await prisma.logs.findMany({where: {login:id}, orderBy:{date:'desc'}});
     res.json(QueryResult)
 }
 // async function deleteById(req: Request, res:Response){
