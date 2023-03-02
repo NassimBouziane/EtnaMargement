@@ -5,24 +5,8 @@ import { getLogsByLogin } from "../../services/logs/logs.services";
 
 
 export default function GraphStudent(props) {
-    const [dataGraph, setDataGraph] = useState<any>([])
-    const setData = async() => {
-        await getLogsByLogin(props.login).then((res) => {
-        const max = Number(res.data.Present) + Number(res.data.Absent) + Number(res.data.Retard) + Number(res.data.Distanciel)
-        const even_max = () => {
-          if (max % 2 == 0 ) {
-            return max + 2
-          } else {
-            return max + 1
-          }
-        } 
-        setDataGraph([res.data.Present, res.data.Absent, res.data.Retard, res.data.Distanciel, even_max()])
-        })
-    }
-    useEffect( () => {
-        setData()
-    }, []);
-
+    // const [dataGraph, setDataGraph] = useState<any>([])
+    console.log(props.dataGraph)
     return (
       <View>
         <BarChart
@@ -30,7 +14,7 @@ export default function GraphStudent(props) {
           labels: ['Present', 'Absent', 'Retard', 'Distanciel', ''],
           datasets: [
             {
-              data :dataGraph,
+              data : props.dataGraph,
               colors: [
                     (opacity = 1) => `rgba(0, 128, 0, ${opacity})`,
                     (opacity = 1) => `rgba(255, 0, 0, ${opacity})`,

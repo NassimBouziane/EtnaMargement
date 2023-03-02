@@ -46,8 +46,8 @@ async function createlog(req:Request,res:Response){
 
 async function insertintologs_service(req:Request,res:Response){
   try{
-  const QueryResult = await prisma.$queryRaw`INSERT INTO Logs (login, date, morning, afternoon)
-  SELECT u.login, CURDATE(), '', ''
+  const QueryResult = await prisma.$queryRaw`INSERT INTO Logs (login, DATE, firstname,lastname)
+  SELECT u.login, CURDATE(), firstname,lastname
   FROM users u
   WHERE NOT EXISTS (
     SELECT l.login, l.date
