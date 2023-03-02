@@ -197,7 +197,9 @@ export default function StudentsAdmin() {
               if (
                 presentFilter &&
                 item.morning !== "Present" &&
-                item.afternoon !== "Present"
+                item.afternoon !== "Present" &&
+                item.morning !== "Distanciel" &&
+                item.afternoon !== "Distanciel"
               ) {
                 return false;
               }
