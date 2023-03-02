@@ -52,12 +52,9 @@ export const checkLogs = async(login :String, date:any) => {
     }
     }
     else{
-        StartEmargement()
-        return await api.post('/logs',{
-            login:login,
-            date:date,
-
-        }).then((response)=> {checkLogs(login,date)})
+        StartEmargement().then(() => {
+            checkLogs(login,date)
+        })    
     } 
 }
 export const StartEmargement = async()=>{
