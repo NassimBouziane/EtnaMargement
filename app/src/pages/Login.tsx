@@ -67,6 +67,7 @@ export default function Login() {
         }
       }
     } catch (error) {
+      setLoading(false);
       Alert.alert("Mot de passe ou login incorrect(s)");
       console.log("[FAIL]", error);
     }
@@ -74,6 +75,7 @@ export default function Login() {
 
   // Fonction appelée au chargement de la page pour récupérer les informations stockées dans AsyncStorage
   const getRemember = async () => {
+    setLoading(false);
     const remember = await AsyncStorage.getItem("remember");
     if (remember === "true") {
       const rememberedLogin = await AsyncStorage.getItem("login");

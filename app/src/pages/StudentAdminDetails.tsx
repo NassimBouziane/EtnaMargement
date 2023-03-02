@@ -5,7 +5,7 @@ import { getLogsByLogin, getLogsUser } from "../../services/logs/logs.services";
 import CardStudent from "../components/CardStudent";
 import SelectDropdown from "react-native-select-dropdown";
 import GraphStudent from "../components/GraphStudent";
-import { getNote, getPromo } from "../../services/etna/etna.services";
+import { getNote, getPromo, getPromoByLogin } from "../../services/etna/etna.services";
 import { getUserByLogin } from "../../services/users/users.services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -40,9 +40,9 @@ export default function StudentsAdminDetails() {
   };
 
   const getGrades = async () => {
-    const token = await AsyncStorage.getItem("token");
+    const token :any = await AsyncStorage.getItem("token");
     const user = await getUserByLogin(props.login, await JSON.parse(token));
-    const promo = await getPromo(await JSON.parse(token));
+    const promo = await getPromoByLogin(props.login, await JSON.parse(token));
     const grades = await getNote(
       await JSON.parse(token),
       user.login,
@@ -64,9 +64,9 @@ export default function StudentsAdminDetails() {
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     // reload data
-    getLogs();
-    getGraph(props.login);
-    getGrades();
+    getLogs()
+    getGraph(props.login)
+    getGrades()
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);

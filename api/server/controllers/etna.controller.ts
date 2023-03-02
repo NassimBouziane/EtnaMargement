@@ -73,9 +73,17 @@ async function getPromo(req: Request, res: Response) {
   }).then((response) => res.send(response.data))
   .catch(() => {res.sendStatus(500);});
 }
+async function getPromoByLogin(req:Request, res:Response){
+  return await apiEtna.get('/promo?login='+req.params.login,  {
+    headers: {Cookie: req.body.token}
+  }).then((response) => res.send(response.data))
+  .catch(() => {res.sendStatus(500);});
+}
 
 export {
-  getWall, getNote, getTicket, getPromo, getWallByName, getWallByPromo, getMessage
+  getWall, getNote, getTicket, getPromo, getWallByName, getWallByPromo, getMessage,
+  getPromoByLogin
+
 }
 
 

@@ -49,6 +49,9 @@ export const getPromo = async(token : any) => {
 		token
 	}).then((response) => response.data)
 }
+export const getPromoByLogin = async(login : any, token: any)=>{
+	return await api.post('/etna/promo/'+login,{token}).then((response)=> response.data).catch((e)=> console.log('[FAIL]'+e))
+}
 
 export const getMessage = async(id :any, token : any) => {
 	return await api.post('/etna/message',

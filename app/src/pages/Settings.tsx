@@ -149,12 +149,12 @@ export default function Settings() {
                 navigation.navigate("Login");
               }}
             >
-              <View className="flex flex-row items-center">
+              <View className="flex flex-row items-center hover:bg-slate-400">
                 <Image
                   source={require("../../assets/logoutIcon.png")}
                   className="w-6 h-8 mr-2"
                 />
-                <Text className="my-5 text-xl">Se déconnecter</Text>
+                <Text className="my-5 text-xl ">Se déconnecter</Text>
               </View>
             </Pressable>
           </View>
