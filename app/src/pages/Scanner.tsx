@@ -64,11 +64,10 @@ export default function Scanner({ navigation }: any) {
   };
 
   if (data) {
-    const gifUrl = "https://media.giphy.com/media/xSM46ernAUN3y/giphy.gif";
     setTimeout(() => {
       setData(null);
       setScanned(false);
-    }, 3000);
+    }, 2000);
 
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
@@ -76,9 +75,7 @@ export default function Scanner({ navigation }: any) {
           QR code valide
         </Text>
         <Image
-          source={{
-            uri: "https://media.giphy.com/media/xSM46ernAUN3y/giphy.gif",
-          }}
+          source={require("../../assets/the-rock-yes.gif")}
           style={{ width: 200, height: 200, alignSelf: "center" }}
         />
       </View>
@@ -86,16 +83,20 @@ export default function Scanner({ navigation }: any) {
   }
 
   if (error) {
+    setTimeout(() => {
+      setData(null);
+      setScanned(false);
+    }, 2000);
+
     return (
-      <View>
-        <Text>Erreur</Text>
-        <Button
-          title="Scan again"
-          onPress={() => {
-            setError(false);
-            setScanned(false);
-          }}
-        ></Button>
+      <View style={{ flex: 1, justifyContent: "center" }}>
+        <Text className="text-2xl mb-10 text-center text-red-500">
+          QR code incorrect
+        </Text>
+        <Image
+          source={require("../../assets/the-rock-no.gif")}
+          style={{ width: 200, height: 200, alignSelf: "center" }}
+        />
       </View>
     );
   }
