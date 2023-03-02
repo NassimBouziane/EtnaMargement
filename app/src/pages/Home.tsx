@@ -195,7 +195,7 @@ export default function Home({ navigation }: any) {
                     />
                   </ScrollView>
                 ) : (
-                  <View className="w-full mx-auto">
+                  <View className="w-full mx-auto ml-4">
                     {dataGraphDay && <GraphDay dataGraphDay={dataGraphDay} />}
                   </View>
                 )}
@@ -257,7 +257,7 @@ export default function Home({ navigation }: any) {
                     </View>
                     {buttonlentickets && (
                       <Pressable
-                        className="w-fit text-lg text-center mt-2 py-2 px-2 rounded-2xl bg-gray-300 active:bg-slate-400"
+                        className="mx-auto w-3/4 text-lg text-center mt-2 py-2 px-2 rounded-2xl bg-[#C8D9F0] active:bg-[#B4CBF0]"
                         onPress={() => {
                           setLentickets(lentickets + 3);
                           if (lentickets + 3 >= tickets.data.length) {
@@ -282,7 +282,7 @@ export default function Home({ navigation }: any) {
                 }}
               >
                 <Text
-                  className="text-lg rounded-lg text-center mb-6 py-2 px-3 bg-[#363D97] color-white"
+                  className="text-lg rounded-lg text-center mb-10 py-2 px-3 bg-[#363D97] color-white"
                   style={{
                     fontSize: screenWidth < 768 ? 20 : 32,
                     marginTop: screenWidth < 768 ? "5%" : "8%",
@@ -291,7 +291,7 @@ export default function Home({ navigation }: any) {
                   Graphique de la semaine
                 </Text>
 
-                <View className="flex h-[300px] mx-auto rounded-lg justify-center items-center">
+                <View className="flex  mx-auto rounded-lg justify-center items-center">
                   {presentData && (
                     <GraphWeek
                       retardData={retardData}
@@ -312,7 +312,7 @@ export default function Home({ navigation }: any) {
             >
               Actions rapides
             </Text>
-            <View className="flex flex-row flex-wrap justify-between w-full mb-12">
+            <View className="flex flex-row flex-wrap justify-evenly w-full mb-12">
               <Pressable onPress={() => navigation.navigate("Tickets")}>
                 <CardActions
                   title="Tickets"

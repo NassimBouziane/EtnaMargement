@@ -237,21 +237,25 @@ export default function Students() {
             Dernières notes
           </Text>
           <View className="w-[90%] bg-[#D9D9D9] rounded-lg">
-            {/* map grades and display them*/
-            grades ? grades.map((grade, index) => {
-              return (
-                <View
-                  key={index}
-                  className="flex flex-row w-full h-[50px] justify-between items-center"
-                >
-                  <View className="flex flex-row w-full h-fit">
-                    <Text className="text-[11px] w-full text-center">
-                      {grade}
-                    </Text>
-                  </View>
-                </View>
-              );
-            }) : null}
+            {
+              /* map grades and display them*/
+              grades
+                ? grades.map((grade: any, index: any) => {
+                    return (
+                      <View
+                        key={index}
+                        className="flex flex-row w-full h-[50px] justify-between items-center"
+                      >
+                        <View className="flex flex-row w-full h-fit">
+                          <Text className="text-[11px] w-full text-center">
+                            {grade}
+                          </Text>
+                        </View>
+                      </View>
+                    );
+                  })
+                : null
+            }
           </View>
         </View>
         <View className="flex h-[300px] w-[95%] mx-auto mt-[25px] rounded-lg justify-center items-center">
