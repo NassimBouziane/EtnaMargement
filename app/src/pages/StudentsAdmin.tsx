@@ -193,17 +193,26 @@ export default function StudentsAdmin() {
             renderItem={({ item }: { item: Logs }) => {
               let notifColor = require("../../assets/notif_red.png");
               let notifColor2 = require("../../assets/notif_red.png");
-
+              
               const color = () => {
+                console.log(item.morning)
                 if (item.morning == "Present") {
                   notifColor = require("../../assets/notif_green.png");
                 } else if (item.morning == "Retard") {
                   notifColor = require("../../assets/notif_yellow.png");
+                } else if (item.morning == "Distanciel") {
+                  notifColor = require("../../assets/notif_purple.png");
+                } else {
+                  notifColor = require("../../assets/notif_red.png");
                 }
                 if (item.afternoon == "Present") {
                   notifColor2 = require("../../assets/notif_green.png");
                 } else if (item.afternoon == "Retard") {
                   notifColor2 = require("../../assets/notif_yellow.png");
+                }else if (item.morning == "Distanciel") {
+                  notifColor2 = require("../../assets/notif_purple.png");
+                } else {
+                  notifColor2 = require("../../assets/notif_red.png");
                 }
               };
 
