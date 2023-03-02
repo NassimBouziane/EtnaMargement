@@ -16,12 +16,10 @@ import {
 } from "../../services/users/users.services";
 import CardTicket from "../components/CardTicket";
 import Navbar from "../components/Navbar";
-import Ticketlarge from "../components/TicketLarge";
 
 export default function Tickets() {
   const [isLoading, setLoading] = useState(true);
   const [user, setUser] = React.useState<any>("");
-  const [chooseDate, setChooseDate] = useState(false);
   const [tickets, setTickets] = React.useState<any>();
   const [lentickets, setLentickets] = React.useState<any>(3);
   const [buttonlentickets, setButtonlentickets] = React.useState<any>(true);
@@ -103,8 +101,8 @@ export default function Tickets() {
                               : "Lastname"
                           }
                           title={ticket.title}
-                          time={`à: ${ticket.created_at.split(" ")[1]}`}
-                          status={ticket.status}
+                          time={`à: ${ticket.created_at.substring(5,16)}`}
+                          status={ticket.closed_at ? 'closed : ' + ticket.closed_at.substring(5,16) : ticket.status}
                         />
                       ))}
                 </View>

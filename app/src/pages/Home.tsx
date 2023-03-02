@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import CardActions from "../components/CardActions";
 import Navbar from "../components/Navbar";
-import Ticket from "../components/Ticket";
 import { Dimensions } from "react-native";
 import GraphDay from "../components/GraphDay";
 import GraphWeek from "../components/GrapWeek";
@@ -221,8 +220,8 @@ export default function Home({ navigation }: any) {
                                   : "Lastname"
                               }
                               title={ticket.title}
-                              time={`à: ${ticket.created_at.split(" ")[1]}`}
-                              status={ticket.status}
+                              time={`à: ${ticket.created_at.substring(5,16)}`}
+                              status={ticket.closed_at ? 'closed : ' + ticket.closed_at.substring(5,16) : ticket.status}
                             />
                           ))}
                     </View>

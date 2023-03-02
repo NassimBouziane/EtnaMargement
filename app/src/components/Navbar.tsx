@@ -1,12 +1,9 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
-  Button,
   Dimensions,
   Image,
   Pressable,
-  StyleSheet,
   View,
 } from "react-native";
 

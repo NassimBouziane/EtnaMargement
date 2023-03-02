@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { View, Text, ActivityIndicator, Image } from "react-native";
+import { View, ActivityIndicator, Image } from "react-native";
 import { fetchUserConnected } from "../../services/users/users.services";
 import QRCODE from "../components/QRCode";
 import { useNavigation } from "@react-navigation/native";

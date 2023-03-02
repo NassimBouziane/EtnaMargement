@@ -3,7 +3,6 @@ import { ScrollView, Text, View } from "react-native";
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { getLogsByLogin, getLogsUser } from "../../services/logs/logs.services";
 import CardStudent from "../components/CardStudent";
-import SelectDropdown from 'react-native-select-dropdown'
 import GraphStudent from "../components/GraphStudent";
 
 interface RouteParams {

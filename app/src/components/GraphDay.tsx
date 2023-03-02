@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { WebView } from 'react-native-webview';
-import { Button, Dimensions, View } from 'react-native';
-import moment from 'moment-timezone';
-import { getLogsByDate } from '../../services/logs/logs.services';
 
 export default function GraphDay(props:any) {
 
