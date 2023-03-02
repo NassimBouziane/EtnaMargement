@@ -6,7 +6,7 @@ import { updatelogs } from "../../services/logs/logs.services";
 
 export default function CardStudent(props: any) {
   const status = ["Justifié", "Non Justifié", "En Attente"];
-  const presence = ["Présent", "Absent", "Retard", "Distanciel"];
+  const presence = ["Present", "Absent", "Retard", "Distanciel"];
 
   const navigation: any = useNavigation();
 
