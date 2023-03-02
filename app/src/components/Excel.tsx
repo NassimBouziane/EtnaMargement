@@ -1,12 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, Button } from 'react-native';
-// Required to save to cache 
 import * as FileSystem from 'expo-file-system';
-// ExcelJS
 import ExcelJS from 'exceljs';
-// Share excel via share dialog
 import * as Sharing from 'expo-sharing';
-// From @types/node/buffer
 import { Buffer as NodeBuffer } from 'buffer';
 import { getLogsByToday } from '../../services/logs/logs.services';
 
@@ -30,9 +26,7 @@ export default function Excel(props: any) {
           workbook.creator = 'Etnamargment App';
           workbook.created = date;
           workbook.modified = date;
-          // Add a sheet to work on
           const worksheet = workbook.addWorksheet('Etnamargement Sheet', {});
-          // Just some columns as used on ExcelJS Readme
           worksheet.columns = [
             { header: 'Login', key: 'login', width: 15 },
             { header: 'Matin', key: 'matin', width: 10 },
@@ -41,7 +35,6 @@ export default function Excel(props: any) {
 						{ header: 'Retard Après-Midi', key: 'retard_apm', width: 20},
 						{ header: 'Status', key: 'status', width:20 }
           ];
-          // Add some test data
           let matin = '';
 					let colorMatin = '';
 					let colorApm = '';
@@ -159,7 +152,6 @@ export default function Excel(props: any) {
       }
   return (
     <View>
-			{console.log(props.date)}
       <Button title='Generate Excel' onPress={shareExcel} />
     </View>
   );

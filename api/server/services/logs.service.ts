@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
-import { count } from 'console';
 const prisma = new PrismaClient();
 
 async function deletebyid(req: Request, res:Response){
@@ -36,7 +35,6 @@ async function createlog(req:Request,res:Response){
     const QueryResult = await prisma.logs.create({data: body})
     if(QueryResult){
         res.status(200).send(QueryResult)
-        console.log(new Date(QueryResult.date))
     }
     else{
         res.status(404).send('Wrong data sent')
@@ -55,7 +53,6 @@ async function insertintologs_service(req:Request,res:Response){
     WHERE l.login = u.login AND l.date = CURDATE()
   )`
   if(QueryResult){
-    console.log(QueryResult)
     res.status(300).json(QueryResult)
 }
 else{

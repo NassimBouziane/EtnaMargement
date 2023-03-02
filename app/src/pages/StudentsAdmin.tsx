@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
-  AsyncStorage,
-  Button,
   Pressable,
   ScrollView,
   Text,
@@ -12,17 +10,10 @@ import {
   RefreshControl,
 } from "react-native";
 import Modal from "react-native-modal";
-
-
 import Navbar from "../components/Navbar";
 import { Ionicons } from "@expo/vector-icons";
 import CardStudent from "../components/CardStudent";
 import { getLogsByToday } from "../../services/logs/logs.services";
-import {
-  fetchUserConnected,
-  getUserByLogin,
-} from "../../services/users/users.services";
-import ReactNativeModal from "react-native-modal";
 import Calendrier from "../components/Calendrier";
 import { useNavigation } from "@react-navigation/native";
 
@@ -108,18 +99,33 @@ export default function StudentsAdmin() {
     <View>
       <View className="flex flex-col h-full w-full">
         <View className="ml-5">
-          <View className="flex-row w-[92%] items-center bg-gray-200 px-3 py-3 rounded-xl mt-5 mb-3">
-            <Ionicons
-              name="search-outline"
-              size={24}
-              className="text-gray-500"
-            />
-            <TextInput
-              className="flex-1 text-gray-700 ml-5"
-              placeholder="Rechercher par login"
-              onChangeText={(text) => setSearchValue(text)}
-              value={searchValue}
-            />
+          <View className="flex flex-row items-center">
+            <View className="flex-row w-[84%] items-center bg-gray-200 px-3 py-3 rounded-xl mt-5 mb-3 mr-2">
+              <Ionicons
+                name="search-outline"
+                size={24}
+                className="text-gray-500"
+              />
+              <TextInput
+                className="flex-1 text-gray-700 ml-5"
+                placeholder="Rechercher par login"
+                onChangeText={(text) => setSearchValue(text)}
+                value={searchValue}
+              />
+
+              <Pressable
+                onPress={() => {
+                  setSearchValue("");
+                }}
+                className="px-3 "
+              >
+                <Ionicons
+                  name="close-outline"
+                  size={24}
+                  className="text-gray-500"
+                />
+              </Pressable>
+            </View>
             <Pressable
               onPress={() => {
                 setModalVisible(!modalVisible);
@@ -131,7 +137,7 @@ export default function StudentsAdmin() {
               />
             </Pressable>
           </View>
-          <View className="flex flex-row w-full gap-6 ">
+          <View className="flex flex-row justify-between w-[95%] ">
             <View className="bg-[#92F866] px-4 py-2 rounded-xl">
               <Pressable onPress={() => handleclick("Present")}>
                 <Text className="text-lg">Présents</Text>

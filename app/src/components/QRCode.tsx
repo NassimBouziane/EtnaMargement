@@ -1,5 +1,4 @@
 import React from "react";
-import { View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 
 export function QRCODE (props:any){

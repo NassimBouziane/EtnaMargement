@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { WebView } from 'react-native-webview';
-import { Button, Dimensions, View } from 'react-native';
-import moment from 'moment-timezone';
-import { getLogsByDate } from '../../services/logs/logs.services';
 
 export default function GraphDay(props:any) {
 
@@ -20,7 +17,7 @@ export default function GraphDay(props:any) {
 
   return (
     <WebView
-      className="flex "
+    className="flex "
       style={{
         width: 1000,
         height: 220,
@@ -37,6 +34,7 @@ export default function GraphDay(props:any) {
       "position": "bottom"
     },}});</script></body></html>`,
       }}
+
       javaScriptEnabled={true}
       scalesPageToFit={false}
     />

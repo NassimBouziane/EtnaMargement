@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import CardActions from "../components/CardActions";
 import Navbar from "../components/Navbar";
-import Ticket from "../components/Ticket";
 import { Dimensions } from "react-native";
 import GraphDay from "../components/GraphDay";
 import GraphWeek from "../components/GrapWeek";
@@ -168,10 +167,7 @@ export default function Home({ navigation }: any) {
             >
               Bonjour, {user.firstname ? user.firstname : ""}
             </Text>
-            {/* <Button
-              title="prout"
-              onPress={() => navigation.navigate(Students)}
-            ></Button> */}
+
             <View
               className="flex flex-row justify-between"
               style={{
@@ -190,7 +186,19 @@ export default function Home({ navigation }: any) {
                 >
                   Graphique journalier
                 </Text>
-                {dataGraphDay && <GraphDay dataGraphDay={dataGraphDay}/>}
+                {isLoading ? (
+                  <ScrollView className="w-full h-[300px] ml-5">
+                    <ActivityIndicator
+                      size="large"
+                      color="blue"
+                      className="mt-64"
+                    />
+                  </ScrollView>
+                ) : (
+                  <View className="w-full mx-auto">
+                    {dataGraphDay && <GraphDay dataGraphDay={dataGraphDay} />}
+                  </View>
+                )}
               </View>
               <View
                 className="right-5"
@@ -237,8 +245,13 @@ export default function Home({ navigation }: any) {
                                   : "Lastname"
                               }
                               title={ticket.title}
-                              time={`à: ${ticket.created_at.split(" ")[1]}`}
-                              status={ticket.status}
+                              time={`à: ${ticket.created_at.substring(5, 16)}`}
+                              status={
+                                ticket.closed_at
+                                  ? "closed : " +
+                                    ticket.closed_at.substring(5, 16)
+                                  : ticket.status
+                              }
                             />
                           ))}
                     </View>
@@ -279,7 +292,14 @@ export default function Home({ navigation }: any) {
                 </Text>
 
                 <View className="flex h-[300px] mx-auto rounded-lg justify-center items-center">
-                  {presentData && <GraphWeek retardData={retardData} absentData={absentData} presentData={presentData} distancielData={distancielData}/>}
+                  {presentData && (
+                    <GraphWeek
+                      retardData={retardData}
+                      absentData={absentData}
+                      presentData={presentData}
+                      distancielData={distancielData}
+                    />
+                  )}
                 </View>
               </View>
             </View>

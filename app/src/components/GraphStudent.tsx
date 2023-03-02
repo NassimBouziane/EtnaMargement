@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Dimensions, Text, View } from "react-native";
+import React from "react";
+import { Dimensions, View } from "react-native";
 import { BarChart } from "react-native-chart-kit";
-import { getLogsByLogin } from "../../services/logs/logs.services";
 
 
 export default function GraphStudent(props:any) {
@@ -38,7 +37,7 @@ export default function GraphStudent(props:any) {
           style: {
             borderRadius: 16,
           },
-          max: 100,
+          min: 0,
         }}
         style={{
           marginVertical: 8,

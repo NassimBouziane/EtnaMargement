@@ -6,29 +6,28 @@ import { updatelogs } from "../../services/logs/logs.services";
 
 export default function CardStudent(props: any) {
   const status = ["Justifié", "Non Justifié", "En Attente"];
-  const presence =["Present","Absent","Retard","Distanciel"]
+  const presence = ["Présent", "Absent", "Retard", "Distanciel"];
 
   const navigation: any = useNavigation();
   let notifColor: any = require("../../assets/notif_red.png");
   let notifColor2: any = require("../../assets/notif_red.png");
 
-
-
- 
   if (props.morning == "Present") {
     notifColor = require("../../assets/notif_green.png");
-  } else if (props.morning == "Retard" ) {
+  } else if (props.morning == "Retard") {
     notifColor = require("../../assets/notif_yellow.png");
   }
   if (props.afternoon == "Present") {
     notifColor2 = require("../../assets/notif_green.png");
-  } else if (props.morning == "Retard") {
+  } else if (props.afternoon == "Retard") {
     notifColor2 = require("../../assets/notif_yellow.png");
   }
 
-
   return (
-    <View className="bg-[#D9D9D9] w-[90%] rounded-xl my-2">
+    <View
+      className="bg-[#D9D9D9] w-[90%] rounded-xl my-2"
+      style={{ width: props.date ? "100%" : "90%" }}
+    >
       <Pressable
         onPress={() =>
           navigation.navigate("Detail", {
@@ -79,33 +78,43 @@ export default function CardStudent(props: any) {
                     return selectedItem;
                   }}
                 />
-                                <SelectDropdown
-                  data={presence}
-                  buttonStyle={{
-                    borderRadius: 5,
-                  }}
-                  defaultValue={props.afternoon}
-                  onSelect={(selectedItem: any, index: any) => {
-                    updatelogs({ afternoon: selectedItem }, props.id).then(
-                      (res) => res
-                    );
-                    return selectedItem;
-                  }}
-                />
-                {props.morning ==="Absent" || props.morning ==="Retard" || props.afternoon ==="Absent" || props.afternoon ==="Retard" ?                   <SelectDropdown
-                  data={status}
-                  buttonStyle={{
-                    borderRadius: 5,
-                  }}
-                  defaultValue={props.status}
-                  onSelect={(selectedItem: any, index: any) => {
-                    updatelogs({ status: selectedItem }, props.id).then(
-                      (res) => res
-                    );
-                    return selectedItem;
-                  }}
-                />: <></>}
-
+                <View className="mt-2">
+                  <SelectDropdown
+                    data={presence}
+                    buttonStyle={{
+                      borderRadius: 5,
+                    }}
+                    defaultValue={props.afternoon}
+                    onSelect={(selectedItem: any, index: any) => {
+                      updatelogs({ afternoon: selectedItem }, props.id).then(
+                        (res) => res
+                      );
+                      return selectedItem;
+                    }}
+                  />
+                </View>
+                {props.morning === "Absent" ||
+                props.morning === "Retard" ||
+                props.afternoon === "Absent" ||
+                props.afternoon === "Retard" ? (
+                  <View className="mt-2">
+                    <SelectDropdown
+                      data={status}
+                      buttonStyle={{
+                        borderRadius: 5,
+                      }}
+                      defaultValue={props.status}
+                      onSelect={(selectedItem: any, index: any) => {
+                        updatelogs({ status: selectedItem }, props.id).then(
+                          (res) => res
+                        );
+                        return selectedItem;
+                      }}
+                    />
+                  </View>
+                ) : (
+                  <></>
+                )}
               </View>
             )}
           </View>
