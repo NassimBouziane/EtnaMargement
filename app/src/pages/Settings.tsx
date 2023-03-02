@@ -61,19 +61,20 @@ export default function Settings() {
           "
           ></View>
           <View>
-            <View className="flex flex-row items-center ml-5">
-              <Image
-                source={require("../../assets/dataIcon.png")}
-                className="w-6 h-6 mr-2"
-              />
-              <Pressable
-                onPress={() => {
-                  setChooseDate(true);
-                }}
-              >
+            <Pressable
+              onPress={() => {
+                setChooseDate(true);
+              }}
+            >
+              <View className="flex flex-row items-center ml-5">
+                <Image
+                  source={require("../../assets/dataIcon.png")}
+                  className="w-6 h-6 mr-2"
+                />
+
                 <Text className="my-5 text-xl">Exporter les données</Text>
-              </Pressable>
-            </View>
+              </View>
+            </Pressable>
             <View className="flex flex-row items-center ml-5">
               <Image
                 source={require("../../assets/resetIcon.png")}
