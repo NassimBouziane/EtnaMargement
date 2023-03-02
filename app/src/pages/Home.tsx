@@ -25,7 +25,6 @@ import CardTicket from "../components/CardTicket";
 import { getTicket } from "../../services/etna/etna.services";
 import { getLogsByDate } from "../../services/logs/logs.services";
 import moment from "moment-timezone";
-import Students from "./Students";
 
 export default function Home({ navigation }: any) {
   const [user, setUser] = React.useState<any>("");

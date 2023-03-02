@@ -105,7 +105,10 @@ export default function Settings() {
                 <Text className="my-5 text-xl">Mode scan</Text>
               </View>
             </Pressable>
-            <Pressable onPress={() => {logOut();navigation.navigate("Login")}}>
+            <Pressable onPress={() => {
+              logOut();
+              navigation.navigate("Login")
+            }}>
               <View className="flex flex-row items-center ml-5">
                 <Image
                   source={require("../../assets/logoutIcon.png")}
