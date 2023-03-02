@@ -4,6 +4,7 @@ import { View, ActivityIndicator, Image } from "react-native";
 import { fetchUserConnected } from "../../services/users/users.services";
 import QRCODE from "../components/QRCode";
 import { useNavigation } from "@react-navigation/native";
+import { getPromo } from "../../services/etna/etna.services";
 
 export default function Messages() {
   const [isLoading, setLoading] = useState(true);
@@ -13,7 +14,8 @@ export default function Messages() {
   const UserInfo = async () => {
     const token: any = await AsyncStorage.getItem("token");
     const user = await fetchUserConnected(await JSON.parse(token));
-    setQr_value(user.login);
+    const promo = await getPromo(await JSON.parse(token));
+    setQr_value(`${user.login}|${user.id}|${promo[0].id}`);
   };
 
   useEffect(() => {
