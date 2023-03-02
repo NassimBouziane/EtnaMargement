@@ -153,31 +153,17 @@ export default function Scanner({ navigation }: any) {
     return (
       <View>
         {isLoading ? (
-          <ScrollView className="w-full h-[300px] ml-5">
+          <ScrollView className="w-full h-full">
             <ActivityIndicator size="large" color="blue" className="mt-64" />
           </ScrollView>
         ) : (
-          <View>
-            <View
-              className="flex flex-row justify-between items-center mt-10"
-              style={{
-                marginTop: screenWidth < 768 ? "15%" : 0,
-                paddingRight: screenWidth < 768 ? 5 : 10,
-              }}
-            ></View>
-            <Text
-              className="mt-40 text-center text-5xl"
-              style={{
-                marginTop: screenWidth < 768 ? "20%" : 0,
-              }}
-            >
-              {currentTime}
-            </Text>
-            <Text className=" text-center text-3xl w-3/4 m-auto mt-12 mb-10">
+          <View className="">
+            <Text className="text-center text-4xl mt-20">{currentTime}</Text>
+            <Text className=" text-center text-xl mt-6">
               Bonjour ! Veuillez scanner le QRcode
             </Text>
             <BarCodeScanner
-              className="mt-10 w-full h-1/2"
+              className=" w-[70%] h-[70%] mt-20 mx-auto"
               onBarCodeScanned={async ({ type, data }) => {
                 setScanned(true);
                 try {
@@ -207,7 +193,7 @@ export default function Scanner({ navigation }: any) {
                 }
               }}
             ></BarCodeScanner>
-            <View className="w-full h-36 bg-[#f2f2f2] z-10 bottom-0 absolute"></View>
+            <View className="w-full h-48 bg-[#f2f2f2] z-10 bottom-0 absolute"></View>
           </View>
         )}
       </View>
