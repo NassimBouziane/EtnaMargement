@@ -9,7 +9,6 @@ export default function CardStudent(props: any) {
   const presence = ["Present", "Absent", "Retard", "Distanciel"];
   const [notifColor, setnotifColor] = useState(props.notifColor);
   const [notifColor2, setnotifColor2] = useState(props.notifColor2);
-
   const navigation: any = useNavigation();
 
   const RefreshColorMorning = (item: string) => {
@@ -49,6 +48,8 @@ export default function CardStudent(props: any) {
         break;
     }
   }
+
+  
 
 
   return (
