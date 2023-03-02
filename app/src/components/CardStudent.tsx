@@ -32,7 +32,6 @@ export default function CardStudent(props: any) {
   }
 
   const RefreshColorAfternoon = (item: string) => {
-    console.log(item)
     switch (item) {
       case 'Present':
         setnotifColor2(require("../../assets/notif_green.png"))
@@ -52,7 +51,10 @@ export default function CardStudent(props: any) {
     }
   }
 
-  
+  useEffect(() => {
+    RefreshColorAfternoon(props.afternoon)
+    RefreshColorMorning(props.morning)
+  }, [])
 
 
   return (
