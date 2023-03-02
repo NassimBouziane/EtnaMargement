@@ -104,7 +104,7 @@ export default function Scanner({ navigation }: any) {
 
     return (
       <View style={{ flex: 1, justifyContent: "center" }}>
-        <Text className="text-2xl mb-10 text-center text-green-500">
+        <Text className="text-2xl mb-10 text-center border-2 w-[50%] text-green-500 bg-slate-200 border-green-500 rounded-xl mx-auto">
           QR code valide
         </Text>
         <Image
