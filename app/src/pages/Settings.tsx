@@ -4,6 +4,7 @@ import { Image, Pressable, Text, View, Button, ScrollView } from "react-native";
 import Navbar from "../components/Navbar";
 import { NativeModules } from "react-native";
 import Calendrier from "../components/Calendrier";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { extendTheme, withColorScheme } from "native-base";
 
 export default function Settings() {
@@ -20,6 +21,14 @@ export default function Settings() {
   // const theme = extendTheme(
   //   withColorScheme({ colorScheme: isDarkModeEnabled ? "dark" : "light" })
   // );
+
+  const logOut = async () => {
+    await AsyncStorage.removeItem("token");
+    await AsyncStorage.removeItem("login");
+    await AsyncStorage.removeItem("password");
+    await AsyncStorage.removeItem("remember");
+  };
+  
   if (chooseDate) {
     return (
       <View>
@@ -93,7 +102,7 @@ export default function Settings() {
                 <Text className="my-5 text-xl">Mode scan</Text>
               </View>
             </Pressable>
-            <Pressable onPress={() => navigation.navigate("Login")}>
+            <Pressable onPress={() => {logOut();navigation.navigate("Login")}}>
               <View className="flex flex-row items-center">
                 <Image
                   source={require("../../assets/logoutIcon.png")}

@@ -25,13 +25,6 @@ export default function Navbar() {
     }
   }, [isFocused]);
 
-  const logOut = async () => {
-    await AsyncStorage.removeItem("token");
-    await AsyncStorage.removeItem("login");
-    await AsyncStorage.removeItem("password");
-    await AsyncStorage.removeItem("remember");
-  };
-
   return (
     <View
       className="w-full h-[8%] bg-[#5863F8] fixed bottom-0"

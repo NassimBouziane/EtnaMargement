@@ -22,6 +22,7 @@ export default function Login() {
   const navigation: any = useNavigation();
   const [hidden, sethidden] = useState(true);
   const [checked, setChecked] = useState(false);
+  const [bWifi, setBWifi] = useState(false);
 
   // Fonction appelée lors de la soumission du formulaire
   const handleSubmit = async () => {
@@ -55,7 +56,6 @@ export default function Login() {
 
         // Si l'utilisateur est un administrateur ou s'il s'agit de l'utilisateur "boular_t", redirige vers la page d'accueil, sinon redirige vers la page des étudiants
         if (user.groups.includes("adm") || user.login == "boular_t") {
-          console.log("jsuis la porte de derriere")
           navigation.navigate('Home')
         }
         else {
@@ -96,11 +96,24 @@ export default function Login() {
         navigation.navigate('Students');
       }
     }
-  };  
+  };
+
+  const handleCheckInternetConnection = async () => {
+    try {
+      const response = await fetch('https://www.google.com');
+      setBWifi(true)
+      getRemember();
+      console.log('Internet connection available');
+    } catch (error) {
+      Alert.alert('No internet connection');
+      console.log('No internet connection');
+      setBWifi(false)
+    }
+  }
   
   useFocusEffect(
     React.useCallback(() => {
-      getRemember();
+      handleCheckInternetConnection()   
 
       return () => {
 
