@@ -24,6 +24,7 @@ export default function CardStudent(props: any) {
         break;
       case 'Distanciel':
         setnotifColor(require("../../assets/notif_purple.png"))
+        break;
       default:
         setnotifColor(require("../../assets/notif_red.png"))
         break;
@@ -31,6 +32,7 @@ export default function CardStudent(props: any) {
   }
 
   const RefreshColorAfternoon = (item: string) => {
+    console.log(item)
     switch (item) {
       case 'Present':
         setnotifColor2(require("../../assets/notif_green.png"))
@@ -41,8 +43,9 @@ export default function CardStudent(props: any) {
       case 'Retard':
         setnotifColor2(require("../../assets/notif_yellow.png"))
         break;
-      case 'Distanciel':
+      case "Distanciel":
         setnotifColor2(require("../../assets/notif_purple.png"))
+        break;
       default:
         setnotifColor2(require("../../assets/notif_red.png"))
         break;
