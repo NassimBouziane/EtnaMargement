@@ -24,7 +24,7 @@ export const checkLogs = async(login :String, date:any) => {
             console.log(isAlready[0].afternoon)
         }
         else{
-            updatelogs({afternoon : "Present", hours_afternoon:hours_minute, status:null}, isAlready[0].id)
+            updatelogs({afternoon : "Present", hours_afternoon:hours_minute, status:"Non Justifié"}, isAlready[0].id)
         }
     }
     else{
@@ -34,7 +34,7 @@ export const checkLogs = async(login :String, date:any) => {
             console.log(isAlready[0].morning)
         }
         else{
-            updatelogs({morning : "Present", hours_morning:hours_minute, status:null}, isAlready[0].id)
+            updatelogs({morning : "Present", hours_morning:hours_minute, status:"Non Justifié"}, isAlready[0].id)
         }
     }
     }

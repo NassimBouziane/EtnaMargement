@@ -4,9 +4,8 @@ import { BarChart } from "react-native-chart-kit";
 import { getLogsByLogin } from "../../services/logs/logs.services";
 
 
-export default function GraphStudent(props) {
+export default function GraphStudent(props:any) {
     // const [dataGraph, setDataGraph] = useState<any>([])
-    console.log(props.dataGraph)
     return (
       <View>
         <BarChart

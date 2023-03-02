@@ -5,7 +5,7 @@ import { Dimensions } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { getLogsByDate } from "../../services/logs/logs.services";
 
-export default function GraphWeek(props) {
+export default function GraphWeek(props:any) {
   
 
   const [currentPage, setCurrentPage] = useState("");

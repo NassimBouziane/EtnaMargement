@@ -4,7 +4,7 @@ import { Button, Dimensions, View } from 'react-native';
 import moment from 'moment-timezone';
 import { getLogsByDate } from '../../services/logs/logs.services';
 
-export default function GraphDay(props) {
+export default function GraphDay(props:any) {
 
   const chartData = {
     labels: ["Absent", "Distanciel", "Present", "Retard"],

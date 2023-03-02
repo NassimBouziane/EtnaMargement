@@ -32,22 +32,27 @@ export default function Settings() {
   if (chooseDate) {
     return (
       <View>
-        <Text> Selectionner le jour pour l'export du excel</Text>
+        <Text className="text-lg rounded-lg text-center py-2 px-3 bg-[#363D97] color-white w-[90%] mx-auto mt-5 mb-10">
+          Exporter les émargements
+        </Text>
         <Calendrier component="Excel" />
-        <Button
-          title="back"
+        <Pressable
           onPress={() => {
             setChooseDate(false);
           }}
-        />
+        >
+          <Text className="text-center mt-10 bg-slate-300 w-1/4 mx-auto py-2 rounded-xl text-lg">
+            Retour
+          </Text>
+        </Pressable>
       </View>
     );
   }
 
   return (
     <View className="flex flex-col h-full w-full">
-      <ScrollView className="mt-3 ml-5" showsVerticalScrollIndicator={false}>
-        <View>
+      <ScrollView className="mt-3" showsVerticalScrollIndicator={false}>
+        <View className="ml-5">
           <Text className="mt-3 mb-3 text-xl font-semibold">
             Paramètres généraux
           </Text>
@@ -56,7 +61,7 @@ export default function Settings() {
           "
           ></View>
           <View>
-            <View className="flex flex-row items-center">
+            <View className="flex flex-row items-center ml-5">
               <Image
                 source={require("../../assets/dataIcon.png")}
                 className="w-6 h-6 mr-2"
@@ -69,22 +74,19 @@ export default function Settings() {
                 <Text className="my-5 text-xl">Exporter les données</Text>
               </Pressable>
             </View>
-            <View className="flex flex-row items-center">
+            <View className="flex flex-row items-center ml-5">
               <Image
                 source={require("../../assets/resetIcon.png")}
                 className="w-6 h-6 mr-2"
               />
               <Text className="my-5 text-xl">Réinitialiser l'émargement</Text>
             </View>
-            <View className="flex flex-row items-center">
+            <View className="flex flex-row items-center ml-5">
               <Image
                 source={require("../../assets/darkModeIcon.png")}
                 className="w-6 h-6 mr-2"
               />
               <Text className="my-5 text-xl">Mode sombre</Text>
-              {/* <View>
-                <Button onPress={toggleDarkMode} title="Mode sombre" />
-              </View> */}
             </View>
           </View>
           <Text className="mt-10 mb-3 text-xl font-semibold">Compte</Text>
@@ -94,7 +96,7 @@ export default function Settings() {
           ></View>
           <View>
             <Pressable onPress={() => navigation.navigate("Scanner")}>
-              <View className="flex flex-row items-center">
+              <View className="flex flex-row items-center ml-5">
                 <Image
                   source={require("../../assets/scanIcon.png")}
                   className="w-6 h-6 mr-2"
@@ -103,7 +105,7 @@ export default function Settings() {
               </View>
             </Pressable>
             <Pressable onPress={() => {logOut();navigation.navigate("Login")}}>
-              <View className="flex flex-row items-center">
+              <View className="flex flex-row items-center ml-5">
                 <Image
                   source={require("../../assets/logoutIcon.png")}
                   className="w-6 h-8 mr-2"
@@ -119,7 +121,7 @@ export default function Settings() {
           ></View>
           <View>
             <Text>Version 1.0</Text>
-            <Text className="w-10/12">
+            <Text className="w-[95%]">
               Contributeurs : Thomas BOULARD, Nassim Abderaouf BOUZIANE, Paul
               MENUT, Raphaël PLASSART
             </Text>
