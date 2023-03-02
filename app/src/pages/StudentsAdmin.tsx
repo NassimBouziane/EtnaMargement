@@ -158,7 +158,9 @@ export default function StudentsAdmin() {
           </View>
         </View>
         {isLoading ? (
-          <ScrollView className="w-full h-full ml-5">
+          <ScrollView className="w-full h-full ml-5" refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }>
             <ActivityIndicator size="large" color="blue" className="mt-64" />
           </ScrollView>
         ) : (
@@ -213,6 +215,22 @@ export default function StudentsAdmin() {
                     .includes(searchValue.toLowerCase());
                 })
                 .map((items: Logs, i: Number) => {
+                  let notifColor = require("../../assets/notif_red.png")
+                  let notifColor2 = require("../../assets/notif_red.png")
+
+                  const color = () => {
+                    if (items.morning == "Present") {
+                      notifColor = require("../../assets/notif_green.png")
+                    } else if (items.morning == "Retard") {
+                      notifColor = require("../../assets/notif_yellow.png");
+                    } if (items.afternoon == "Present") {
+                      notifColor2 = require("../../assets/notif_green.png");
+                    } else if (items.afternoon == "Retard") {
+                      notifColor2 = require("../../assets/notif_yellow.png");
+                    }
+                  }
+
+                  color()
                   return (
                     <CardStudent
                       key={items.id}
@@ -221,6 +239,8 @@ export default function StudentsAdmin() {
                       afternoon={items.afternoon}
                       firstname={items.firstname}
                       lastname={items.lastname}
+                      notifColor={notifColor}
+                      notifColor2={notifColor2}
                     />
                   );
                 })}

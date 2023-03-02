@@ -11,6 +11,7 @@ import {
   RefreshControl,
 } from "react-native";
 import {
+  getNote,
   getPromo,
   getTicket,
   getWall,
@@ -48,8 +49,6 @@ export default function Students() {
       setRefreshing(false);
     }, 2000);
   }, []);
-
-  
 
   const UserInfo = async () => {
     const token: any = await AsyncStorage.getItem("token");
@@ -106,9 +105,13 @@ export default function Students() {
     // console.log(tickets.data[0].created_at.split(" ")[1]);
 
     //const promo = await getPromo(await JSON.parse(token))
-    //const lastNote = await getNote(await JSON.parse(token), user.login, promo[0].id.toString()).then((res) => res[res.length-1])
-    //console.log(lastNote.activity_name)
-    //console.log(lastNote.student_mark)
+    const lastNote = await getNote(
+      await JSON.parse(token),
+      user.login,
+      promo[0].id.toString()
+    ).then((res) => res[res.length - 1]);
+    console.log(lastNote.activity_name);
+    console.log(lastNote.student_mark);
     //console.log(tickets)
     setUser(user);
     setPromo(promo[0]);
@@ -124,14 +127,11 @@ export default function Students() {
 
   useEffect(() => {
     UserInfo();
-    
   }, []);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: () => (
-        <View></View>
-      ),
+      headerLeft: () => <View></View>,
       headerRight: () => (
         <View>
           <Image
@@ -215,7 +215,21 @@ export default function Students() {
             <Text className="text-[8px] text-center underline">Zoom</Text>
           </Pressable>
         </View>
-        <View className="flex h-[300px] w-[95%] mx-auto mt-[50px] rounded-lg justify-center items-center">
+        <View className="flex h-[300px] w-[95%] mx-auto rounded-lg justify-center items-center">
+          <Text className="text-lg w-[90%] rounded-lg text-center mb-6 py-2 px-3 bg-[#363D97] color-white">
+            Dernières notes
+          </Text>
+          <View className="w-[90%] bg-[#D9D9D9] rounded-lg">
+            <Text className="py-3 text-center border-b-[1px] border-slate-500">
+              Activity 1: 14/20
+            </Text>
+            <Text className="py-3 text-center border-b-[1px] border-slate-500">
+              Activité 2: 16/20
+            </Text>
+            <Text className="py-3 text-center">Activité 3: 13/20</Text>
+          </View>
+        </View>
+        <View className="flex h-[300px] w-[95%] mx-auto mt-[25px] rounded-lg justify-center items-center">
           <Text className="text-lg w-[90%] rounded-lg text-center mb-6 py-2 px-3 bg-[#363D97] color-white">
             Graphique de Présence
           </Text>
@@ -276,15 +290,19 @@ export default function Students() {
           <Text className="text-[32px] my-auto mx-auto">Mur Promo</Text>
         </View>
 
-        <Pressable onPress={() => {logOut().then(() => navigation.navigate("Login"))}}>
-              <View className="flex flex-row items-center ml-5">
-                <Image
-                  source={require("../../assets/logoutIcon.png")}
-                  className="w-6 h-8 mr-2"
-                />
-                <Text className="my-5 text-xl text-center">Se déconnecter</Text>
-              </View>
-            </Pressable>
+        <Pressable
+          onPress={() => {
+            logOut().then(() => navigation.navigate("Login"));
+          }}
+        >
+          <View className="flex flex-row items-center ml-5">
+            <Image
+              source={require("../../assets/logoutIcon.png")}
+              className="w-6 h-8 mr-2"
+            />
+            <Text className="my-5 text-xl text-center">Se déconnecter</Text>
+          </View>
+        </Pressable>
       </View>
     </ScrollView>
   );
