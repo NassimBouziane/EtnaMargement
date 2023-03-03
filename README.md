@@ -2,7 +2,7 @@
 
 # Etnamargement
 
-Etnamargement is a solution developed for our school to check attendance of individuals. It features a scanner to start the project and an API to manage attendance data.
+Etnamargement is a solution developed for our school to check attendance of individuals. It features a QR scanner and an API to manage attendance data.
 
 ## Getting Started
 
